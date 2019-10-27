@@ -1,0 +1,60 @@
+<div class="accordion sidebar-content" id="accordionExample">
+    <div class="sidebar-title">
+        <div class="collapsed" data-toggle="collapse" data-target="#collapseOne"
+        aria-expanded="true" aria-controls="collapseOne">
+            <span class="fa fa-newspaper-o"></span>
+            <span class="">Dernières discussions</span>
+        </div>
+    </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="sidebar-body">
+            {% for lastDiscu in lastDiscussion %}
+                <div class="article-list-content">
+                    <span><img src="{{ vich_uploader_asset( lastDiscu.auteur, 'imageFile') }}" alt="{{  lastDiscu.auteur.username }}" width="40" height="40" /></span>
+                    <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug})}}">{{ lastDiscu.titre }}</strong></a>
+                    <br/>
+                    <div class="article-list-info">
+                        Auteur: <a href="{{ path('membres.profil', {id: lastDiscu.auteur.id, slug: lastDiscu.auteur.slug})}}" class="pseudoUser{{ lastDiscu.auteur.role.id }}">
+                            {{ lastDiscu.auteur.username }}
+                        </a>, {{ date_passed(lastDiscu.dateCreation | date('d-m-Y H:i:s')) }}
+                    </div>
+                    <div class="article-list-categ">
+                        <a href="{{ path('forum.discussions', {id: lastDiscu.categorie.id, slug: lastDiscu.categorie.slug})}}">
+                            {{ lastDiscu.categorie.categorie }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="sidebar-title">
+        <div class="collapsed" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="false" aria-controls="collapseTwo">
+            <span class="fa fa-comment-o"></span>
+            <span class="">Commentaires récents</span>
+        </div>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <div class="sidebar-body">
+            {% for lastCom in lastCommentaire %}
+                <div class="article-list-content">
+                    <span><img src="{{ vich_uploader_asset( lastCom.auteur, 'imageFile') }}" alt="{{  lastCom.auteur.username }}" width="40" height="40" /></span>
+                    <div class="article-list-info">
+                        <a href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}" class="pseudoUser{{ lastCom.auteur.role.id }}">
+                            {{ lastCom.auteur.username }}</a>,
+                            {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s' )) }}
+                    </div>
+                    <a href="{{ path('forum.discussion', {id: lastCom.discussion.id, slug: lastCom.discussion.slug})}}#ancreCom{{ lastCom.id }}">
+                        <strong>{{ delParser(lastCom.commentaire) | slice(0, 25) }}{% if lastCom.commentaire|length > 25 %}...{% endif %}</strong>
+                    </a>
+                    <div class="article-list-categ">
+                        <a href="{{ path('forum.discussions', {id: lastCom.discussion.categorie.id, slug: lastCom.discussion.categorie.slug})}}">
+                            {{ lastCom.discussion.categorie.categorie }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

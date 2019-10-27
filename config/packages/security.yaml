@@ -1,0 +1,51 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        from_databasse:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            logout:
+                path: /logout
+                target: /
+                handlers: [app.logout.listener]
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            form_login:
+                check_path: login
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 2592000 # 30 jours
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+    role_hierarchy:
+        # Un premium hérite des droits d'users
+        ROLE_PREMIUM:       [ROLE_USER]
+        # Un moderateur hérite des droits d user et de premium
+        ROLE_MODERATEUR:       [ROLE_PREMIUM, ROLE_USER]
+        # Un admin hérite des droits d user premium et de modérateur
+        ROLE_ADMIN:       [ROLE_PREMIUM, ROLE_MODERATEUR, ROLE_USER]
+        # il herite de tous les droit GOODMOD
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

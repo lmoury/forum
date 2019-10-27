@@ -1,0 +1,255 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ discussion.titre }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('forums') }}">Forums</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('forum.discussions', {id: discussion.categorie.id, slug: discussion.categorie.slug})}}">{{ discussion.categorie.categorie }}</a></li>
+    <li class="breadcrumb-item active">{{ discussion.titre }}</li>
+</ol>
+
+<h1 class="p-title-value text-center">{{ discussion.titre }}</h1>
+
+<p class="text-center">
+	Discussion dans <a href="{{ path('forum.discussions', {id: discussion.categorie.id, slug: discussion.categorie.slug})}}">{{ discussion.categorie.categorie }}</a>
+    créé par <a class="pseudoUser{{ discussion.auteur.role.id }}" href="{{ path('membres.profil', {id: discussion.auteur.id, slug: discussion.auteur.slug})}}">{{ discussion.auteur.username }}</a>,
+    <span> le {{ discussion.dateCreation | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</span>.
+</p>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
+<div class="pagination">
+    {{ knp_pagination_render(commentaires) }}
+</div>
+
+<div class="row">
+    <div class="col-sm-2 text-center">
+        <div class="profilPanelForum no-padding" id="content-section">
+            <div class="avatarShadow">
+                <img width="96" height="96" src="{{ vich_uploader_asset( discussion.auteur, 'imageFile') }}" alt="{{  discussion.auteur.username }}"/>
+            </div>
+            <div class="pseudoPanelDiscu">
+                <a class="pseudoUser{{ discussion.auteur.role.id }}" href="{{ path('membres.profil', {id: discussion.auteur.id, slug: discussion.auteur.slug})}}">{{ discussion.auteur.username }}</a>
+            </div>
+            <div class="userBannerDiscu b{{ discussion.auteur.role.id }} wrappedDiscu">
+                <span class="before"></span>{{ discussion.auteur.role.nom }}<span class="after"></span>
+            </div>
+            <div>
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <i class="fa fa-comments fa-fw"></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-thumbs-up fa-fw Tooltip"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ discussion.auteur.forumDiscussions.count + discussion.auteur.forumCommentaires.count }}
+                        </td>
+                        <td>
+                            23
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <div class="" id="content-section">
+            <div class="message-attribution message-attribution--split">
+                <div class="float-left">{{ date_passed(discussion.dateCreation | date('d-m-Y H:i:s')) }}</div>
+                <div class="text-right"><a href="/threads/presentation-urudred.628472/post-7376518" rel="nofollow">#1</a></div>
+            </div>
+            <div class="content-message">
+                {{ parser(discussion.message) | raw }}
+            </div>
+            <div class="message-attribution text-right">
+                {% if discussion.dateEdition != discussion.dateCreation %}
+                <span>Dernière édition: {{ date_passed(discussion.dateEdition | date('d-m-Y H:i:s')) }}</span>
+                {% endif %}
+            </div>
+            <div class="actionBar-set float-right">
+                <a href=""><i class="fa fa-thumbs-up"></i> Like</a>
+            </div>
+            {% if is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR') %}
+            <div class="actionBar-set">
+                <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i> Editer</a>
+                <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i> Supprimer</a>
+            </div>
+            {% endif %}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="espace-commentaire-hr">
+    <span class="espace-commentaire-hr-l"><i class="fa  fa-pencil"></i> Espace commentaire</span>
+    <span class="espace-commentaire-hr-r" ><i class="fa  fa-comments"></i> {{ commentaires.getTotalItemCount }}</span>
+</div>
+{% for com in commentaires %}
+<div id="ancreCom{{ com.id }}"></div>
+<br/>
+<div class="row">
+    <div class="col-sm-2 text-center">
+        <div class="profilPanelForum no-padding" id="content-section">
+            <div class="avatarShadow">
+                <img width="96" height="96" src="{{ vich_uploader_asset( com.auteur, 'imageFile') }}" alt="{{  com.auteur.username }}"/>
+            </div>
+            <div class="pseudoPanelDiscu">
+                <a class="pseudoUser{{ com.auteur.role.id }}" href="{{ path('membres.profil', {id: com.auteur.id, slug: com.auteur.slug})}}">{{ com.auteur.username }}</a>
+            </div>
+            <div class="userBannerDiscu b{{ com.auteur.role.id }} wrappedDiscu">
+                <span class="before"></span>{{ com.auteur.role.nom }}<span class="after"></span>
+            </div>
+            <div>
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <i class="fa fa-comments fa-fw"></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-thumbs-up fa-fw Tooltip"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ com.auteur.forumDiscussions.count + com.auteur.forumCommentaires.count }}
+                        </td>
+                        <td>
+                            23
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <div class="" id="content-section">
+            <div class="message-attribution message-attribution--split">
+                <div class="float-left">{{ date_passed(com.dateCreation | date('d-m-Y H:i:s'))}}</div>
+                <div class="text-right">#{{ loop.index }}</div>
+            </div>
+            <div class="content-message">
+                {{ parser(com.commentaire) | raw }}
+            </div>
+            <div class="message-attribution text-right">
+                {% if com.dateEdition != com.dateCreation %}
+                <span>Dernière édition: {{ date_passed(com.dateEdition | date('d-m-Y H:i:s')) }}</span>
+                {% endif %}
+            </div>
+            <div class="actionBar-set float-right">
+                <a href=""><i class="fa fa-thumbs-up"></i> Like</a>
+            </div>
+            {% if is_granted('DELET_EDIT_COMMENTAIRE', com) or is_granted('ROLE_MODERATEUR') %}
+            <div class="actionBar-set">
+                <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i> Editer</a>
+                <a href="#" data-title="Delete" data-toggle="modal" data-target="#deleteCom{{ com.id }}" ><i class="fa fa-trash"></i> Supprimer</a>
+            </div>
+            {% endif %}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- modal suppression commentaire -->
+<div class="modal fade" id="deleteCom{{ com.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+            </div>
+            <div class="modal-footer">
+            <form method="post" action="{{ path('forum.commentaire.delete', {id: com.id})}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger">Supprimer</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+{% else %}
+<br/>
+<div class="alert alert-info">
+  <strong>Aucaun commentaire !</strong> Soyez la première personne à poster un commentaire.
+</div>
+{% endfor %}
+<div class="pagination">
+    {{ knp_pagination_render(commentaires) }}
+</div>
+
+<div id="content-section" class="no-padding">
+    {% if comEdit != null %}
+    <form action="{{ path("forum.commentaire.editer", {id: discussion.id, slug: discussion.slug, idCom: comEdit.id }) }}" method="POST" id="formAncre">
+    {% else %}
+	<form action="{{ path("forum.commentaire.new", {id: discussion.id}) }}" method="POST" id="formAncre">
+    {% endif %}
+		<div class="article-content">
+			<div>
+				<textarea class="editor form-control" name="tMessage" rows="5" id="comment">{% if comEdit != null %}{{ comEdit.commentaire}}{% endif %}</textarea>
+			</div>
+		</div>
+		<div class="text-center btn-container">
+            <button class="btn" type="submit">
+            	<i class="fa fa-edit fa-lg" aria-hidden="true"></i> Publier la réponse
+            </button>
+        </div>
+		<div class="clearfix"></div>
+	</form>
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Vos commentaires seront supprimé également</div>
+            </div>
+            <div class="modal-footer">
+            <form method="post" action="{{ path('forum.discussion.delete', {id: discussion.id})}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ discussion.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
+    <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
+    <script>
+    $(document).ready(function() {
+    var wbbOpt = {
+    buttons: "br,bold,italic,underline,strike,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,img,link,|,fontcolor,fontsize,fontfamily,table,|,code,quote,smilebox",
+    lang: "fr",
+    allButtons: {
+    br : {
+        title: 'Saut de ligne',
+        buttonHTML: '<span class="fonticon"><strong>br</strong></span>',
+        excmd: 'br',
+        transform : {
+            '<br/>':"[br]"
+        }
+    } }
+    }
+    $(".editor").wysibb(wbbOpt);
+    });
+    </script>
+{% endblock %}

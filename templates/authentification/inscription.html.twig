@@ -1,0 +1,140 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Inscription {{ parent() }}{% endblock %}
+
+{% block body %}
+<h1 class="p-title-value text-center">S'inscrire</h1>
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    <i class="fa fa-warning"></i> <strong> Erreur !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
+<div class="content-section no-padding">
+    {{ form_start(form) }}
+        <div class="block-container">
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="name">Nom : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.username, { 'attr': {'placeholder': 'Entrer votre nom'} }) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.username) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="email">Adresse email : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.email, { 'attr': {'placeholder': 'Entrer votre email'} }) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.email) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="password">Mot de passe : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.password.first, { 'attr': {'placeholder': 'Entrer votre mot de passe'} }) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.password.first) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="confirm">Confirmer le mot de passe : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.password.second, { 'attr': {'placeholder': 'Confirmer votre mot de passe'} }) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="birthDate">Date de naissance : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.date_naissance) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-birthday-cake fa" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.date_naissance) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="sexe">Votre sexe : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.sexe) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.sexe) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow">
+                <dt></dt>
+                <dd>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="validerReglem" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">En vous inscrivant, vous acceptez nos <a href="">termes et règles.</a></label><br/><br/>
+                    </div>
+                </dd>
+            </dl>
+            {{ form_rest(form) }}
+            <div class="text-center btn-container">
+                <button class="btn"><i class="fa fa fa-key fa-lg" aria-hidden="true"></i> S'inscrire</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

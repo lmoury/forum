@@ -1,0 +1,31 @@
+<div class="sidebar-content">
+    <div class="sidebar-title">
+        <span class="fa fa-bar-chart-o"></span>
+        <span class="">Statistiques</span>
+    </div>
+    <div class="sidebar-body">
+        <dl class="widget-statistique">
+            <dt><span><i class="fa fa-comments"></i>Discussions: </span></dt>
+            <dd><span>{{ compteur[0].countDiscussion }}</span></dd>
+
+            <dt><span><i class="fa fa-envelope"></i>Message: </span></dt>
+            <dd><span>{{ compteur[0].countDiscussion + compteur[0].countCommentaire }}</span></dd>
+
+            <dt><span><i class="fa fa-users"></i>Membres: </span></dt>
+            <dd><span>{{ compteur[0].countUser }}</span></dd>
+            {% if app.user %}
+            <dt><span><i class="fa fa-user-plus"></i>Dernier membre: </span></dt>
+            <dd><span><a class="pseudoUser{{ lastUser.role.id }}" href="{{ path('membres.profil', {id: lastUser.id, slug: lastUser.slug})}}">{{ lastUser.username }} </a></span></dd>
+            {% endif %}
+            <dt><span><i class="fa fa-comments-o"></i>Nouvelles discussions aujourd'hui: </span></dt>
+            <dd><span>{{ compteur[0].countTodayDiscussion }}</span></dd>
+
+            <dt><span><i class="fa fa-comment-o"></i>Nouveaux commentaires aujourd'hui: </span></dt>
+            <dd><span>{{ compteur[0].countTodayCommentaire }}</span></dd>
+
+            <dt><span><i class="fa fa-user-o"></i>Nouveaux membres aujourd'hui: </span></dt>
+            <dd><span>{{ compteur[0].countTodayUser }}</span></dd>
+        </dl>
+        <div class="clearfix"></div>
+    </div>
+</div>

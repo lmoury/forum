@@ -1,0 +1,144 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ user.username }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('membres') }}">Liste des membres</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('membres.profil', {id: user.id, slug: user.slug})}}">Mon profil</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Mon compte</li>
+</ol>
+
+<h1 class="p-title-value text-center">Compte </h1>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
+<div class="content-section no-padding">
+    {{ form_start(form) }}
+    <div class="block-container">
+       <dl class="formRow formRow-input">
+           <dt>
+               <label for="email">Adresse email : </label>
+           </dt>
+           <dd>
+               <div class="form-group">
+                   <div class="input-group mb-3">
+                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Entrer votre e-mail'} }) }}
+                       <div class="input-group-prepend">
+                           <span class="input-group-text">@</span>
+                       </div>
+                   </div>
+                   {{ form_errors(form.email) }}
+               </div>
+           </dd>
+       </dl>
+
+       <dl class="formRow formRow-input form-avatar">
+           <dt>
+               <label for="email">Avatar : </label>
+           </dt>
+           <dd>
+               <img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="miniature img-circle img-thumbnail" alt="{{ user.username }}">
+               <br/><br/>
+               {{ form_widget(form.imageFile) }}
+               {{ form_errors(form.imageFile) }}
+               <br/><br/>
+           </dd>
+       </dl>
+
+       <dl class="formRow formRow-input">
+           <dt>
+               <label for="birthDate">Date de naissance : </label>
+           </dt>
+           <dd>
+               <div class="form-group">
+                   <div class="input-group mb-3">
+                       {{ form_widget(form.date_naissance) }}
+                       <div class="input-group-prepend">
+                           <span class="input-group-text"><i class="fa fa-birthday-cake fa" aria-hidden="true"></i></span>
+                       </div>
+                   </div>
+                   {{ form_errors(form.date_naissance) }}
+               </div>
+           </dd>
+       </dl>
+
+       <dl class="formRow formRow-input">
+           <dt>
+               <label for="sexe">Votre sexe : </label>
+           </dt>
+           <dd>
+               <div class="form-group">
+                   <div class="input-group mb-3">
+                       {{ form_widget(form.sexe) }}
+                       <div class="input-group-prepend">
+                           <span class="input-group-text">
+                               <i class="fa fa-venus-mars" aria-hidden="true"></i>
+                           </span>
+                       </div>
+                   </div>
+                   {{ form_errors(form.sexe) }}
+               </div>
+           </dd>
+       </dl>
+
+       <div class="text-center btn-container">
+           <button class="btn" type="submit"><i class="fa fa fa-save fa-lg" aria-hidden="true"></i> Sauvegarder</button>&nbsp;&nbsp;&nbsp;
+       </div>
+    {{ form_rest(form) }}
+</div>
+{{ form_end(form) }}
+</div>
+<br/><br/>
+
+<h1 class="p-title-value text-center">Modifier son mot de passe</h1>
+
+<div id="content-section" class="page-connexion">
+    {{ form_start(formPass) }}
+    <div class="block-container">
+       <dl class="formRow formRow-input">
+           <dt>
+               <label for="password">Mot de passe : </label>
+           </dt>
+           <dd>
+               <div class="form-group">
+                   <div class="input-group mb-3">
+                       {{ form_widget(formPass.password.first, { 'attr': {'placeholder': 'Entrer votre mot de passe'} }) }}
+                       <div class="input-group-prepend">
+                           <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                       </div>
+
+                   </div>
+                   {{ form_errors(formPass.password.first) }}
+               </div>
+           </dd>
+       </dl>
+
+       <dl class="formRow formRow-input">
+           <dt>
+               <label for="confirm">Confirmer le mot de passe : </label>
+           </dt>
+           <dd>
+               <div class="form-group">
+                   <div class="input-group mb-3">
+                       {{ form_widget(formPass.password.second, { 'attr': {'placeholder': 'Confirmer votre mot de passe'} }) }}
+                       <div class="input-group-prepend">
+                           <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                       </div>
+                   </div>
+               </div>
+           </dd>
+       </dl>
+       {{ form_rest(formPass) }}
+       <div class="text-center btn-container">
+           <button class="btn"><i class="fa fa fa-key fa-lg" aria-hidden="true"></i> S'inscrire</button>
+       </div>
+    </div>
+   {{ form_end(formPass) }}
+</div>
+{% endblock %}

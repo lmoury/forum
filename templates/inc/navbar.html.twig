@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg sticky-top" role="navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="/assets/img/logolm.png"></a>
+        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+        &#9776;
+        </button>
+        <div class="collapse navbar-collapse" id="exCollapsingNavbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item {% if current_url is defined and current_url == 'home' %}active{% endif %}">
+                    <a class="nav-link"  href="{{ path('/') }}">Home</a>
+                </li>
+                <li class="nav-item {% if current_url is defined and current_url == 'forums' %}active{% endif %}">
+                    <a class="nav-link"  href="{{ path('forums') }}">Forums</a>
+                </li>
+                {% if app.user %}
+                <li class="nav-item {% if current_url is defined and current_url == 'membres' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('membres') }}">Membres</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+                {% if app.user %}
+                <li id="profil-pop-user" class="dropdown nav-item">
+                    <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
+                        {% if ("now" | date("H")) < 19  and ("now" | date("H")) > 6 %}
+                        <i class="fa fa-user-circle-o"></i>
+                        <span class="d-none d-md-inline-block">Bonjour {{ app.user.username }}</span>
+                        {% else %}
+                        <i class="fa fa-moon-o"></i>
+                        <span class="d-none d-md-inline-block">Bonsoir {{ app.user.username }}</span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" id="dropdown-content-user">
+                        <span class="menu-arrow"></span>
+                        <div class="float-left avatar-user">
+                            <img src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}"/>
+                        </div>
+                        <div>
+                            <a href="{{ path('membres.profil', {id: app.user.id, slug: app.user.slug}) }}">
+                                <i class="fa fa-user-circle"></i> Voir son profil
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{{ path('membres.compte') }}"> <i class="fa fa-edit"></i> Editer son profil</a>
+                        </div>
+                        <div>
+                            <a href="{{ path('admin') }}" target="_blank"><i class="fa fa-sign-in"></i> Panneaux d'administration</a>
+                        </div>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('logout') }}"><i class="fa fa-power-off"></i></a>
+                </li>
+                {% else %}
+                <li class="nav-item {% if current_url is defined and current_url == 'login' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('login') }}"><i class="fa fa-sign-in"></i> Se connecter</a>
+                </li>
+                <li class="nav-item {% if current_url is defined and current_url == 'inscription' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('inscription') }}"><i class="fa fa-key"></i> S'inscrire</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

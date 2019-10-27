@@ -1,0 +1,161 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ user.username }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('membres') }}">Liste des membres</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Profil de {{ user.username }}</li>
+</ol>
+
+<div class="content-section no-padding">
+<div class="memberHeader">
+    <div class="memberHeader-main">
+        <span class="memberHeader-avatar">
+            <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.username }}" />
+            {% if app.user.id == user.id %}
+            <div>
+                <a class="avatar-update" href="{{ path('membres.compte') }}">Éditer son compte</a>
+            </div>
+            {% endif %}
+        </span>
+        <div class="memberHeader-content">
+            <h1 class="memberHeader-name"><span class="pseudoUser{{ user.role.id }}">{{ user.username }}</span></h1>
+            <div class="memberHeader-blurb">
+                <span><strong>{{ user.role.nom }}</strong></span>
+            </div>
+            <div class="memberHeader-blurb">
+                <dl class="pairs pairs--inline">
+                    <dt>Inscription : </dt>
+                    <dd>{{ date_passed(user.dateInscription | date('d-m-Y H:i:s'))  }}</dd>
+                </dl>
+            </div>
+            <div class="memberHeader-blurb">
+                <dl class="pairs pairs--inline">
+                    <dt>Dernière visite : </dt>
+                    <dd>{{ user.dateVisite | localizeddate('none', 'none', 'fr', null, 'd MMMM Y') }}</dd>
+                </dl>
+            </div>
+            <div class="memberHeader-blurb">
+                <dl class="pairs pairs--inline">
+                    <dt>Messages : </dt>
+                    <dd>{{ user.forumDiscussions.count + user.forumCommentaires.count }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="memberHeader-content">
+        <div class="memberHeader-stats">
+            <div class="pairJustifier">
+                <dl class="pairs pairs--rows pairs--rows--centered fauxBlockLink">
+                    <dt>Discussions</dt>
+                    <dd>{{ user.forumDiscussions.count }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows pairs--rows--centered fauxBlockLink">
+                    <dt title="Points de trophée">Commentaires</dt>
+                    <dd>{{ user.forumCommentaires.count }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows pairs--rows--centered">
+                    <dt title="Appréciations reçus">J'aime</dt>
+                    <dd>0</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center btn-container">
+    <nav>
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-discussion-tab" data-toggle="tab" href="#nav-discussion" role="tab" aria-controls="nav-home" aria-selected="true">Discussions</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Commentaires</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">A propos</a>
+        </div>
+    </nav>
+</div>
+</div>
+<br/>
+<div id="">
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade content-section show active" id="nav-discussion" role="tabpanel" aria-labelledby="nav-discussion-tab">
+        {% for d in user.forumDiscussions | reverse| slice(0, 10) %}
+            <div class="tab-content-arctile">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="{{ vich_uploader_asset( d.auteur, 'imageFile') }}" alt="{{  d.auteur.username }}" width="48" height="48">
+                            </td>
+                            <td>
+                                <div class="tab-content-arctile-titre">
+                                    <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">
+                                        {{ d.titre }}
+                                    </a>
+                                </div>
+                                <div class="tab-content-arctile-content">
+                                    {{ delParser(d.message) | slice(0, 125) }}{% if d.message|length > 125 %}...{% endif %}
+                                </div>
+                                <div class="tab-content-arctile-categ">
+                                    <a href="{{ path('membres.profil', {id: d.auteur.id, slug: d.auteur.slug})}}" class="pseudoUser{{ d.auteur.role.id }}">
+                                        {{ d.auteur.username }}
+                                    </a>
+                                     -
+                                    {{ date_passed(d.dateCreation | date('d-m-Y H:i:s'))  }}
+                                     - Forum:
+                                    <a href="{{ path('forum.discussions', {id: d.categorie.id, slug: d.categorie.slug}) }}">{{ d.categorie.categorie }}</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            Aucune discussion
+        {% endfor %}
+    </div>
+    <div class="tab-pane fade content-section" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        {% for com in user.forumCommentaires | reverse| slice(0, 10) %}
+            <div class="tab-content-arctile">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="{{ vich_uploader_asset( com.discussion.auteur, 'imageFile') }}" alt="{{  com.discussion.auteur.username }}" width="48" height="48">
+                            </td>
+                            <td>
+                                <div class="tab-content-arctile-titre">
+                                    <span class="pseudoUser{{ user.role.id }}">{{ user.username }}</span>
+                                    a répondu à la discussion
+                                    <a href="{{ path('forum.discussion', {id: com.discussion.id, slug: com.discussion.slug}) }}">
+                                        {{ com.discussion.titre }}
+                                    </a>
+                                </div>
+                                <div class="tab-content-arctile-content">
+                                    {{ delParser(com.commentaire) | slice(0, 125) }}{% if com.commentaire|length > 125 %}...{% endif %}
+                                </div>
+                                <div class="tab-content-arctile-categ">
+                                    <a href="{{ path('membres.profil', {id: com.discussion.auteur.id, slug: com.discussion.auteur.slug})}}" class="pseudoUser{{ com.discussion.auteur.role.id }}">
+                                        {{ com.discussion.auteur.username }}
+                                    </a>
+                                     -
+                                    {{ date_passed(com.dateCreation | date('d-m-Y H:i:s'))  }}
+                                     - Forum:
+                                    <a href="{{ path('forum.discussions', {id: com.discussion.categorie.id, slug: com.discussion.categorie.slug}) }}">{{ com.discussion.categorie.categorie }}</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            Aucun commentaire
+        {% endfor %}
+    </div>
+    <div class="tab-pane fade content-section" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        Genre : <span class="float-right">{{ user.sexeType }}</span>
+        <hr>
+    </div>
+</div>
+</div>
+{% endblock %}

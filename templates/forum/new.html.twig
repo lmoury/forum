@@ -1,0 +1,42 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Créer une discussion {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('forums') }}">Forums</a></li>
+    <li class="breadcrumb-item active">Créer une discussion</li>
+</ol>
+
+<h1 class="p-title-value text-center">Créer une discussion</h1>
+
+<div id="content-section" class="page-connexion">
+    {{ include('forum/_form.html.twig', {form: form, button:'Créer une discussion'}) }}
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
+    <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
+    <script>
+    $(document).ready(function() {
+    var wbbOpt = {
+    buttons: "br,bold,italic,underline,strike,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,img,link,|,fontcolor,fontsize,fontfamily,table,|,code,quote,smilebox",
+    lang: "fr",
+    allButtons: {
+    br : {
+        title: 'Saut de ligne',
+        buttonHTML: '<span class="fonticon"><strong>br</strong></span>',
+        excmd: 'br',
+        transform : {
+            '<br/>':"[br]"
+        }
+    } }
+    }
+    $(".editor").wysibb(wbbOpt);
+    });
+    </script>
+{% endblock %}

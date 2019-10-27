@@ -1,0 +1,37 @@
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <img src="/assets/img/dachser_logo.svg" alt="Dachser"/>
+    </div>
+
+    <ul class="list-unstyled components">
+        <p class="text-center">
+            <span class="pseudoUser{{ app.user.role.id }}">{{ app.user.username }}</span>
+            <br/>
+            {{ app.user.role.nom }}
+        </p>
+        <li class="{% if current_url is defined and current_url == 'home' %}active{% endif %}">
+            <a href="{{ path('admin') }}">Dashboard</a>
+        </li>
+        <li class="{% if current_url is defined and current_url == 'forums' %}active{% endif %}">
+            <a href="#remorqueSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Forums</a>
+            <ul class="collapse list-unstyled" id="remorqueSubmenu">
+                <li>
+                    <a href="{{ path('admin.forums') }}">Liste des Forums</a>
+                </li>
+                <li>
+                    <a href="">Type de remorque</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <a href="{{ path('/') }}" class="download">Retour au forum</a>
+        </li>
+        <li>
+            <a href="{{ path('logout') }}" class="article btn btn-danger">Déconnexion</a>
+        </li>
+    </ul>
+</nav>

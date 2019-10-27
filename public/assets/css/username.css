@@ -1,0 +1,117 @@
+.pseudoUser3
+{
+  color: white;
+  text-shadow: 0px 0px 5px #ff0000, 0px 0px 5px #ff0000;
+  font-weight: bold;
+}
+
+.pseudoUser3::before
+{
+  font-family: "FontAwesome";
+  content: "";
+  padding-right: 4px;
+  display: inline-block;
+}
+
+.pseudoUser1
+{
+  color: #2ecc71;
+  text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
+}
+
+.pseudoUser6
+{
+  color: gold;
+  text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
+  background: transparent url(../img/extra/7.gif) no-repeat;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.pseudoUser2
+{
+  color: #02fcfc;
+  text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
+  font-weight: bold;
+}
+.pseudoUser2::before
+{
+  font-family: "FontAwesome";
+  content: "";
+  padding-right: 4px;
+  display: inline-block;
+}
+
+.pseudoUser6
+{
+  color: yellow;
+  text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
+  font-weight: bold;
+}
+
+.pseudoUser6::before
+{
+  font-family: "FontAwesome";
+  content: "";
+  padding-right: 4px;
+  display: inline-block;
+}
+
+.pseudoUser5
+{
+  color: white;
+  text-shadow: 1px 0px 2px black, 2px 0px 2px black, 3px 3px 6px black, -2px 0px 6px black, 0px 0px 5px black;
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+
+.userBannerDiscu.b3
+{
+color: white;
+background-color: red;
+border-color: #F88;
+}
+.wrappedDiscu.userBannerDiscu.b3 span.after , .wrappedDiscu.userBannerDiscu.b3 span.before {
+background-color: #F88;
+}
+
+.userBannerDiscu.b1
+{
+  color: white;
+  background-color: green;
+  border-color: darkgreen;
+}
+.wrappedDiscu.userBannerDiscu.b2 span.after , .wrappedDiscu.userBannerDiscu.b2 span.before {
+  background-color: darkgreen;
+}
+
+.userBannerDiscu.b5
+{
+  color: black;
+  background-color: gold;
+  border-color: orange;
+}
+.wrappedDiscu.userBannerDiscu.b5 span.after , .wrappedDiscu.userBannerDiscu.b5 span.before {
+  background-color: orange;
+}
+
+.userBannerDiscu.b6
+{
+  color: black;
+  background-color: yellow;
+  border-color: gold;
+}
+.wrappedDiscu.userBannerDiscu.b6 span.after , .wrappedDiscu.userBannerDiscu.b6 span.before {
+  background-color: gold;
+}
+
+.userBannerDiscu.b2
+{
+  color: white;
+  background-color: royalblue;
+  border-color: #81A9E1;
+}
+.wrappedDiscu.userBannerDiscu.b4 span.after , .wrappedDiscu.userBannerDiscu.b4 span.before {
+  background-color: #81A9E1;
+}

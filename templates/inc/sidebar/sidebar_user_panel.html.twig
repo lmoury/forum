@@ -1,0 +1,20 @@
+<div class="sidebar-content">
+    <div class="sidebar-body">
+        <div class="visitor-panel-welcome">
+            <a class="username" href="{{ path('membres.profil', {id: app.user.id, slug: app.user.slug})}}">
+                <span class="pseudoUser{{ app.user.role.id }}">{{ app.user.username }}</span>
+            </a>
+        </div>
+        <div class="visitor-avatar">
+            <img width="58" height="58" alt="{{ app.user.username }}" src="{{ vich_uploader_asset(  app.user, 'imageFile') }}"/>
+        </div>
+		<div class="visitor-text">
+			<div class="stats">
+				<dl class="pairsJustified"><dt><font class="pairsJustified1"></font><i class="fa fa-comments"></i> Discussions:</dt><dd>{{ app.user.forumDiscussions.count }}</dd></dl>
+				<dl class="pairsJustified"><dt><font class="pairsJustified1"></font><i class="fa fa-comment"></i> Commentaires:</dt><dd>{{ app.user.forumCommentaires.count }}</dd></dl>
+                <dl class="pairsJustified"><dt><font class="pairsJustified1"></font><i class="fa fa-thumbs-up"></i> J'aime:</dt> <dd>0</dd></dl>
+			</div>
+		</div>
+    <div class="clearfix"></div>
+    </div>
+</div>

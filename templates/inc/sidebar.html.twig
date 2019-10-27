@@ -1,0 +1,11 @@
+<div class="sidebar-container">
+	{% if app.user %}
+	{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
+	<br/>
+	{% endif %}
+	{{ render(controller("App\\Controller\\SidebarController:forum")) }}
+	<br/>
+	{{ render(controller("App\\Controller\\SidebarController:statistique")) }}
+	<br/>
+	{{ include('inc/sidebar/sidebar_social.html.twig') }}
+</div>
