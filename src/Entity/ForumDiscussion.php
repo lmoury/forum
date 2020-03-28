@@ -70,12 +70,18 @@ class ForumDiscussion
      */
     private $affichage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="discussion")
+     */
+    private $likes;
+
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
         $this->date_new_com = new \DateTime();
         $this->forumCommentaires = new ArrayCollection();
         $this->affichage = 0;
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,6 +216,37 @@ class ForumDiscussion
     public function setAffichage(int $affichage): self
     {
         $this->affichage = $affichage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLikes(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setDiscussion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getDiscussion() === $this) {
+                $like->setDiscussion(null);
+            }
+        }
 
         return $this;
     }

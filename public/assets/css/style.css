@@ -605,6 +605,10 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
 	font-size: 12px;
 	color: white;
 }
+.widget_whosHas {
+  font-size: 11px;
+  text-align:center;
+}
 .sidebar-triple-menu li a.active , .sidebar-triple-menu li a:hover {
     border: 1px solid #2f78a0 !important;
     background: #2f78a0 !important;
@@ -799,7 +803,7 @@ dl.widget-statistique {
     position: relative;
     top: 20%;
 }
-#btn-article-add a {
+#btn-article-add a, #btn-article-add.btnartseul {
     color: white;
     text-shadow: 1px 1px 0px black;
     font-size: 16px;
@@ -1233,3 +1237,15 @@ td.discussionCol1 {
     width: 100%;
 
 }
+
+
+/* .sidebar-container li a.active {
+    background: #2577b1;
+    padding-left: 6px;
+    margin-right: 5px;
+    color: white;
+}
+
+.sidebar-container .nav-tabs {
+    border-bottom : none;
+} */

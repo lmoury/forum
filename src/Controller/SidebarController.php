@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Repository\UserRoleRepository;
 use App\Repository\ForumDiscussionRepository;
 use App\Repository\ForumCommentaireRepository;
+use App\Repository\WhoshasvisitedRepository;
+use App\Repository\WhosonlineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +17,7 @@ class SidebarController extends AbstractController
 {
 
     /**
-     * @param UserRepository $repository 
+     * @param UserRepository $repository
      * @param Connection $connection
      */
     public function statistique(Connection $connection,UserRepository $repository)
@@ -46,6 +49,29 @@ class SidebarController extends AbstractController
         return $this->render('inc/sidebar/sidebar_forum.html.twig', [
             'lastDiscussion' => $lastDiscussion,
             'lastCommentaire' => $lastCommentaire,
+        ]);
+    }
+
+
+    /**
+     * @param UserRoleRepository $repoRole
+     * @param WhoshasvisitedRepository $repoWhoshasvisited
+     */
+    public function menu(Connection $connection, UserRoleRepository $repoRole, WhoshasvisitedRepository $repoWhoshasvisited, WhosonlineRepository $repoWhosonline)
+    {
+        $compteur= $connection->fetchAll('SELECT
+            (SELECT COUNT(*) FROM whosonline) as countOnline,
+            (SELECT COUNT(*) FROM whosonline WHERE online_id is not null) as countUser,
+            (SELECT COUNT(*) FROM whosonline WHERE online_ip is not null) as countVisite
+            ');
+        $whoshasvisited = $repoWhoshasvisited->getWhoshasvisited();
+        $whosonline = $repoWhosonline->getWhosonline();
+        $roles = $repoRole->getRoles();
+        return $this->render('inc/sidebar/sidebar_menu.html.twig', [
+            'roles' => $roles,
+            'whoshasvisited' => $whoshasvisited,
+            'whosonline' => $whosonline,
+            'compteur' => $compteur
         ]);
     }
 

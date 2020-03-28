@@ -35,7 +35,7 @@
                             <td><a class="pseudoUser{{ user.role.id }}" href="{{ path('membres.profil', {id: user.id, slug: user.slug}) }}">{{ user.username }}</a></td>
                             <td>{{ user.forumCommentaires.count + user.forumDiscussions.count }}</td>
                             <td>{{ date_passed(user.dateInscription | date('d-m-Y H:i:s')) }}</td>
-                            <td>{{ user.dateVisite | localizeddate('none', 'none', 'fr', null, 'd MMMM Y') }}</td>
+                            <td>{{ date_passed(user.dateVisite | date('d-m-Y H:i:s'))}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

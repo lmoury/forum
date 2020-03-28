@@ -105,6 +105,26 @@ class User implements UserInterface,\Serializable
      */
     private $role;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user")
+     */
+    private $likesUser;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="auteur")
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Whoshasvisited", mappedBy="visiteur")
+     */
+    private $whoshasvisiteds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Whosonline", mappedBy="online")
+     */
+    private $whosonlines;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -113,6 +133,10 @@ class User implements UserInterface,\Serializable
         $this->forumDiscussions = new ArrayCollection();
         $this->forumCommentaires = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->likesUser = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->whoshasvisiteds = new ArrayCollection();
+        $this->whosonlines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -372,6 +396,130 @@ class User implements UserInterface,\Serializable
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikeUser(): Collection
+    {
+        return $this->likesUser;
+    }
+
+    public function addLikesUser(Likes $likesUser): self
+    {
+        if (!$this->likesUser->contains($likesUser)) {
+            $this->likesUser[] = $likesUser;
+            $likesUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikesUser(Likes $likesUser): self
+    {
+        if ($this->likesUser->contains($likesUser)) {
+            $this->likesUser->removeElement($likesUser);
+            // set the owning side to null (unless already changed)
+            if ($likesUser->getUser() === $this) {
+                $likesUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLikes(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getAuteur() === $this) {
+                $like->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Whoshasvisited[]
+     */
+    public function getWhoshasvisiteds(): Collection
+    {
+        return $this->whoshasvisiteds;
+    }
+
+    public function addWhoshasvisited(Whoshasvisited $whoshasvisited): self
+    {
+        if (!$this->whoshasvisiteds->contains($whoshasvisited)) {
+            $this->whoshasvisiteds[] = $whoshasvisited;
+            $whoshasvisited->setVisiteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWhoshasvisited(Whoshasvisited $whoshasvisited): self
+    {
+        if ($this->whoshasvisiteds->contains($whoshasvisited)) {
+            $this->whoshasvisiteds->removeElement($whoshasvisited);
+            // set the owning side to null (unless already changed)
+            if ($whoshasvisited->getVisiteur() === $this) {
+                $whoshasvisited->setVisiteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Whosonline[]
+     */
+    public function getWhosonlines(): Collection
+    {
+        return $this->whosonlines;
+    }
+
+    public function addWhosonline(Whosonline $whosonline): self
+    {
+        if (!$this->whosonlines->contains($whosonline)) {
+            $this->whosonlines[] = $whosonline;
+            $whosonline->setOnline($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWhosonline(Whosonline $whosonline): self
+    {
+        if ($this->whosonlines->contains($whosonline)) {
+            $this->whosonlines->removeElement($whosonline);
+            // set the owning side to null (unless already changed)
+            if ($whosonline->getOnline() === $this) {
+                $whosonline->setOnline(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -1,0 +1,41 @@
+<div class="">
+    <ul class="nav customBorderNav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#widgetHome" alt="" title="Qui est en ligne ?"><i class="fa fa-users" style="padding-right:7px;"></i></a></li>
+        <li><a data-toggle="tab" href="#widget1" alt="" title="Qui a visité ses dernière 24H"><i class="fa fa-user-times" style="padding-right: 6px;"></i></a></li>
+        <li><a data-toggle="tab" href="#widget2" alt="" title="Légende des groupes"><i class="fa fa-list-ul" style="padding-right: 7px;"></i></a></li>
+    </ul>
+
+    <div class="tab-content sidebar-content">
+        <div id="widgetHome" class="tab-pane in active">
+            <div class="sidebar-body">
+                {% for online in whosonline %}
+                    {% if online.online %}
+                        {% set onlineUser = loop.index %}
+                        <span class="pseudoUser{{ online.online.role.id }}">{{ online.online.username }},</span>
+                    {% endif %}
+
+                {% endfor %}
+                <p class="widget_whosHas">Il y a {{ compteur[0].countOnline }} connectés ({{ compteur[0].countUser }} membres et {{ compteur[0].countVisite }} invités)</p>
+            </div>
+        </div>
+
+        <div id="widget1" class="tab-pane fade">
+            <div class="sidebar-body">
+                {% set foo = '' %}
+                {% for visite in whoshasvisited %}
+                {% set foo = loop.index %}
+                    <span class="pseudoUser{{ visite.visiteur.role.id }}">{{ visite.visiteur.username }},</span>
+                {% endfor %}
+                <p class="widget_whosHas">Actuellement : {{ foo }} membres (Dernières 24H)</p>
+            </div>
+        </div>
+
+        <div id="widget2" class="tab-pane fade">
+            <div class="sidebar-body">
+                  {% for role in roles %}
+                    <div><span class="pseudoUser{{ role.id }}">{{ role.nom }}</span><span style="float:right;font-weight:bold;">{{ role.users.count }}</span></div>
+                  {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

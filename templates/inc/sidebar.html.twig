@@ -2,6 +2,11 @@
 	{% if app.user %}
 	{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
 	<br/>
+	{{ render(controller("App\\Controller\\SidebarController:menu")) }}
+	<br/>
+	{% else %}
+	{{ include('inc/sidebar/sidebar_connexion.html.twig') }}
+	<br/>
 	{% endif %}
 	{{ render(controller("App\\Controller\\SidebarController:forum")) }}
 	<br/>

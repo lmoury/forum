@@ -55,7 +55,7 @@
                             {{ discussion.auteur.forumDiscussions.count + discussion.auteur.forumCommentaires.count }}
                         </td>
                         <td>
-                            23
+                            {{ discussion.auteur.likes.count }}
                         </td>
                     </tr>
                 </table>
@@ -76,9 +76,19 @@
                 <span>Dernière édition: {{ date_passed(discussion.dateEdition | date('d-m-Y H:i:s')) }}</span>
                 {% endif %}
             </div>
+            {% if app.user == discussion.auteur %}
             <div class="actionBar-set float-right">
-                <a href=""><i class="fa fa-thumbs-up"></i> Like</a>
+                <i class="fa fa-thumbs-up"></i> <span class="badge">{{ discussion.likes.count }}</span>
             </div>
+            {% elseif is_granted('LIKE_DISCUSSION', discussion) %}
+            <div class="actionBar-set float-right">
+                <a href="{{ path('delet.like.discussion', {id: discussion.id}) }}"><i class="fa fa-thumbs-down"></i> Je n'aime plus <span class="badge">{{ discussion.likes.count }}</span></a>
+            </div>
+            {% else %}
+            <div class="actionBar-set float-right">
+                <a href="{{ path('like.discussion', {id: discussion.id}) }}"><i class="fa fa-thumbs-up"></i> J'aime <span class="badge">{{ discussion.likes.count }}</span></a>
+            </div>
+            {% endif %}
             {% if is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
                 <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i> Editer</a>
@@ -124,7 +134,7 @@
                             {{ com.auteur.forumDiscussions.count + com.auteur.forumCommentaires.count }}
                         </td>
                         <td>
-                            23
+                            {{ com.auteur.likes.count }}
                         </td>
                     </tr>
                 </table>
@@ -135,7 +145,7 @@
         <div class="" id="content-section">
             <div class="message-attribution message-attribution--split">
                 <div class="float-left">{{ date_passed(com.dateCreation | date('d-m-Y H:i:s'))}}</div>
-                <div class="text-right">#{{ loop.index }}</div>
+                <div class="text-right" id="{{ com.id }}">#{{ loop.index }}</div>
             </div>
             <div class="content-message">
                 {{ parser(com.commentaire) | raw }}
@@ -145,9 +155,20 @@
                 <span>Dernière édition: {{ date_passed(com.dateEdition | date('d-m-Y H:i:s')) }}</span>
                 {% endif %}
             </div>
+            {% if app.user == com.auteur %}
             <div class="actionBar-set float-right">
-                <a href=""><i class="fa fa-thumbs-up"></i> Like</a>
+                <i class="fa fa-thumbs-up"></i><span class="badge">{{ com.likes.count }}</span>
             </div>
+            {% elseif is_granted('LIKE_COMMENTAIRE', com) %}
+            <div class="actionBar-set float-right">
+                <a href="{{ path('delet.like.commentaire', {id: com.id}) }}"><i class="fa fa-thumbs-down"></i> Je n'aime plus <span class="badge">{{ com.likes.count }}</span></a>
+            </div>
+            {% else %}
+            <div class="actionBar-set float-right">
+                <a href="{{ path('like.commentaire', {id: com.id}) }}"><i class="fa fa-thumbs-up"></i> J'aime <span class="badge">{{ com.likes.count }}</span></a>
+            </div>
+            {% endif %}
+
             {% if is_granted('DELET_EDIT_COMMENTAIRE', com) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
                 <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i> Editer</a>
@@ -235,6 +256,7 @@
     <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
     <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
     <script>
+
     $(document).ready(function() {
     var wbbOpt = {
     buttons: "br,bold,italic,underline,strike,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,img,link,|,fontcolor,fontsize,fontfamily,table,|,code,quote,smilebox",

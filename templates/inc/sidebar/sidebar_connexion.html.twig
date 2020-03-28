@@ -1,0 +1,29 @@
+<div class="sidebar-content">
+    <div class="sidebar-title">
+        <span class="fa fa-sign-in"></span>
+        <span class="">Connexion</span>
+    </div>
+    <div class="sidebar-body mt-2">
+        <form action="{{ path('login') }}" method="post">
+            <div class="block-container">
+                <label for="username">Votre nom ou adresse email : </label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="_username" id="username"  placeholder="Entrer votre nom" required autofocus />
+                </div>
+                <label for="password">Mot de passe : </label>
+                <div class="input-group">
+                    <input type="password" class="form-control" name="_password" id="password"  placeholder="Entrer votre mot de passe" required />
+                </div>
+                <a href="recuperation" data-xf-click="overlay">Mot de passe oublié ?</a>
+                <div class="custom-control custom-checkbox mt-2">
+                    <input type="checkbox" name="_remember_me" class="custom-control-input" id="customCheck">
+                    <label class="custom-control-label" for="customCheck">Rester identifié</label><br/><br/>
+                </div>
+                <div class="float-right">
+                    <button id="btn-article-add" class="btn btnartseul" type="submit"><i class="fa fa-lock fa-lg" aria-hidden="true"></i> Se connecter</button>
+                </div>
+            </div>
+        </form>
+        <div class="clearfix"></div>
+    </div>
+</div>

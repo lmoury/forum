@@ -46,6 +46,14 @@ services:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
 
+    App\EventListener\WhoshasvisitedListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request}
+
+    App\EventListener\WhosonlineListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request}
+
     app.logout.listener:
         class: App\EventListener\LogoutListener
 

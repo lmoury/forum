@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,9 +47,15 @@ class ForumCommentaire
      */
     private $auteur;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="commentaire")
+     */
+    private $likes;
+
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +119,37 @@ class ForumCommentaire
     public function setAuteur(?User $auteur): self
     {
         $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setCommentaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getCommentaire() === $this) {
+                $like->setCommentaire(null);
+            }
+        }
 
         return $this;
     }
