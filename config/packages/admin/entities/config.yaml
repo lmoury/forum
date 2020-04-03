@@ -1,0 +1,18 @@
+easy_admin:
+    entities:
+        Config:
+            class: App\Entity\Config
+            list:
+                title: 'Paramètre général'
+            new:
+                title: 'Créer un paramètre'
+            edit:
+                title: 'Editer le paramètre'
+        Social:
+            class: App\Entity\Social
+            list:
+                title: 'Médias sociaux'
+            new:
+                title: 'Créer un média social'
+            edit:
+                title: 'Editer le média social'

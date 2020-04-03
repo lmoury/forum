@@ -12,6 +12,11 @@
     <div class="row">
         <div class="col-sm-12">
             home
+            {% if is_granted('ROLE_BANNI') %}
+            <div class="alert alert-danger">
+                <strong>Vous êtes banni du site.</strong>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

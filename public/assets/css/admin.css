@@ -1,0 +1,65 @@
+body {
+    background-color: rgb(231, 231, 231);
+}
+
+.wrapper {
+	width: calc(100% - 0px);
+}
+.main-sidebar {
+    height: ;
+	padding: 0px;
+	background: #2E363F;
+}
+.sidebar-menu a {
+	color: #939da8;
+}
+.sidebar-menu li:not(.submenu-active).active .fa, .sidebar-menu li:not(.submenu-active).active a {
+	color: white;
+}
+.sidebar-menu ul {
+	background-color: #1e242b;
+}
+
+.sidebar-menu ul li {
+    border-top: 1px solid #37414b;
+    border-bottom: 1px solid #1f262d;
+    padding: 6px 0px;
+}
+.sidebar-menu li {
+    border-top: 1px solid #37414b;
+    border-bottom: 1px solid #1f262d;
+}
+
+ul.sidebar-menu {
+    border-bottom: 1px solid #37414b;
+}
+.treeview-menu {
+	margin-bottom: 0px;
+}
+
+
+.sidebar-menu .fa {
+	color: #939da8;
+}
+
+.sidebar-menu > li > a {
+	padding: 10px;
+}
+.sidebar-menu .treeview-icon {
+	padding: 9px;
+}
+.wrapper {
+	grid-row-gap: 0px;
+	margin: 0px;
+    grid-column-gap: 0px;
+}
+.main-header {
+	background: #1e242b;
+	padding: 20px;
+}
+.content-wrapper {
+	padding: 30px 20px;
+}
+body.easyadmin-sidebar-width-compact .main-sidebar {
+	width: 30px;
+}

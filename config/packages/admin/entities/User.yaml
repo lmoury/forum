@@ -1,0 +1,71 @@
+easy_admin:
+    entities:
+        User:
+            class: App\Entity\User
+            list:
+                title: 'Liste des utilisateurs'
+                fields:
+                    - { property: 'id', label: '#' }
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+            new:
+                title: 'Créer un utilisateur'
+            edit:
+                title: 'Editer un utilisateur'
+            form:
+                fields:
+                    - {property: 'username'}
+                    - {property: 'email'}
+                    - {property: 'sexe', type: choice, type_options: { choices: {"Inconnu": "0","Masculin": "1", "Feminin": "2"} } }
+                    - {property: 'avatar'}
+                    - {property: 'password'}
+                    - {property: 'date_naissance', type: birthday}
+                    - {property: 'role'}
+            show:
+                fields:
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+                    - { property: 'date_visite', label: 'Dernière visite'}
+                    - { property: 'forumDiscussions', label: 'Discussions'}
+                    - { property: 'forumCommentaires', label: 'Commentaires'}
+        UserRole:
+            class: App\Entity\UserRole
+            list:
+                title: 'Liste des roles'
+            new:
+                title: 'Nouveau role'
+            edit:
+                title: 'Editer un role'
+            show:
+                title: 'role: (%%entity_id%%)'
+                actions: ['-delete']
+            form:
+                fields:
+                    - {property: 'nom'}
+                    - {property: 'role'}
+                    - {property: 'level'}
+        Banni:
+            class: App\Entity\User
+            list:
+                title: 'Utilisateur banni'
+                dql_filter: 'entity.role = 5'
+                actions: ['-news']
+                fields:
+                    - { property: 'id', label: '#' }
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}

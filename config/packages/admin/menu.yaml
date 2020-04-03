@@ -1,0 +1,23 @@
+easy_admin:
+    design:
+        assets:
+            css:
+                - '/assets/css/admin.css'
+        menu:
+            - label: 'Dashboard'
+              icon: 'dashboard'
+              children:
+                  - {entity: 'Config', icon: 'cogs', label: 'Paramètre général', default: true}
+                  - {entity: 'Social', icon: 'share-alt', label: 'Médias sociaux'}
+            - label: 'Utilisateurs'
+              icon: 'users'
+              children:
+                  - {entity: 'User', icon: 'users', label: 'Liste des utilisateurs'}
+                  - {entity: 'User', icon: 'user', label: 'Créer un utilisateur', params: { action: 'new' } }
+                  - {entity: 'Banni', label: 'Utilisateur banni', icon: 'user-times'}
+                  - {entity: 'UserRole', icon: 'shield', label: 'Roles des utilisateurs'}
+            - label: 'Forums'
+              icon: 'comments'
+              children:
+                  - {entity: 'ForumCategorie', icon: 'list-ol', label: 'Liste des forums'}
+                  - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }

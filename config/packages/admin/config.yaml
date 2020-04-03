@@ -1,0 +1,20 @@
+easy_admin:
+    site_name: '<strong>LMoury</strong>'
+    formats:
+        date: 'j M Y'
+        datetime: 'j M Y H:i'
+    list:
+        actions:
+            - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
+            - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
+
+    new:
+        actions:
+            - {name: 'list', label: 'Retour à la liste', css_class: 'btn btn-secondary'}
+    edit:
+        actions:
+            - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
+            - {name: 'list', label: 'Retour à la liste', css_class: 'btn btn-secondary'}
+    show:
+        actions:
+            - {name: 'list', label: 'Retour à la liste', css_class: 'btn btn-secondary'}

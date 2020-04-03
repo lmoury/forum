@@ -1,0 +1,16 @@
+easy_admin:
+    entities:
+        ForumCategorie:
+            list:
+                title: 'Catégories'
+            new:
+                title: 'Nouvelle catégorie'
+            edit:
+                title: 'Editer une catégorie'
+            class: App\Entity\ForumCategorie
+            form:
+                fields:
+                    - {property: 'categorie'}
+                    - {property: 'parent'}
+                    - {property: 'icon'}
+                    - {property: 'ordre'}

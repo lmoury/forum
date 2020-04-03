@@ -153,4 +153,9 @@ class ForumCommentaire
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->commentaire;
+    }
 }

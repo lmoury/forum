@@ -24,8 +24,8 @@ class User implements UserInterface,\Serializable
 
     const SEXE = [
             0=> 'Inconnu',
-            1=> 'Homme',
-            2=> 'Femme'
+            1=> 'Masculin',
+            2=> 'Feminin'
     ];
 
 
@@ -520,6 +520,12 @@ class User implements UserInterface,\Serializable
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->username;
+        return self::SEXE[$this->sexe];
     }
 
 }

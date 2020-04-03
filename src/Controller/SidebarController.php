@@ -8,6 +8,7 @@ use App\Repository\ForumDiscussionRepository;
 use App\Repository\ForumCommentaireRepository;
 use App\Repository\WhoshasvisitedRepository;
 use App\Repository\WhosonlineRepository;
+use App\Repository\SocialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,6 +57,8 @@ class SidebarController extends AbstractController
     /**
      * @param UserRoleRepository $repoRole
      * @param WhoshasvisitedRepository $repoWhoshasvisited
+     * @param WhosonlineRepository $repoWhosonline
+     * @param Connection $connection
      */
     public function menu(Connection $connection, UserRoleRepository $repoRole, WhoshasvisitedRepository $repoWhoshasvisited, WhosonlineRepository $repoWhosonline)
     {
@@ -72,6 +75,17 @@ class SidebarController extends AbstractController
             'whoshasvisited' => $whoshasvisited,
             'whosonline' => $whosonline,
             'compteur' => $compteur
+        ]);
+    }
+
+    /**
+     * @param SocialRepository $repoSocial
+     */
+    public function social(SocialRepository $repoSocial)
+    {
+        $sociaux = $repoSocial->findAll();
+        return $this->render('inc/sidebar/sidebar_social.html.twig', [
+            'sociaux' => $sociaux
         ]);
     }
 
