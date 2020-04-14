@@ -32,6 +32,7 @@
                     </a>
                     <ul class="dropdown-menu" id="dropdown-content-user">
                         <span class="menu-arrow"></span>
+                        <h3 class="menu-header">Votre compte</h3>
                         <div class="float-left avatar-user">
                             <img src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}"/>
                         </div>
@@ -43,11 +44,51 @@
                         <div>
                             <a href="{{ path('membres.compte') }}"> <i class="fa fa-edit"></i> Editer son profil</a>
                         </div>
+                        <div>
+                            <a href="{{ path('conversations') }}"> <i class="fa fa-envelope-o"></i> Message privé</a>
+                        </div>
                         {% if is_granted('ROLE_ADMIN')  %}
                         <div>
                             <a href="/admin" target="_blank"><i class="fa fa-sign-in"></i> Panneaux d'administration</a>
                         </div>
                         {% endif %}
+                    </ul>
+                </li>
+                {% set nombreMessage = 0 %}
+                {% for nombre in app.user.participant if nombre.lu == false %}
+                {% set nombreMessage = loop.index %}
+                {% endfor %}
+                <li class="nav-item dropdown" id="profil-pop-messagerie">
+                    <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope"></i>
+                        {% if nombreMessage > 0 %}<span class="badge badge-secondary alertMessagerie">{{ nombreMessage }}</span>{% endif %}
+                    </a>
+                    <ul class="dropdown-menu" id="dropdown-content-messagerie">
+                        <span class="menu-arrow"></span>
+                        <h3 class="menu-header">Conversations</h3>
+                        {% for us in app.user.participant if us.lu == false %}
+                        <div class="messagerie-user">
+                            <a href="{{ path('conversations.message', {id: us.id, slug: us.slug})}}">{{ us.titre }}</a>
+                            <div>
+                                <span class="noMessages"><i class="fa fa-user-o"></i>
+                                    <a class="pseudoUser{{ us.expediteur.role.id }}" href="{{ path('membres.profil', {id: us.expediteur.id, slug: us.expediteur.slug}) }}">{{ us.expediteur.username }}</a>,
+                                    <i class="fa fa-clock-o"></i> {{ date_passed(us.dateCreation | date('d-m-Y H:i:s')) }}
+                                </span>
+                            </div>
+                            </a>
+                            <hr/>
+                        </div>
+                        {% else %}
+                        <div class="messagerie-user pb-2 text-center">Vous n'avez aucune conversation récente.</div>
+                        {% endfor %}
+                        <div class="menu-footer">
+							<span class="menu-footer-main">
+								<a href="{{ path('conversations') }}">Afficher l'ensemble…</a>
+							</span>
+							<span class="menu-footer-opposite float-right">
+								<a href="{{ path('conversations.new') }}">Nouvelle conversation</a>
+							</span>
+						</div>
                     </ul>
                 </li>
                 <li class="nav-item">

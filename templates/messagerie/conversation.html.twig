@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ conversation.titre }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('conversations') }}">Conversations</a></li>
+    <li class="breadcrumb-item active">{{ conversation.titre }}</li>
+</ol>
+
+<h1 class="p-title-value text-center">{{ conversation.titre }}</h1>
+
+<div id="content-section" class="no-padding">
+    <section>
+    <div>
+        <img width="36" height="36" src="{{ vich_uploader_asset( conversation.expediteur, 'imageFile') }}" alt="{{  conversation.expediteur.username }}" />
+    </div>
+
+    <div>
+        <span class="noMessages"><i class="fa fa-user-o"></i>
+            <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>
+        </span>
+
+    </div>
+</section>
+
+
+    <div class="message-attribution">
+        <span class="message-userArrow"></span>
+        <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>
+    </div>
+
+    {{ conversation.message }}
+</div>
+{% endblock %}

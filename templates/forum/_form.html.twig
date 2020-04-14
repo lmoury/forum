@@ -11,6 +11,25 @@
     </div>
     <textarea class="editor form-control" name="tMessage" rows="5" id="tMessage">{% if discussion.message is defined %}{{ discussion.message}}{% endif %}</textarea>
 </div>
+<div class="">
+   <dl class="formRow formRow-input">
+       <dt>
+           <label for="email">Options : </label>
+       </dt>
+       <dd>
+           <div class="form-group">
+               <div class="input-group mb-2">
+                   {{ form_widget(form.locked) }}
+                   {{ form_errors(form.locked) }}
+               </div>
+               <div class="input-group mb-3" style="{% if is_granted('ROLE_MODERATEUR') %}{% else %}display: none{% endif %}">
+                   {{ form_widget(form.important) }}
+                   {{ form_errors(form.important) }}
+               </div>
+           </div>
+       </dd>
+   </dl>
+</div>
 <div class="block-container">
     {{ form_rest(form) }}
     <div class="text-center btn-container">

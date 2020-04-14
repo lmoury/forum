@@ -9,6 +9,12 @@
     <li class="breadcrumb-item active" aria-current="page">Profil de {{ user.username }}</li>
 </ol>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
 <div class="content-section no-padding">
 <div class="memberHeader">
     <div class="memberHeader-main">
@@ -20,6 +26,23 @@
             </div>
             {% endif %}
         </span>
+        {% if is_granted('ROLE_MODERATEUR') %}
+        <span class="dropdown open float-right mt-3 mr-4" id="editMembre">
+            <a class="dropdown-toggle" aria-expanded="true" href="#" type="button" data-toggle="dropdown">Modération</a>
+            <ul class="dropdown-menu">
+                {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="/admin/?action=edit&entity=User&primary_key_name=id&id={{ user.id }}&referer=&sortField=id&sortDirection=DESC" target="_blank"><i class="fa fa-edit"></i> Editer le membre</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="{{ path('membres.bannir', {id: user.id, slug: user.slug}) }}">
+                        <i class="fa fa-ban"></i> {% if user.role.id == 1 %}Bannir le membre{% else %}Débannir le membre{% endif %}
+                    </a>
+                </li>
+            </ul>
+        </span>
+        {% endif %}
         <div class="memberHeader-content">
             <h1 class="memberHeader-name"><span class="pseudoUser{{ user.role.id }}">{{ user.username }}</span></h1>
             <div class="memberHeader-blurb">

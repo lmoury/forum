@@ -125,6 +125,21 @@ class User implements UserInterface,\Serializable
      */
     private $whosonlines;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Messagerie", mappedBy="expediteur")
+     */
+    private $messageries;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Messagerie", mappedBy="participants")
+     */
+    private $participant;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussionView", mappedBy="user")
+     */
+    private $forumDiscussionViewUser;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -137,6 +152,9 @@ class User implements UserInterface,\Serializable
         $this->likes = new ArrayCollection();
         $this->whoshasvisiteds = new ArrayCollection();
         $this->whosonlines = new ArrayCollection();
+        $this->messageries = new ArrayCollection();
+        $this->participant = new ArrayCollection();
+        $this->forumDiscussionViewUser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -528,4 +546,93 @@ class User implements UserInterface,\Serializable
         return self::SEXE[$this->sexe];
     }
 
+    /**
+     * @return Collection|Messagerie[]
+     */
+    public function getMessageries(): Collection
+    {
+        return $this->messageries;
+    }
+
+    public function addMessagery(Messagerie $messagery): self
+    {
+        if (!$this->messageries->contains($messagery)) {
+            $this->messageries[] = $messagery;
+            $messagery->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagery(Messagerie $messagery): self
+    {
+        if ($this->messageries->contains($messagery)) {
+            $this->messageries->removeElement($messagery);
+            // set the owning side to null (unless already changed)
+            if ($messagery->getExpediteur() === $this) {
+                $messagery->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Messagerie[]
+     */
+    public function getParticipant(): Collection
+    {
+        return $this->participant;
+    }
+
+    public function addParticipant(Messagerie $participant): self
+    {
+        if (!$this->participant->contains($participant)) {
+            $this->participant[] = $participant;
+            $participant->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Messagerie $participant): self
+    {
+        if ($this->participant->contains($participant)) {
+            $this->participant->removeElement($participant);
+            $participant->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ForumDiscussionView[]
+     */
+    public function getForumDiscussionViewUser(): Collection
+    {
+        return $this->forumDiscussionViewUser;
+    }
+
+    public function addForumDiscussionViewUser(ForumDiscussionView $forumDiscussionViewUser): self
+    {
+        if (!$this->forumDiscussionViewUser->contains($forumDiscussionViewUser)) {
+            $this->forumDiscussionViewUser[] = $forumDiscussionViewUser;
+            $forumDiscussionViewUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForumDiscussionViewUser(ForumDiscussionView $forumDiscussionViewUser): self
+    {
+        if ($this->forumDiscussionViewUser->contains($forumDiscussionViewUser)) {
+            $this->forumDiscussionViewUser->removeElement($forumDiscussionViewUser);
+            // set the owning side to null (unless already changed)
+            if ($forumDiscussionViewUser->getUser() === $this) {
+                $forumDiscussionViewUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

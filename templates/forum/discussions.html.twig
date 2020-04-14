@@ -10,6 +10,12 @@
     <li class="breadcrumb-item active">{{ categorie.categorie }}</li>
 </ol>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
 <div class="row">
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <div class="col-sm-9">
@@ -56,12 +62,47 @@
                 <tbody>
 
                 {% for d in discussions %}
-                    <tr class="nodeLigne" id="">
+                    <tr class="nodeLigne {% if d.important %}ligneImportantDiscu{% endif %}" id="">
                         <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( d.auteur, 'imageFile') }}" alt="{{  d.auteur.username }}" /></td>
                         <td class="discussionCol2">
+                            {% if d.locked %}
+                            <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
+                            {% endif %}
+                            {% if d.important %}
+                            <span style="float:right; color:#f79e12;"><i class="fa fa-thumb-tack"></i></span>
+                            {% endif %}
                             <div class="nodeTitle">
                             <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">{{ d.titre }}</a>
                             </div>
+                            {% if is_granted('DELET_EDIT_DISCISSION', d) or is_granted('ROLE_MODERATEUR') %}
+                            <span class="dropdown noMessages open float-right" id="editDiscussion">
+							    <a aria-expanded="true" href="#" type="button" data-toggle="dropdown">Editer</a>
+						    	<ul class="dropdown-menu">
+									<li>
+										<a href="{{ path('forum.discussion.editer', {id: d.id, slug: d.slug})}}"><i class="fa fa-edit"></i> Editer la discussion</a>
+									</li>
+                                    <li>
+                                        <a data-toggle="modal" href="#" data-target="#modalDeplaDiscu" data-id="{{ d.id }}"><i class="fa fa-sign-out"></i> Déplacer la discussion</a>
+                                    </li>
+									<li>
+                                        {% if d.locked %}
+										<a href="{{ path('forum.locked', {id: d.id})}}"><i class="fa fa-unlock"></i> Dévérrouiller la discussion</a>
+                                        {% else %}
+                                        <a href="{{ path('forum.locked', {id: d.id})}}"><i class="fa fa-lock"></i> Vérrouiller la discussion</a>
+                                        {% endif %}
+                                    </li>
+                                    {% if is_granted('ROLE_MODERATEUR') %}
+									<li>
+                                        {% if d.important %}
+										<a href="{{ path('forum.important', {id: d.id})}}"><i class="fa fa-thumb-tack"></i> Désépingler la discussion</a>
+                                        {% else %}
+                                        <a href="{{ path('forum.important', {id: d.id})}}"><i class="fa fa-thumb-tack"></i> Epingler la discussion</a>
+                                        {% endif %}
+                                    </li>
+                                    {% endif %}
+								</ul>
+							</span>
+                            {% endif %}
                             <div class="nodeStat">
                                 <span class="disparforumstat">
                                     <a class="pseudoUser{{ d.auteur.role.id }}" href="{{ path('membres.profil', {id: d.auteur.id, slug: d.auteur.slug}) }}">{{ d.auteur.username }}</a>,
@@ -125,4 +166,30 @@
         {{ include("inc/sidebar.html.twig") }}
     </div>
 </div>
+
+<!-- Modal deplaDiscu -->
+<div class="modal fade" id="modalDeplaDiscu" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $('#modalDeplaDiscu').on('shown.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const id = button.attr('data-id');
+        var url = "{{ (path('forum.deplacer.discussion', {id: 'ReplaceMeWithCorrectValue'})) }}";
+        url = url.replace("ReplaceMeWithCorrectValue", id);
+        var modal = $(this);
+        $.ajax({
+            url: url,
+            success: function(data) {
+                modal.find('.modal-content').html(data);
+            }
+        });
+    });
+    </script>
 {% endblock %}

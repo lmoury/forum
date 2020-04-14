@@ -81,11 +81,12 @@ nav .navbar-brand img {
     height: 50px;
     width: 50px;
 }
-#dropdown-content-user {
+#dropdown-content-user, #dropdown-content-messagerie {
 	width: 300px;
 	box-shadow: 0px 0px 8px black;
 	border-radius: 0px;
-	padding: 0px;
+	padding-bottom: 9px;
+    padding-top: 0px;
 	border: none;
 }
 #dropdown-content-search {
@@ -121,21 +122,28 @@ nav .navbar-brand img {
 	left: 50%;
 	border: 16px solid transparent;
 	border-top-width: 0;
-	border-bottom-color: rgb(47, 120, 160);
-    left: 80%;
+	border-bottom-color: #dd8d38;
+    left: 84%;
 }
 #dropdown-content-search {
     border-top: solid rgb(47, 120, 160);
 }
-#search-pop.show > a, #profil-pop-user.show > a {
+#search-pop.show > a, #profil-pop-user.show > a, #profil-pop-messagerie.show > a {
 	background-color: rgba(7,7,7,.15);
 	text-shadow: 1px 1px 0px black;
 }
-#dropdown-content-user {
-    border-top: solid rgb(47, 120, 160);
-    padding : 9px 1px;
+.menu-header {
+    margin-bottom: 9px;
+    border-top: solid #dd8d38;
+    padding: 6px 15px;
+    font-weight: 400;
+    text-decoration: none;
+    font-size: 17px;
+    color: #fefefe;
+    background: rgb(47, 120, 160);
+    border-bottom: 1px solid rgb(47, 120, 160);
 }
-#dropdown-content-user a:hover {
+#dropdown-content-user a:hover, #dropdown-content-messagerie a:hover {
     color: #367fa9;
 }
 #dropdown-content-user img {
@@ -144,7 +152,7 @@ nav .navbar-brand img {
     border: 1px solid #2f78a0;
     padding: 2px;
 }
-#dropdown-content-user .avatar-user {
+#dropdown-content-user .avatar-user, #dropdown-content-messagerie .messagerie-user {
     padding: 0px 10px;
 }
 #form-pop-search .btn-container {
@@ -803,12 +811,16 @@ dl.widget-statistique {
     position: relative;
     top: 20%;
 }
-#btn-article-add a, #btn-article-add.btnartseul {
+.btn-article-add {
+    background: #dd8d38;
+    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.6), 0px 1px 0px rgba(255,255,255,0.1);
+}
+#btn-article-add a, #btn-article-add.btnartseul, #btn-conversation-add a, .btn-article-add {
     color: white;
     text-shadow: 1px 1px 0px black;
     font-size: 16px;
 }
-#btn-article-add:hover {
+#btn-article-add:hover, #btn-conversation-add:hover, .btn-article-add:hover {
     background: #27a0f6;
 }
 .article-home-miniature {
@@ -1238,6 +1250,26 @@ td.discussionCol1 {
 
 }
 
+#btn-conversation-add {
+	background: #dd8d38;
+	box-shadow: inset 0px 1px 3px rgba(0,0,0,0.6), 0px 1px 0px rgba(255,255,255,0.1);
+	padding: .6rem 1rem;
+	border: 1px solid transparent;
+	float: right;
+	margin-bottom: 20px;
+}
+.converLigne, .ligneImportantDiscu {
+	background-color: #ddd;
+}
+.alertMessagerie {
+	font-size: 10px;
+	position: absolute;
+	top: 15px;
+}
+.menu-footer {
+    padding: 0px 15px;
+    font-size: 12px;
+}
 
 /* .sidebar-container li a.active {
     background: #2577b1;
@@ -1249,3 +1281,28 @@ td.discussionCol1 {
 .sidebar-container .nav-tabs {
     border-bottom : none;
 } */
+
+#editDiscussion .dropdown-menu, #editMembre .dropdown-menu {
+	min-width: 220px;
+	padding: 9px;
+	box-shadow: 0px 6px 12px rgba(0,0,0,0.175);
+}
+.messagerie-user hr {
+    margin: 6px 0px;
+}
+.message-attribution {
+    color: #000;
+    font-size: 12px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgba(15,15,15,.1);
+}
+.message-userArrow {
+    position: absolute;
+    bottom: 0px;
+    left: 50px;
+    top: initial;
+    right: initial;
+    border: 10px solid transparent;
+    border-top-width: 0px;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}

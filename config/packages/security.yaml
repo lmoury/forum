@@ -42,6 +42,8 @@ security:
             algorithm: bcrypt
             cost: 12
 
+    access_denied_url: /
+
     role_hierarchy:
         # Un premium hérite des droits d'users
         ROLE_PREMIUM:       [ROLE_USER]

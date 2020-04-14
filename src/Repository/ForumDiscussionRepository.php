@@ -38,7 +38,8 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             ->addSelect('d', 'cat')
             ->andWhere('d.categorie = :val')
             ->setParameter('val', $value)
-            ->orderBy('d.date_new_com', 'DESC')
+            ->addOrderBy('d.important', 'DESC')
+            ->addOrderBy('d.date_new_com', 'DESC')
             ->getQuery();
     }
 

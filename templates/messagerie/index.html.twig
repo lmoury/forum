@@ -1,0 +1,88 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Conversations {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Conversations</li>
+</ol>
+
+<h1 class="p-title-value text-center">Conversations</h1>
+
+    <div id="btn-conversation-add">
+    	<a href="{{ path('conversations.new') }}">
+    		<span>Démarrer une conversation</span>
+    	</a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="discussionRepAfi no-padding" id="content-section">
+                <table>
+                    <thead>
+                      <tr class="nodeLigneTitle">
+                        <th></th>
+                        <th></th>
+                        <th class="discussionRepAfi">
+                        </th>
+                        <th class="discussionRepAfi" style="text-align: right;">Filtre ↓</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for u in app.user.participant %}
+                        <tr class="nodeLigne {% if u.lu == false %}converLigne{% endif %}">
+                            <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
+                            <td class="discussionCol2">
+                                <div class="nodeTitle">
+                                <a href="{{ path('conversations.message', {id: u.id, slug: u.slug})}}">{{ u.titre }}</a>
+                                </div>
+                                <div class="nodeStat">
+                                    <span class="disparforumstat">
+                                        {% for p in u.participants %}
+                                        <a class="pseudoUser{{ p.role.id }}" href="{{ path('membres.profil', {id: p.id, slug: p.slug}) }}">{{ p.username }}</a>,
+                                        {% endfor %}
+                                        <span><i class="fa fa-clock-o"></i> {{ date_passed(u.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="discussionCol3 discussionRepAfiBis">
+                                <div class="nodeTdCust">
+                                    <div class="discussionRepAfi">
+                                        <div><span>Réponses:</span> <span style="float: right;">0</span></div>
+                                        <div><span>Participants:</span> <span style="float: right;">{{ u.participants.count }}</span></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="discussionCol4 discussionRepAfiBis">
+                                <div class="nodeTdCust">
+                                    <div class="discussionRepAfi">
+                                        <div>
+                                            <i class="fa fa-clock-o"></i> {{ date_passed(u.dateCreation | date('d-m-Y H:i:s')) }}
+                                        </div>
+                                        <div>
+                                            <span class="noMessages"><i class="fa fa-user-o"></i>
+                                                <a class="pseudoUser{{ u.expediteur.role.id }}" href="{{ path('membres.profil', {id: u.expediteur.id, slug: u.expediteur.slug}) }}">{{ u.expediteur.username }}</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="alert alert-info mt-3">
+                                    <strong>Aucune discussion !</strong> Soyez la première personne à poster une discussion.
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+<div class="article-add-form">
+    {% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        <i class="fa fa-warning"></i> <strong> Erreur !!!</strong> {{ message }}
+    </div>
+    {% endfor %}
+    <label class="mt-3">Participants:</label>
+    <div class="input-group mb-3">
+        {{ form_widget(form.participants) }}
+        {{ form_errors(form.participants) }}
+    </div>
+    <div class="input-group mt-3 mb-3">
+        {{ form_widget(form.titre, { 'attr': {'placeholder': 'Ajouter un titre'} }) }}
+        {{ form_errors(form.titre) }}
+    </div>
+    <textarea class="editor form-control" name="tMessage" rows="5" id="tMessage"></textarea>
+</div>
+<div class="block-container">
+    {{ form_rest(form) }}
+    <div class="text-center btn-container">
+        <button class="btn"><i class="fa fa-edit fa-lg" aria-hidden="true"></i>{{ button|default('Créer')}}</button>
+    </div>
+</div>
+{{ form_end(form) }}

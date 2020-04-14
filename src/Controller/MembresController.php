@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Repository\UserRoleRepository;
 use App\Form\EditMembreType;
 use App\Form\EditPasswordMembreType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -112,4 +113,27 @@ class MembresController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/membres/banni/{slug}.{id}", name="membres.bannir", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
+     * @Security("is_granted('ROLE_MODERATEUR')")
+     * @param ObjectManager em
+     * @param UserRoleRepository $repoRole
+     * @param User $user
+     * @param string $slug
+     */
+    public function bannir(User $user, string $slug, UserRoleRepository $repoRole)
+    {
+
+        if($user->getRole()->getId() == 5) {
+            $user->setRole($repoRole->find(1));
+            $this->addFlash('success', 'Utilisateur débanni');
+        }
+        else {
+            $user->setRole($repoRole->find(5));
+            $this->addFlash('success', 'Utilisateur banni');
+        }
+        $this->em->flush();
+        return $this->redirectToRoute('membres.profil', ['id' => $user->getId(), 'slug' => $user->getSlug()]);
+    }
 }

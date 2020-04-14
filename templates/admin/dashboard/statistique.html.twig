@@ -1,0 +1,160 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Statistiques généraux
+{% endblock %}
+
+{% block main %}
+<div class="row tile_count">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-general">
+            <span class="info-box-icon info-box-icon-general"><i class="fa fa-users"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres</span>
+                <div class="info-box-number">{{ compteur[0].countUser }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-general">
+            <span class="info-box-icon info-box-icon-general"><i class="fa fa-user-circle"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des personnes en ligne actuellement </span>
+                <div class="info-box-number">{{ compteur[0].countWhosonline }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-general">
+            <span class="info-box-icon info-box-icon-general"><i class="fa fa-envelope"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des messages</span>
+                <div class="info-box-number">{{ compteur[0].countDiscussion + compteur[0].countCommentaire }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<h2>Statistiques des utilisateurs</h2>
+<hr/>
+
+<div class="row tile_count">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-users"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres</span>
+                <div class="info-box-number">{{ compteur[0].countUser }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-user"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres en ligne</span>
+                <div class="info-box-number">{{ compteur[0].countWhosonline }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-mars"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres masculin</span>
+                <div class="info-box-number">{{ compteur[0].countUserMale }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-user-plus"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres aujourd'hui</span>
+                <div class="info-box-number">{{ compteur[0].countTodayUser }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-user-times"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres au cours des 24H</span>
+                <div class="info-box-number">{{ compteur[0].countWhoshasvisited }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-user">
+            <span class="info-box-icon info-box-icon-user"><i class="fa fa-venus"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des membres feminin</span>
+                <div class="info-box-number">{{ compteur[0].countUserFemel }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<h2>Statistiques du forum</h2>
+<hr/>
+
+<div class="row tile_count">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-comments"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des discussions</span>
+                <div class="info-box-number">{{ compteur[0].countDiscussion }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-comment"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des commentaires</span>
+                <div class="info-box-number">{{ compteur[0].countCommentaire }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-inbox"></i>  </span>
+            <div class="info-box-content">
+                <span>Nombres de catégorie</span>
+                <div class="info-box-number">{{ compteur[0].countCat }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-comments-o"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des discussions aujourd'hui</span>
+                <div class="info-box-number">{{ compteur[0].countTodayDiscussion }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-comment-o"></i>  </span>
+            <div class="info-box-content">
+                <span>Total des commentaires aujourd'hui</span>
+                <div class="info-box-number">{{ compteur[0].countTodayCommentaire }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box info-box-forum">
+            <span class="info-box-icon info-box-icon-forum"><i class="fa fa-newspaper-o"></i>  </span>
+            <div class="info-box-content">
+                <span>Nombres de forum</span>
+                <div class="info-box-number">{{ compteur[0].countForumCat }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

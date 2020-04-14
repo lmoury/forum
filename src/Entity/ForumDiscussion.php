@@ -75,6 +75,21 @@ class ForumDiscussion
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $locked;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $important;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussionView", mappedBy="discussion")
+     */
+    private $forumDiscussionViews;
+
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
@@ -82,6 +97,7 @@ class ForumDiscussion
         $this->forumCommentaires = new ArrayCollection();
         $this->affichage = 0;
         $this->likes = new ArrayCollection();
+        $this->forumDiscussionViews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,5 +270,60 @@ class ForumDiscussion
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function getLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): self
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    public function getImportant(): ?bool
+    {
+        return $this->important;
+    }
+
+    public function setImportant(bool $important): self
+    {
+        $this->important = $important;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ForumDiscussionView[]
+     */
+    public function getForumDiscussionViews(): Collection
+    {
+        return $this->forumDiscussionViews;
+    }
+
+    public function addForumDiscussionView(ForumDiscussionView $forumDiscussionView): self
+    {
+        if (!$this->forumDiscussionViews->contains($forumDiscussionView)) {
+            $this->forumDiscussionViews[] = $forumDiscussionView;
+            $forumDiscussionView->setDiscussion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForumDiscussionView(ForumDiscussionView $forumDiscussionView): self
+    {
+        if ($this->forumDiscussionViews->contains($forumDiscussionView)) {
+            $this->forumDiscussionViews->removeElement($forumDiscussionView);
+            // set the owning side to null (unless already changed)
+            if ($forumDiscussionView->getDiscussion() === $this) {
+                $forumDiscussionView->setDiscussion(null);
+            }
+        }
+
+        return $this;
     }
 }

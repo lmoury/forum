@@ -198,15 +198,23 @@
 </div>
 <br/>
 {% else %}
-<br/>
-<div class="alert alert-info">
-  <strong>Aucaun commentaire !</strong> Soyez la première personne à poster un commentaire.
-</div>
+    {% if discussion.locked %}
+    <br/>
+    <div class="alert alert-danger">
+        <strong><i class="fa fa-warning"></i> Statut de la discussion:</strong> N'est pas ouverte pour d'autres réponses.
+    </div>
+    {% else %}
+    <br/>
+    <div class="alert alert-info">
+      <strong>Aucaun commentaire !</strong> Soyez la première personne à poster un commentaire.
+    </div>
+    {% endif %}
 {% endfor %}
 <div class="pagination">
     {{ knp_pagination_render(commentaires) }}
 </div>
 
+{% if discussion.locked == false %}
 <div id="content-section" class="no-padding">
     {% if comEdit != null %}
     <form action="{{ path("forum.commentaire.editer", {id: discussion.id, slug: discussion.slug, idCom: comEdit.id }) }}" method="POST" id="formAncre">
@@ -226,6 +234,7 @@
 		<div class="clearfix"></div>
 	</form>
 </div>
+{% endif %}
 
 
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

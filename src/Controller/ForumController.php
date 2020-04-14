@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\ForumCategorie;
 use App\Entity\ForumDiscussion;
 use App\Entity\ForumCommentaire;
+use App\Entity\ForumDiscussionView;
 use App\Repository\ForumCategorieRepository;
 use App\Repository\ForumDiscussionRepository;
+use App\Repository\ForumDiscussionViewRepository;
 use App\Repository\ForumCommentaireRepository;
 use App\Repository\UserRepository;
 use App\Form\DiscussionType;
+use App\Form\DeplacerDiscussionType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,13 +128,22 @@ class ForumController extends AbstractController
     * @param ObjectManager em
     * @param ForumDiscussion $discussion
     * @param ForumCommentaireRepository $comRepo
+    * @param ForumDiscussionViewRepository $repoView
     * @param Request $request
     * @param string $slug
     */
-    public function discussion(int $idCom = null, Request $request, ForumDiscussion $discussion, ForumCommentaireRepository $comRepo, string $slug): Response
+    public function discussion(int $idCom = null, Request $request, ForumDiscussion $discussion, ForumCommentaireRepository $comRepo, string $slug, ForumDiscussionViewRepository $repoView): Response
     {
-        //$discussion->setAffichage($discussion->getAffichage()+1);
-        //$this->em->flush();
+        $discussionView = $repoView->getDiscussionView($this->getUser(), $discussion);
+        if(!$discussionView) {
+            $view = new ForumDiscussionView();
+            $view->setUser($this->getUser());
+            $view->setDiscussion($discussion);
+            $this->em->persist($view);
+            $discussion->setAffichage($discussion->getAffichage()+1);
+            $this->em->flush();
+        }
+
 
         if($discussion->getSlug() !== $slug) {
           return $this->redirectToRoute('forum.discussion', ['id' => $discussion->getId(), 'slug' => $discussion->getSlug()], 301);
@@ -254,5 +266,75 @@ class ForumController extends AbstractController
        $this->addFlash('success', 'Commentaire supprimer avec success');
        return $this->redirectToRoute('forum.discussion', ['id' => $commentaire->getDiscussion()->getId(), 'slug' =>  $commentaire->getDiscussion()->getSlug()]);
    }
+
+
+   /**
+    * @Route("/forums/locked/{id}", name="forum.locked")
+    * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
+    * @param ObjectManager em
+    * @param ForumDiscussion $discussion
+    */
+   public function locked(ForumDiscussion $discussion)
+   {
+
+       if($discussion->getLocked()) {
+           $discussion->setLocked(false);
+           $this->addFlash('success', 'Discussion dévérrouiller');
+       }
+       else {
+           $discussion->setLocked(true);
+           $this->addFlash('success', 'Discussion vérrouiller');
+       }
+       $this->em->flush();
+       return $this->redirectToRoute('forum.discussions', ['id' => $discussion->getCategorie()->getId(), 'slug' => $discussion->getCategorie()->getSlug()]);
+   }
+
+   /**
+    * @Route("/forums/important/{id}", name="forum.important")
+    * @Security("is_granted('ROLE_MODERATEUR')")
+    * @param ObjectManager em
+    * @param ForumDiscussion $discussion
+    */
+   public function important(ForumDiscussion $discussion)
+   {
+
+       if($discussion->getImportant()) {
+           $discussion->setImportant(false);
+           $this->addFlash('success', 'Discussion désépinglé');
+       }
+       else {
+           $discussion->setImportant(true);
+           $this->addFlash('success', 'Discussion épinglé');
+       }
+       $this->em->flush();
+       return $this->redirectToRoute('forum.discussions', ['id' => $discussion->getCategorie()->getId(), 'slug' => $discussion->getCategorie()->getSlug()]);
+   }
+
+
+   /**
+     * @Route("/forums/deplacer/{id}", name="forum.deplacer.discussion")
+     * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
+     * @param ObjectManager $this->em
+     * @param Request $request
+     */
+    public function deplacerDiscussion(Request $request, ForumDiscussion $discussion)
+    {
+
+        $form = $this->createForm(DeplacerDiscussionType::class, $discussion, [
+            'action' => $this->generateUrl('forum.deplacer.discussion', ['id' => $discussion->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', 'La discussion à été déplacé');
+            return $this->redirectToRoute('forum.discussions', ['id' => $discussion->getCategorie()->getId(), 'slug' => $discussion->getCategorie()->getSlug()]);
+        }
+
+        return $this->render('forum/deplacerform.html.twig', [
+            'form' => $form->createView(),
+            'deplacer' => $discussion
+        ]);
+    }
 
 }

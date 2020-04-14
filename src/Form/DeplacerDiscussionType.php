@@ -3,26 +3,22 @@
 namespace App\Form;
 
 use App\Entity\ForumDiscussion;
+use App\Entity\ForumCategorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-
-class DiscussionType extends AbstractType
+class DeplacerDiscussionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
-            ->add('locked', CheckboxType::class, [
-                'label' => 'Vérrouiller la discussion',
-                'required' => false
+            ->add('categorie', EntityType::class, [
+                'class' => ForumCategorie::class,
+                'choice_label' => 'categorie',
             ])
-            ->add('important', CheckboxType::class, [
-                'label' => 'Mettre la discussion en important',
-                'required' => false
-            ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
