@@ -116,16 +116,6 @@ class User implements UserInterface,\Serializable
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Whoshasvisited", mappedBy="visiteur")
-     */
-    private $whoshasvisiteds;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Whosonline", mappedBy="online")
-     */
-    private $whosonlines;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Messagerie", mappedBy="expediteur")
      */
     private $messageries;
@@ -472,68 +462,6 @@ class User implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($like->getAuteur() === $this) {
                 $like->setAuteur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Whoshasvisited[]
-     */
-    public function getWhoshasvisiteds(): Collection
-    {
-        return $this->whoshasvisiteds;
-    }
-
-    public function addWhoshasvisited(Whoshasvisited $whoshasvisited): self
-    {
-        if (!$this->whoshasvisiteds->contains($whoshasvisited)) {
-            $this->whoshasvisiteds[] = $whoshasvisited;
-            $whoshasvisited->setVisiteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWhoshasvisited(Whoshasvisited $whoshasvisited): self
-    {
-        if ($this->whoshasvisiteds->contains($whoshasvisited)) {
-            $this->whoshasvisiteds->removeElement($whoshasvisited);
-            // set the owning side to null (unless already changed)
-            if ($whoshasvisited->getVisiteur() === $this) {
-                $whoshasvisited->setVisiteur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Whosonline[]
-     */
-    public function getWhosonlines(): Collection
-    {
-        return $this->whosonlines;
-    }
-
-    public function addWhosonline(Whosonline $whosonline): self
-    {
-        if (!$this->whosonlines->contains($whosonline)) {
-            $this->whosonlines[] = $whosonline;
-            $whosonline->setOnline($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWhosonline(Whosonline $whosonline): self
-    {
-        if ($this->whosonlines->contains($whosonline)) {
-            $this->whosonlines->removeElement($whosonline);
-            // set the owning side to null (unless already changed)
-            if ($whosonline->getOnline() === $this) {
-                $whosonline->setOnline(null);
             }
         }
 

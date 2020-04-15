@@ -6,8 +6,6 @@ use App\Repository\UserRepository;
 use App\Repository\UserRoleRepository;
 use App\Repository\ForumDiscussionRepository;
 use App\Repository\ForumCommentaireRepository;
-use App\Repository\WhoshasvisitedRepository;
-use App\Repository\WhosonlineRepository;
 use App\Repository\SocialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,25 +54,23 @@ class SidebarController extends AbstractController
 
     /**
      * @param UserRoleRepository $repoRole
-     * @param WhoshasvisitedRepository $repoWhoshasvisited
-     * @param WhosonlineRepository $repoWhosonline
+     * @param UserRepository $repoUser
      * @param Connection $connection
      */
-    public function menu(Connection $connection, UserRoleRepository $repoRole, WhoshasvisitedRepository $repoWhoshasvisited, WhosonlineRepository $repoWhosonline)
+    public function menu(UserRepository $repoUser, UserRoleRepository $repoRole)
     {
-        $compteur= $connection->fetchAll('SELECT
-            (SELECT COUNT(*) FROM whosonline) as countOnline,
-            (SELECT COUNT(*) FROM whosonline WHERE online_id is not null) as countUser,
-            (SELECT COUNT(*) FROM whosonline WHERE online_ip is not null) as countVisite
-            ');
-        $whoshasvisited = $repoWhoshasvisited->getWhoshasvisited();
-        $whosonline = $repoWhosonline->getWhosonline();
+        $date= new \DateTime();
+        $online = clone $date;
+        $online->modify('-5 minute');
+        $hasvisited = clone $date;
+        $hasvisited->modify('-24 hour');
+        $whosonline = $repoUser->getlistUserOnlineAndVisited($online);
+        $whoshasvisited = $repoUser->getlistUserOnlineAndVisited($hasvisited);
         $roles = $repoRole->getRoles();
         return $this->render('inc/sidebar/sidebar_menu.html.twig', [
             'roles' => $roles,
             'whoshasvisited' => $whoshasvisited,
-            'whosonline' => $whosonline,
-            'compteur' => $compteur
+            'whosonline' => $whosonline
         ]);
     }
 
@@ -86,6 +82,21 @@ class SidebarController extends AbstractController
         $sociaux = $repoSocial->findAll();
         return $this->render('inc/sidebar/sidebar_social.html.twig', [
             'sociaux' => $sociaux
+        ]);
+    }
+
+
+    /**
+     * @param UserRepository $repository
+     */
+    public function staffOnline(UserRepository $repository)
+    {
+        $date= new \DateTime();
+        $online = clone $date;
+        $online->modify('-5 minute');
+        $userStaff = $repository->getlistStaffOnline($online);
+        return $this->render('inc/sidebar/sidebar_staff.html.twig', [
+            'userStaff' => $userStaff
         ]);
     }
 

@@ -2,6 +2,8 @@
 	{% if app.user %}
 	{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
 	<br/>
+	{{ render(controller("App\\Controller\\SidebarController:staffOnline")) }}
+	<br/>
 	{{ render(controller("App\\Controller\\SidebarController:menu")) }}
 	<br/>
 	{% else %}

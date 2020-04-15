@@ -128,3 +128,46 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
     line-height: 90px;
     color: #c8c8c8;
 }
+.serverTitle {
+	background-color: #2f78a0;
+	color: white;
+	text-shadow: 1px 1px 0px black;
+	padding: 6px 15px;
+	border-bottom: 2px solid #2f78a0;
+	box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+}
+.server-title, .server-title i {
+	font-size: 13pt;
+	font-weight: bold;
+}
+.sidebar-content {
+	background-color: rgb(245,245,245);
+	box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+	border-top: solid #2f78a0;
+}
+
+.staffRole {
+    font-size: 13px;
+}
+.sidebar-body-staf {
+    padding-right: 9px;
+    padding-left: 9px;
+}
+.sidebar-content-staf {
+	padding-top: 9px;
+	padding-bottom: 9px;
+	border-bottom: 1px solid rgb(47, 120, 160);
+}
+.sidebar-content-staf:last-child {
+	border: none;
+}
+.visitor-avatar {
+    margin-right: 5px;
+    float: left;
+    width: auto;
+    height: auto;
+}
+.visitor-avatar img {
+	border: 1px solid #2f78a0;
+	box-shadow: 0px 1px 0px rgba(255,255,255,0.25), inset 0px 1px 5px black;
+}

@@ -3,6 +3,7 @@ easy_admin:
         assets:
             css:
                 - '/assets/css/admin.css'
+                - '/assets/css/username.css'
             js:
                 - '/assets/js/jquery.min.js'
                 - '/assets/js/admin.js'

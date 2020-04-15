@@ -38,7 +38,6 @@ class UserRepository extends ServiceEntityRepository
     public function getlistUser()
     {
         return $this->createQueryBuilder('u')
-
             ->select('u', 'd')
             ->leftJoin('u.forumDiscussions', 'd')
             ->leftJoin('u.forumCommentaires', 'c')
@@ -48,6 +47,40 @@ class UserRepository extends ServiceEntityRepository
             ->leftJoin('d.categorie', 'cat')
             ->addSelect('d', 'cat')
             ->orderBy('u.date_inscription', 'DESC')
+            ->getQuery()
+            ->getResult();
+        ;
+    }
+
+    /**
+    * @return User Returns array user
+    */
+    public function getlistUserOnlineAndVisited($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->andWhere('u.date_visite > :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.date_inscription', 'DESC')
+            ->getQuery()
+            ->getResult();
+        ;
+    }
+
+    /**
+    * @return User Returns array user
+    */
+    public function getlistStaffOnline($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->andWhere('u.role = 3')
+            ->orWhere('u.role = 2')
+            ->andWhere('u.date_visite > :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.role', 'DESC')
             ->getQuery()
             ->getResult();
         ;

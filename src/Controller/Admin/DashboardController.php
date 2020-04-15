@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,11 +29,16 @@ class DashboardController extends AbstractController
     /**
      * @Route("/admin/dashboard", name="admin.dashboard")
      */
-    public function index(Connection $connection)
+    public function index(UserRepository $repository)
     {
-
+        $date= new \DateTime();
+        $online = clone $date;
+        $online->modify('-5 minute');
+        $userStaff = $repository->getlistStaffOnline($online);
+        $serverInfo = array (phpversion(), $_SERVER['SERVER_SOFTWARE'], curl_version()['ssl_version'], curl_version()['version']);
         return $this->render('admin/dashboard/index.html.twig', [
-
+            'serverInfo' => $serverInfo,
+            'userStaff' => $userStaff
         ]);
     }
 
@@ -48,8 +54,6 @@ class DashboardController extends AbstractController
             (SELECT COUNT(*) FROM user) as countUser,
             (SELECT COUNT(*) FROM forum_discussion WHERE date_creation > CURDATE( )) as countTodayDiscussion,
             (SELECT COUNT(*) FROM forum_commentaire WHERE date_creation > CURDATE( )) as countTodayCommentaire,
-            (SELECT COUNT(*) FROM whosonline) as countWhosonline,
-            (SELECT COUNT(*) FROM whoshasvisited) as countWhoshasvisited,
             (SELECT COUNT(*) FROM user WHERE sexe = 1) as countUserMale,
             (SELECT COUNT(*) FROM user WHERE sexe = 2) as countUserFemel,
             (SELECT COUNT(*) FROM forum_categorie WHERE parent is not null) as countForumCat,
