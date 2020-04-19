@@ -16,3 +16,24 @@ easy_admin:
                 title: 'Créer un média social'
             edit:
                 title: 'Editer le média social'
+        Notice:
+            class: App\Entity\Notice
+            list:
+                title: 'Notice'
+                fields:
+                    - { property: 'id', label: '#' }
+                    - { property: 'titre', label: 'Titre' }
+                    - { property: 'emplacementType', label: 'Emplacements'}
+                    - { property: 'dismissed', label: 'La notice peut être rejeté' }
+                    - { property: 'actif', label: 'Actif' }
+            new:
+                title: 'Créer une notice'
+            edit:
+                title: 'Editer la notice'
+            form:
+                fields:
+                    - {property: 'titre'}
+                    - {property: 'message'}
+                    - {property: 'emplacement', type: choice, type_options: { choices: {"Notice en haut": "0","Notice en bas": "1"} } }
+                    - {property: 'actif'}
+                    - {property: 'dismissed', label: 'La notice peut être rejeté'}

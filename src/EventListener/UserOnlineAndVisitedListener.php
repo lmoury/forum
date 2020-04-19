@@ -4,7 +4,6 @@ namespace App\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Security;
-use Doctrine\DBAL\Driver\Connection;
 
 class UserOnlineAndVisitedListener
 {

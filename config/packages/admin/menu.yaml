@@ -4,9 +4,6 @@ easy_admin:
             css:
                 - '/assets/css/admin.css'
                 - '/assets/css/username.css'
-            js:
-                - '/assets/js/jquery.min.js'
-                - '/assets/js/admin.js'
         menu:
             - {entity: 'Messagerie', icon: 'share-alt', label: 'Messagerie'}
             - label: 'Dashboard'
@@ -15,6 +12,7 @@ easy_admin:
                   - {label: 'Dashboard', icon: 'dashboard', route: 'admin.dashboard', default: true }
                   - {entity: 'Config', icon: 'cogs', label: 'Paramètre général'}
                   - {label: 'Statistiques', icon: 'bar-chart-o', route: 'admin.statistique' }
+                  - {entity: 'Notice', icon: 'sticky-note', label: 'Notice'}
                   - {entity: 'Social', icon: 'share-alt', label: 'Médias sociaux'}
             - label: 'Utilisateurs'
               icon: 'users'

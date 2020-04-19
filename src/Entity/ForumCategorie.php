@@ -40,7 +40,7 @@ class ForumCategorie
     private $ordre;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussion", mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussion", mappedBy="categorie", cascade={"remove"})
      */
     private $forumDiscussions;
 

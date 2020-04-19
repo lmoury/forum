@@ -1,3 +1,5 @@
+{% if userStaff != [] %}
+<br/>
 <div class="sidebar-content">
     <div class="sidebar-title">
         <span class="fa fa-users"></span>
@@ -5,16 +7,16 @@
     </div>
     <div class="sidebar-body-staf">
         {% for staff in userStaff %}
-        <div class="sidebar-content-staf">
-            <div class="visitor-avatar">
-                <img width="38" height="38" alt="{{ staff.username }}" src="{{ vich_uploader_asset(  staff, 'imageFile') }}"/>
+            <div class="sidebar-content-staf">
+                <div class="visitor-avatar">
+                    <img width="38" height="38" alt="{{ staff.username }}" src="{{ vich_uploader_asset(  staff, 'imageFile') }}"/>
+                </div>
+                <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">
+                    <span class="pseudoUser{{ staff.role.id }}">{{ staff.username }}</span>
+                </a>
+                <div class="staffRole">{{ staff.role.nom }}</div>
             </div>
-            <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">
-                <span class="pseudoUser{{ staff.role.id }}">{{ staff.username }}</span>
-            </a>
-            <div class="staffRole">{{ staff.role.nom }}</div>
-        </div>
         {% endfor %}
-        <div class="clearfix"></div>
     </div>
 </div>
+{% endif %}

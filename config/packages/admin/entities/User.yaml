@@ -9,8 +9,8 @@ easy_admin:
                     - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
                     - { property: 'username', label: 'Nom' }
                     - { property: 'email', label: 'Email', type: 'email' }
-                    - { property: 'role', label: 'role'}
-                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'role', label: 'Role'}
+                    - { property: 'sexeType', label: 'Sexe'}
                     - { property: 'date_naissance', label: 'Date de naissance'}
                     - { property: 'date_inscription', label: 'Inscription'}
             new:

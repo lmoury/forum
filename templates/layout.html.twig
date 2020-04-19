@@ -19,6 +19,7 @@
         {{ include("inc/navbar.html.twig") }}
 
         <div class="container" id="container">
+            {{ render(controller("App\\Controller\\LayoutController:notice")) }}
             {% block body %}{% endblock %}
         </div>
         {{ include("inc/footer.html.twig") }}

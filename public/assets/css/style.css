@@ -615,6 +615,8 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
 }
 .widget_whosHas {
   font-size: 11px;
+  color: #818181 !important;
+  padding-top: 10px;
 }
 .sidebar-triple-menu li a.active , .sidebar-triple-menu li a:hover {
     border: 1px solid #2f78a0 !important;
@@ -1318,5 +1320,45 @@ td.discussionCol1 {
 	border-bottom: 1px solid rgb(47, 120, 160);
 }
 .sidebar-content-staf:last-child {
-	border: none;
+	border-bottom: none;
+}
+#sidMenu li a {
+	padding: 6px 9px;
+	border-radius: 9px 9px 0px 0px;
+}
+#sidMenu li a.active {
+    background: rgb(47, 120, 160);
+    color: white
+}
+.nav-tabs#sidMenu {
+	border-bottom: none;
+    margin-bottom: 1px;
+}
+.notice-flotante {
+	position: fixed;
+	bottom: 6%;
+	right: 30px;
+	width: 300px;
+    z-index: 9999999;
+}
+.notice {
+	overflow: hidden;
+	font-size: .875rem;
+	background-color: #edf6fd;
+	background-clip: padding-box;
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 0px;
+	box-shadow: 0 .25rem .75rem rgba(0,0,0,.1);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+.sidebar-body span.virguleDisplay::after:last-child {
+	content: ',';
+}
+@font-face {
+  font-family: 'Watchdogs';
+  src: url('/assets/fonts/HACKED.ttf') format('truetype');
+}
+.logoAnimA {
+    font-family: Watchdogs;
 }

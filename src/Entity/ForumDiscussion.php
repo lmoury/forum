@@ -71,7 +71,7 @@ class ForumDiscussion
     private $affichage;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="discussion")
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="discussion", cascade={"remove"})
      */
     private $likes;
 
@@ -86,7 +86,7 @@ class ForumDiscussion
     private $important;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussionView", mappedBy="discussion")
+     * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussionView", mappedBy="discussion", cascade={"remove"})
      */
     private $forumDiscussionViews;
 

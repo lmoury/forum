@@ -1,8 +1,8 @@
 <div class="">
-    <ul class="nav customBorderNav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#widgetHome" alt="" title="Qui est en ligne ?"><i class="fa fa-street-view" style="padding-right:7px;"></i></a></li>
-        <li><a data-toggle="tab" href="#widget1" alt="" title="Qui a visité ses dernière 24H"><i class="fa fa-user-times" style="padding-right: 6px;"></i></a></li>
-        <li><a data-toggle="tab" href="#widget2" alt="" title="Légende des groupes"><i class="fa fa-list-ul" style="padding-right: 7px;"></i></a></li>
+    <ul class="nav customBorderNav nav-tabs" id="sidMenu">
+        <li class="active"><a class="active" data-toggle="tab" href="#widgetHome" alt="" title="Qui est en ligne ?"><i class="fa fa-street-view"></i></a></li>
+        <li><a data-toggle="tab" href="#widget1" alt="" title="Qui a visité ses dernière 24H"><i class="fa fa-user-times"></i></a></li>
+        <li><a data-toggle="tab" href="#widget2" alt="" title="Légende des groupes"><i class="fa fa-list-ul"></i></a></li>
     </ul>
 
     <div class="tab-content sidebar-content">
@@ -10,14 +10,13 @@
             <div class="sidebar-body">
                 {% set foo = '' %}
                 {% for online in whosonline %}
-                {% set foo = loop.index %}
-                    {% if online %}
-                        {% set onlineUser = loop.index %}
-                        <span class="pseudoUser{{ online.role.id }}">{{ online.username }},</span>
-                    {% endif %}
-
+                    {% set foo = loop.index %}
+                    <a class="username" href="{{ path('membres.profil', {id: online.id, slug: online.slug})}}">
+                        <span class="pseudoUser{{ online.role.id }}">{{ online.username }}</span>
+                    </a>
+                    <span class="virguleDisplay">, </span>
                 {% endfor %}
-                <p class="widget_whosHas">Il y a {{ foo }} membres connectés</p>
+                <div class="widget_whosHas">Il y a {{ foo }} membre{% if foo > 1 %}s{% endif %} connecté{% if foo > 1 %}s{% endif %}</div>
             </div>
         </div>
 
@@ -25,10 +24,13 @@
             <div class="sidebar-body">
                 {% set foo = '' %}
                 {% for visite in whoshasvisited %}
-                {% set foo = loop.index %}
-                    <span class="pseudoUser{{ visite.role.id }}">{{ visite.username }},</span>
+                    {% set foo = loop.index %}
+                    <a class="username" href="{{ path('membres.profil', {id: visite.id, slug: visite.slug})}}">
+                        <span class="pseudoUser{{ visite.role.id }}">{{ visite.username }}</span>
+                    </a>
+                    <span class="virguleDisplay">, </span>
                 {% endfor %}
-                <p class="widget_whosHas">Actuellement : {{ foo }} membres (Dernières 24H)</p>
+                <div class="widget_whosHas">Actuellement : {{ foo }} membre{% if foo > 1 %}s{% endif %} (Dernières 24H)</div>
             </div>
         </div>
 

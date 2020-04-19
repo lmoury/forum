@@ -48,6 +48,11 @@ class DashboardController extends AbstractController
      */
     public function statistiques(Connection $connection)
     {
+        $date= new \DateTime();
+        $online = clone $date;
+        $online->modify('-5 minute');
+        $hasvisited = clone $date;
+        $hasvisited->modify('-24 hour');
         $compteur= $connection->fetchAll('SELECT
             (SELECT COUNT(*) FROM forum_discussion) as countDiscussion,
             (SELECT COUNT(*) FROM forum_commentaire) as countCommentaire,

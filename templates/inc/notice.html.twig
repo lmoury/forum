@@ -1,0 +1,17 @@
+{% for notice in notices if notice.actif %}
+    {% if notice.emplacement == 0 %}
+    <div class="alert notice alert-dismissible">
+        {% if notice.dismissed %}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {% endif %}
+        {{ notice.message|raw }}
+    </div>
+    {% else %}
+    <div class="alert notice alert-dismissible notice-flotante">
+        {% if notice.dismissed %}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {% endif %}
+        {{ notice.message|raw }}
+    </div>
+    {% endif %}
+{% endfor %}

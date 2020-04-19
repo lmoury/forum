@@ -48,7 +48,7 @@ class ForumCommentaire
     private $auteur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="commentaire")
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="commentaire", cascade={"remove"})
      */
     private $likes;
 
