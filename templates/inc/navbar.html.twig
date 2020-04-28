@@ -54,6 +54,18 @@
                         {% endif %}
                     </ul>
                 </li>
+
+                <li id="profil-pop-user" class="dropdown nav-item">
+                    <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-search"></i>
+                    </a>
+                    <ul class="dropdown-menu" id="dropdown-content-user">
+                        <span class="menu-arrow"></span>
+                        <h3 class="menu-header">Rechercher</h3>
+                        {{ render(controller("App\\Controller\\SearchController:searchNavbar")) }}
+                    </ul>
+                </li>
+
                 {% set nombreMessage = 0 %}
                 {% for nombre in app.user.participant if nombre.lu == false %}
                 {% set nombreMessage = loop.index %}

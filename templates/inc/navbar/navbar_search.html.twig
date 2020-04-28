@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="block-container pr-3 pl-3">
+    <div class="input-group mb-2">
+        {{ form_widget(form.mot_cle, { 'attr': {'placeholder': 'Rechercher...'} }) }}
+        {{ form_errors(form.mot_cle) }}
+    </div>
+    <div class="custom-control custom-checkbox mb-2">
+        {{ form_widget(form.titre) }}
+        {{ form_errors(form.titre) }}
+    </div>
+    {{ form_rest(form) }}
+    <div class="text-center">
+        <button class="btn search-btn btn-rech"><i class="fa fa-search" aria-hidden="true"></i> {{ button|default('Rechercher')}}</button>
+        <a class="btn search-btn btn-rech-av" href="{{ path('search') }}">Recherche avancée…</a>
+    </div>
+</div>
+{{ form_end(form) }}

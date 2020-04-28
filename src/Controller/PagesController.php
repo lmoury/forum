@@ -16,6 +16,7 @@ class PagesController extends AbstractController
      */
     public function index()
     {
+        //return $this->redirectToRoute('forums');
         return $this->render('pages/home.html.twig', [
             'current_url' => $this->current_url,
         ]);

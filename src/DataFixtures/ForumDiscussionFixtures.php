@@ -26,6 +26,8 @@ class ForumDiscussionFixtures extends Fixture implements OrderedFixtureInterface
                 ->setDateCreation($faker->dateTime('now', null))
                 ->setDateEdition($faker->dateTime('now', null))
                 ->setDateNewCom($faker->dateTime('now', null))
+                ->setLocked(0)
+                ->setImportant(0)
                 ;
                 $manager->persist($discussions);
         }

@@ -10,27 +10,157 @@
 </ol>
 
 <h1 class="p-title-value text-center">{{ conversation.titre }}</h1>
+<p class="text-center pDescription">
+	<i class="fa fa-users"></i> <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>,
+    {% set blockMessageAutor = false %}
+    {% for p in conversation.participants %}
+        {% if p.role.id == 3 or p.role.id == 2 %}
+         {% set blockMessageAutor = true %}
+        {% endif %}
+        <a class="pseudoUser{{ p.role.id }}" href="{{ path('membres.profil', {id: p.id, slug: p.slug}) }}">{{ p.username }}</a>,
+    {% endfor %}
+    <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>.
+</p>
+<div class="row">
+    <div class="col-sm-9">
+        {% if blockMessageAutor == false and conversation.expediteur.role.id != 3 and conversation.expediteur.role.id != 2  %}
+        <div class="blockMessage blockMessage--error blockMessage--iconic">
+            <table>
+                <tr>
+                    <td>
+                        <i class="fa fa-warning"></i>
+                    </td>
+                    <td>
+            			Il n'y a aucun membre du staff dans cette discussion. Restez vigilant à ne communiquer aucune donnée sensible aux autres membres (comme votre mot de passe ou votre adresse), faites attention au contenu téléchargé, et ne cliquez sur aucun lien sans avoir entièrement confiance.
+                        Vous souhaitez procéder a une vente ou un échange? N'oubliez pas de vérifier que le(s) membre(s) en question possède(nt) les conditions de ventes, en cas de doutes inviter un membre de l'équipe.
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        {% endif %}
+        <div class="btn-group float-right">
+            <div id="btn-article-add" class="mr-2"><a href="" class="">Fermer la conversation</a></div>
+            <div id="btn-article-add" class="mr-2"><a href="" class="">Définir comme important</a></div>
+            <div id="btn-article-add"><a href="" class="">Quitter la conversation</a></div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+        <div id="content-section" class="no-padding">
+            <section>
+                <div class="conversation-padding">
+                    <div class="visitor-avatar mr-3 mb-2">
+                        <img width="100" height="100" src="{{ vich_uploader_asset( conversation.expediteur, 'imageFile') }}" alt="{{  conversation.expediteur.username }}" />
+                    </div>
+                    <div class="conversation-expediteur">
+                        <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>
+                        <div class="staffRole">{{ conversation.expediteur.role.nom }}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </section>
+            <div class="conversation-padding message-attribution-bg">
+                <span class="message-userArrow"></span>
+                <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>
+            </div>
+            <div class="conversation-padding">
+                {{ parser(conversation.message) | raw }}
+            </div>
+        </div>
+        <br/>
+        <div id="content-section" class="no-padding">
+        	<form action="" method="POST" id="formAncre">
+        		<div class="article-content">
+        			<div>
+        				<textarea class="editor form-control" name="tMessage" rows="5" id="comment"></textarea>
+        			</div>
+        		</div>
+        		<div class="text-center btn-container">
+                    <button class="btn" type="submit">
+                    	<i class="fa fa-edit fa-lg" aria-hidden="true"></i> Répondre
+                    </button>
+                </div>
+        		<div class="clearfix"></div>
+        	</form>
+        </div>
 
-<div id="content-section" class="no-padding">
-    <section>
-    <div>
-        <img width="36" height="36" src="{{ vich_uploader_asset( conversation.expediteur, 'imageFile') }}" alt="{{  conversation.expediteur.username }}" />
     </div>
-
-    <div>
-        <span class="noMessages"><i class="fa fa-user-o"></i>
-            <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>
-        </span>
-
+    <div class="col-sm-3">
+        <div class="sidebar-content">
+            <div class="sidebar-title">
+                <span class="fa fa-comments"></span>
+                <span class="">Information de la conversation</span>
+            </div>
+            <div class="sidebar-body">
+                <dl class="widget-conversation">
+                    <dt><span>Participants: </span></dt>
+                    <dd><span>{{ conversation.participants.count }}</span></dd>
+                    <dt><span>Réponses: </span></dt>
+                    <dd><span>0</span></dd>
+                    <dt><span>Dernière réponse: </span></dt>
+                    <dd><span>{{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span></dd>
+                    <dt><span>Dernière réponse par: </span></dt>
+                    <dd><span><a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a></span></dd>
+                </dl>
+            </div>
+        </div>
+        <br/>
+        <div class="sidebar-content">
+            <div class="sidebar-title">
+                <span class="fa fa-users"></span>
+                <span class="">Participants à la conversation</span>
+            </div>
+            <div class="sidebar-body">
+                <div class="sidebar-content-staf">
+                    <div class="visitor-avatar">
+                        <img width="38" height="38" alt="{{ conversation.expediteur.username }}" src="{{ vich_uploader_asset(  conversation.expediteur, 'imageFile') }}"/>
+                    </div>
+                    <a class="username" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug})}}">
+                        <span class="pseudoUser{{ conversation.expediteur.role.id }}">{{ conversation.expediteur.username }}</span>
+                    </a>
+                    <div class="staffRole">{{ conversation.expediteur.role.nom }}</div>
+                </div>
+                {% for p in conversation.participants %}
+                <div class="sidebar-content-staf">
+                    <div class="visitor-avatar">
+                        <img width="38" height="38" alt="{{ p.username }}" src="{{ vich_uploader_asset(  p, 'imageFile') }}"/>
+                    </div>
+                    <a class="username" href="{{ path('membres.profil', {id: p.id, slug: p.slug})}}">
+                        <span class="pseudoUser{{ p.role.id }}">{{ p.username }}</span>
+                    </a>
+                    <div class="staffRole">{{ p.role.nom }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-</section>
-
-
-    <div class="message-attribution">
-        <span class="message-userArrow"></span>
-        <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>
-    </div>
-
-    {{ conversation.message }}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
+    <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
+    <script>
+
+    $(document).ready(function() {
+    var wbbOpt = {
+    buttons: "br,bold,italic,underline,strike,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,img,link,|,fontcolor,fontsize,fontfamily,table,|,code,quote,smilebox",
+    lang: "fr",
+    allButtons: {
+    br : {
+        title: 'Saut de ligne',
+        buttonHTML: '<span class="fonticon"><strong>br</strong></span>',
+        excmd: 'br',
+        transform : {
+            '<br/>':"[br]"
+        }
+    } }
+    }
+    $(".editor").wysibb(wbbOpt);
+    });
+    </script>
 {% endblock %}

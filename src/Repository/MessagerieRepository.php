@@ -22,12 +22,16 @@ class MessagerieRepository extends ServiceEntityRepository
     /**
     * @return Messagerie[] Returns an array of Messagerie objects
     */
-    public function getListConversations($value)
+    public function getListConversations($value, $value1)
     {
         return $this->createQueryBuilder('m')
-            ->innerJoin('m.messagerieUser', 'g')
-            ->where('g.username = :val')
+            ->addSelect('t')
+            ->join('m.participants', 't')
+            ->where('t.id = :val')
             ->setParameter('val', $value)
+            ->orWhere('m.expediteur = :val')
+            ->setParameter('val', $value1)
+            ->orderBy('m.date_creation', 'DESC')
             ->getQuery()
             ->getResult()
         ;

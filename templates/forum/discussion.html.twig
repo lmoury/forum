@@ -12,7 +12,7 @@
 
 <h1 class="p-title-value text-center">{{ discussion.titre }}</h1>
 
-<p class="text-center">
+<p class="text-center pDescription">
 	Discussion dans <a href="{{ path('forum.discussions', {id: discussion.categorie.id, slug: discussion.categorie.slug})}}">{{ discussion.categorie.categorie }}</a>
     créé par <a class="pseudoUser{{ discussion.auteur.role.id }}" href="{{ path('membres.profil', {id: discussion.auteur.id, slug: discussion.auteur.slug})}}">{{ discussion.auteur.username }}</a>,
     <span> le {{ discussion.dateCreation | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</span>.

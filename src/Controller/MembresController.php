@@ -45,10 +45,10 @@ class MembresController extends AbstractController
      * @Route("/membres", name="membres")
      * @param UserRepository repoUser
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->repoUser->getListUser();
 
+        $users = $this->repoUser->getListUser();
         return $this->render('membres/index.html.twig', [
             'current_url' => $this->current_url,
             'users' => $users

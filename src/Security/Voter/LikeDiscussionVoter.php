@@ -17,8 +17,8 @@ class LikeDiscussionVoter extends Voter
         /**
         * @var $subject ForumDiscussion
         */
-            foreach ($subject->getLikes() as $test) {
-                if($token->getUser() == $test->getUser()){
+            foreach ($subject->getLikes() as $likeDiscu) {
+                if($token->getUser() == $likeDiscu->getUser()){
                     return true;
                 }
             }

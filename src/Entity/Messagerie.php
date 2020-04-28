@@ -43,9 +43,9 @@ class Messagerie
     private $date_creation;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : false})
      */
-    private $lu;
+    private $lu = false;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="participant")
@@ -56,7 +56,6 @@ class Messagerie
     public function __construct()
     {
         $this->date_creation = new \DateTime();
-        $this->lu = 0;
         $this->participants = new ArrayCollection();
     }
 

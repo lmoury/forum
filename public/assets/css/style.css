@@ -476,7 +476,6 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
     font-family: 'Open sans condensed',Arial,sans-serif;
     font-weight: bold;
     color: #173e5f;
-    padding-bottom: 20px;
     padding-top: 20px;
     font-size: 2rem;
 }
@@ -1237,15 +1236,6 @@ td.discussionCol1 {
 }
 
 
-
-.message-attribution {
-	color: #8c8c8c;
-	font-size: 12px;
-	padding-bottom: 3px;
-	border-bottom: 1px solid #e7e7e7;
-}
-
-
 #lastMembres img {
     width: 100%;
 
@@ -1292,14 +1282,26 @@ td.discussionCol1 {
     margin: 6px 0px;
 }
 .message-attribution {
-    color: #000;
-    font-size: 12px;
+	color: #8c8c8c;
+	font-size: 12px;
     padding-bottom: 3px;
-    border-bottom: 1px solid rgba(15,15,15,.1);
+	border-bottom: 1px solid #e7e7e7;
+}
+.message-attribution-bg {
+	color: #8c8c8c;
+	font-size: 12px;
+	background: rgba(0, 0, 0, 0.1);
+	position: relative;
+}
+.conversation-padding {
+    padding: 9px;
+}
+.conversation-expediteur {
+    font-size: 15pt;
 }
 .message-userArrow {
     position: absolute;
-    bottom: 0px;
+    bottom: 36px;
     left: 50px;
     top: initial;
     right: initial;
@@ -1361,4 +1363,55 @@ td.discussionCol1 {
 }
 .logoAnimA {
     font-family: Watchdogs;
+}
+.blockMessage.blockMessage--error {
+    border-left: 3px solid #c84448;
+    background: #fde9e9;
+    color: #c84448;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+.blockMessage {
+    padding: 6px 10px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 4px;
+}
+.blockMessage i {
+    font-size: 35pt;
+    padding-right: 9px;
+}
+.pDescription {
+    font-size: 13px;
+}
+/* widget conversation*/
+dl.widget-conversation {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.widget-conversation dt {
+    float: left;
+    font-weight:300;
+}
+
+.widget-conversation dd {
+    text-align: right;
+    font-weight:bold;
+    margin-bottom: 0px;
+}
+.custom-control.custom-checkbox {
+	padding-left: 0!important;
+}
+.search-btn {
+    font-size: 13px;
+    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.6), 0px 1px 0px rgba(255,255,255,0.1);
+    color: white;
+}
+.btn-rech {
+	background: #dd8d38;
+}
+.btn-rech-av {
+    background: rgb(47, 120, 160);
+}
+.btn-rech:hover, .btn-rech-av:hover {
+    background: #27a0f6;
+    color: white!important;
 }

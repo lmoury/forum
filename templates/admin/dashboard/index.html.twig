@@ -45,9 +45,7 @@
             <div class="visitor-avatar">
                 <img width="38" height="38" alt="{{ staff.username }}" src="{{ vich_uploader_asset(  staff, 'imageFile') }}"/>
             </div>
-            <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">
-                <span class="pseudoUser{{ staff.role.id }}">{{ staff.username }}</span>
-            </a>
+            <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">{{ staff.username }}</a>
             <div class="staffRole">{{ staff.role.nom }}</div>
         </div>
         {% endfor %}

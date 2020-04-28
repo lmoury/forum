@@ -1,42 +1,21 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %} {{ categorie.categorie }} {{ parent() }}{% endblock %}
+{% block title %}Résultats de la recherche: {{ recherche }} {{ parent() }}{% endblock %}
 
 {% block body %}
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
-    <li class="breadcrumb-item"><a href="{{ path('forums') }}">Forums</a></li>
-    <li class="breadcrumb-item active">{{ categorie.categorie }}</li>
+    <li class="breadcrumb-item"><a href="{{ path('search') }}">Rechercher</a></li>
+    <li class="breadcrumb-item active">{{ recherche }}</li>
 </ol>
 
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+<div class="col-sm-12">
+    <h1 class="p-title-value text-center">Résultats de la recherche: {{ recherche }}</h1>
 </div>
-{% endfor %}
 
 <div class="row">
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div class="col-sm-9">
-        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
-    </div>
-    <div class="col-sm-3">
-        <div id="btn-article-add">
-        	<a href="{{ path('forum.discussions.new', {id: categorie.id, slug: categorie.slug})}}">
-        		<span>Poster une nouvelle discussion</span>
-        	</a>
-        </div>
-    </div>
-    {% else %}
     <div class="col-sm-12">
-        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
-    </div>
-    {% endif %}
-</div>
-
-<div class="row">
-    <div class="col-sm-9">
         <div class="pagination">
             {{ knp_pagination_render(discussions) }}
         </div>
@@ -68,39 +47,11 @@
                             <div class="nodeTitle">
                             <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">{{ d.titre }}</a>
                             </div>
-                            {% if is_granted('DELET_EDIT_DISCISSION', d) or is_granted('ROLE_MODERATEUR') %}
-                            <span class="dropdown noMessages open float-right" id="editDiscussion">
-							    <a aria-expanded="true" href="#" type="button" data-toggle="dropdown">Editer</a>
-						    	<ul class="dropdown-menu">
-									<li>
-										<a href="{{ path('forum.discussion.editer', {id: d.id, slug: d.slug})}}"><i class="fa fa-edit"></i> Editer la discussion</a>
-									</li>
-                                    <li>
-                                        <a data-toggle="modal" href="#" data-target="#modalDeplaDiscu" data-id="{{ d.id }}"><i class="fa fa-sign-out"></i> Déplacer la discussion</a>
-                                    </li>
-									<li>
-                                        {% if d.locked %}
-										<a href="{{ path('forum.locked', {id: d.id})}}"><i class="fa fa-unlock"></i> Dévérrouiller la discussion</a>
-                                        {% else %}
-                                        <a href="{{ path('forum.locked', {id: d.id})}}"><i class="fa fa-lock"></i> Vérrouiller la discussion</a>
-                                        {% endif %}
-                                    </li>
-                                    {% if is_granted('ROLE_MODERATEUR') %}
-									<li>
-                                        {% if d.important %}
-										<a href="{{ path('forum.important', {id: d.id})}}"><i class="fa fa-thumb-tack"></i> Désépingler la discussion</a>
-                                        {% else %}
-                                        <a href="{{ path('forum.important', {id: d.id})}}"><i class="fa fa-thumb-tack"></i> Epingler la discussion</a>
-                                        {% endif %}
-                                    </li>
-                                    {% endif %}
-								</ul>
-							</span>
-                            {% endif %}
                             <div class="nodeStat">
                                 <span class="disparforumstat">
                                     <a class="pseudoUser{{ d.auteur.role.id }}" href="{{ path('membres.profil', {id: d.auteur.id, slug: d.auteur.slug}) }}">{{ d.auteur.username }}</a>,
                                     <span><i class="fa fa-clock-o"></i> {{ date_passed(d.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                    dans <strong><a href="{{ path('forum.discussions', {id: d.categorie.id, slug: d.categorie.slug}) }}">{{ d.categorie.categorie }}</a></strong>
                                 </span>
                             </div>
                         </td>
@@ -142,8 +93,8 @@
                     {% else %}
                     <tr>
                         <td colspan="4">
-                            <div class="alert alert-info mt-3">
-                                <strong>Aucune discussion !</strong> Soyez la première personne à poster une discussion.
+                            <div class="m-2">
+                                Aucun résultat trouvé.
                             </div>
                         </td>
                     </tr>
@@ -156,34 +107,5 @@
             {{ knp_pagination_render(discussions) }}
         </div>
     </div>
-    <div class="col-sm-3">
-        {{ include("inc/sidebar.html.twig") }}
-    </div>
 </div>
-
-<!-- Modal deplaDiscu -->
-<div class="modal fade" id="modalDeplaDiscu" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-    $('#modalDeplaDiscu').on('shown.bs.modal', function (event) {
-        const button = $(event.relatedTarget);
-        const id = button.attr('data-id');
-        var url = "{{ (path('forum.deplacer.discussion', {id: 'ReplaceMeWithCorrectValue'})) }}";
-        url = url.replace("ReplaceMeWithCorrectValue", id);
-        var modal = $(this);
-        $.ajax({
-            url: url,
-            success: function(data) {
-                modal.find('.modal-content').html(data);
-            }
-        });
-    });
-    </script>
 {% endblock %}

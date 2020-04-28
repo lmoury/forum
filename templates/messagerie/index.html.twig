@@ -26,12 +26,12 @@
                         <th></th>
                         <th class="discussionRepAfi">
                         </th>
-                        <th class="discussionRepAfi" style="text-align: right;">Filtre ↓</th>
+                        <th class="discussionRepAfi" style="text-align: right;">Expéditeur ↓</th>
                       </tr>
                     </thead>
                     <tbody>
 
-                    {% for u in app.user.participant %}
+                    {% for u in conversations %}
                         <tr class="nodeLigne {% if u.lu == false %}converLigne{% endif %}">
                             <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
                             <td class="discussionCol2">

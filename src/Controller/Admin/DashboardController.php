@@ -28,6 +28,7 @@ class DashboardController extends AbstractController
 
     /**
      * @Route("/admin/dashboard", name="admin.dashboard")
+     * @param UserRepository $repository
      */
     public function index(UserRepository $repository)
     {
@@ -45,14 +46,18 @@ class DashboardController extends AbstractController
 
     /**
      * @Route("/admin/statistiques", name="admin.statistique")
+     * @param UserRepository $repoUser
+     * @param Connection $connection
      */
-    public function statistiques(Connection $connection)
+    public function statistiques(Connection $connection, UserRepository $repoUser)
     {
         $date= new \DateTime();
         $online = clone $date;
         $online->modify('-5 minute');
         $hasvisited = clone $date;
         $hasvisited->modify('-24 hour');
+        $whosonline = $repoUser->getCountUserOnlineAndVisited($online);
+        $whoshasvisited = $repoUser->getCountUserOnlineAndVisited($hasvisited);
         $compteur= $connection->fetchAll('SELECT
             (SELECT COUNT(*) FROM forum_discussion) as countDiscussion,
             (SELECT COUNT(*) FROM forum_commentaire) as countCommentaire,
@@ -66,7 +71,9 @@ class DashboardController extends AbstractController
             (SELECT COUNT(*) FROM user WHERE date_inscription > CURDATE( )) as countTodayUser
             ');
         return $this->render('admin/dashboard/statistique.html.twig', [
-            'compteur' => $compteur
+            'compteur' => $compteur,
+            'whoshasvisited' => $whoshasvisited,
+            'whosonline' => $whosonline,
         ]);
     }
 

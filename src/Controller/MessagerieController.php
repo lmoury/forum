@@ -29,9 +29,11 @@ class MessagerieController extends AbstractController
      */
     public function index(MessagerieRepository $repository)
     {
-        //$categories = $repository->finbByLabel($this->getUser());
+        $conversations = $repository->getListConversations($this->getUser()->getId(), $this->getUser());
+        //dump($categories);
+        //die();
         return $this->render('messagerie/index.html.twig', [
-
+            'conversations' => $conversations
         ]);
     }
 

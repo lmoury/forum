@@ -1,0 +1,98 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Rechercher {{ parent() }}{% endblock %}
+
+{% block body %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Rechercher</li>
+</ol>
+
+<h1 class="p-title-value text-center">Rechercher</h1>
+
+<div id="content-section" class="page-connexion">
+    {{ form_start(form) }}
+        <div class="block-container">
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="motcle">Mots-clés : </label>
+                </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.mot_cle) }}
+                        {{ form_errors(form.mot_cle) }}
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        {{ form_widget(form.titre) }}
+                        {{ form_errors(form.titre) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="membre">Posté par : </label>
+                </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.users) }}
+                        {{ form_errors(form.users) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="datecreation">Plus récent que : </label>
+                </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.date_creation) }}
+                        {{ form_errors(form.date_creation) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="categories">Rechercher dans les forums : </label>
+                </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.categories) }}
+                        {{ form_errors(form.categories) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow">
+                <dt>Trier par : </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.trier) }}
+                        {{ form_errors(form.trier) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="block-container">
+                {{ form_rest(form) }}
+                <div class="text-center btn-container">
+                    <button class="btn"><i class="fa fa-search" aria-hidden="true"></i> {{ button|default('Rechercher')}}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+    <script>
+    $('select').select2();
+    </script>
+{% endblock %}

@@ -48,7 +48,30 @@ class UserRepository extends ServiceEntityRepository
             ->addSelect('d', 'cat')
             ->orderBy('u.date_inscription', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
+    }
+
+
+    /**
+    * @return User Returns search array user
+    */
+    public function getSearchListUser($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u', 'd')
+            ->leftJoin('u.forumDiscussions', 'd')
+            ->leftJoin('u.forumCommentaires', 'c')
+            ->addSelect('u', 'c')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->leftJoin('d.categorie', 'cat')
+            ->addSelect('d', 'cat')
+            ->andWhere('u.username LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->orderBy('u.date_inscription', 'DESC')
+            ->getQuery()
+            ->getResult()
         ;
     }
 
@@ -64,7 +87,21 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('u.date_inscription', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
+    }
+
+    /**
+    * @return User Returns count user
+    */
+    public function getCountUserOnlineAndVisited($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->andWhere('u.date_visite > :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
         ;
     }
 
@@ -82,7 +119,7 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('u.role', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
         ;
     }
 
