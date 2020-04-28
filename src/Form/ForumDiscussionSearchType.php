@@ -25,8 +25,10 @@ class ForumDiscussionSearchType extends AbstractType
                 'required' => false
             ])
             ->add('date_creation', BirthdayType::class, [
-                    //'widget' => 'text',
-                    'format' => 'dd-MMM-yyyy',
+                    'widget' => 'single_text',
+                    'format' => 'dd MM yy',
+                    'html5' => false,
+			        'attr' => ['class' => 'js-datepicker'],
                     'required' => false
                 ])
             ->add('categories', EntityType::class, [
@@ -46,7 +48,6 @@ class ForumDiscussionSearchType extends AbstractType
                 'multiple' => true
             ])
             ->add('trier', ChoiceType::class, [
-                //'choice_value' => 'valeur1',
                 'choices' =>[
                     'Pertinence' => 'valeur1',
                     'Date dernier commentaire' => 'valeur2',

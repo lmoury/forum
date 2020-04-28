@@ -22,7 +22,7 @@ class EditMembreType extends AbstractType
                     'class' => 'file-upload')
                 ])
             ->add('date_naissance', BirthdayType::class, [
-                    'format' => 'dd-MMM-yyyy',
+                    'format' => 'dd MMM yyyy',
                 ])
             ->add('sexe', ChoiceType::class, [
                 'choices' => $this->getChoices()

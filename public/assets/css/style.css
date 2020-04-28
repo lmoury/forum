@@ -1397,7 +1397,7 @@ dl.widget-conversation {
     font-weight:bold;
     margin-bottom: 0px;
 }
-.custom-control.custom-checkbox {
+.search-checkbox.custom-checkbox {
 	padding-left: 0!important;
 }
 .search-btn {
@@ -1414,4 +1414,7 @@ dl.widget-conversation {
 .btn-rech:hover, .btn-rech-av:hover {
     background: #27a0f6;
     color: white!important;
+}
+#dateInputCustom {
+    padding-left: 0px;
 }

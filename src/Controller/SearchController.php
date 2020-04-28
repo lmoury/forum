@@ -11,7 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+/**
+ * @Security("has_role('ROLE_USER')")
+ */
 class SearchController extends AbstractController
 {
 
@@ -80,7 +85,7 @@ class SearchController extends AbstractController
             'action' => $this->generateUrl('search'),
         ]);
 
-        return $this->render('inc\navbar\navbar_search.html.twig', [
+        return $this->render('inc\navbar\_form-search.html.twig', [
             'form' => $form->createView(),
         ]);
     }
