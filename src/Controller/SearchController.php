@@ -20,6 +20,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class SearchController extends AbstractController
 {
 
+    private $current_url = 'search';
+
     /**
      * @var ObjectManager
      */
@@ -59,12 +61,14 @@ class SearchController extends AbstractController
             );
 
             return $this->render('search/index.html.twig', [
+                'current_url' => $this->current_url,
                 'discussions' => $discussions,
                 'recherche' => $search->getMotCle()
             ]);
         }
         else {
             return $this->render('search/_form.html.twig', [
+                'current_url' => $this->current_url,
                 'form' => $form->createView(),
             ]);
         }

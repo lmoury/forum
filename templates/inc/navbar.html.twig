@@ -55,7 +55,7 @@
                     </ul>
                 </li>
 
-                <li id="profil-pop-user" class="dropdown nav-item">
+                <li id="profil-pop-user" class="dropdown nav-item {% if current_url is defined and current_url == 'search' %}active{% endif %}">
                     <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-search"></i>
                     </a>
