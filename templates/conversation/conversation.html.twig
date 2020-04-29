@@ -13,13 +13,13 @@
 <p class="text-center pDescription">
 	<i class="fa fa-users"></i> <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>,
     {% set blockMessageAutor = false %}
-    {% for p in conversation.participants %}
-        {% if p.role.id == 3 or p.role.id == 2 %}
+    {% for p in conversation.conversationMessage %}
+        {% if p.participant.role.id == 3 or p.participant.role.id == 2 %}
          {% set blockMessageAutor = true %}
         {% endif %}
-        <a class="pseudoUser{{ p.role.id }}" href="{{ path('membres.profil', {id: p.id, slug: p.slug}) }}">{{ p.username }}</a>,
+        <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
     {% endfor %}
-    <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>.
+    <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span>.
 </p>
 <div class="row">
     <div class="col-sm-9">
@@ -61,7 +61,7 @@
             </section>
             <div class="conversation-padding message-attribution-bg">
                 <span class="message-userArrow"></span>
-                <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span>
             </div>
             <div class="conversation-padding">
                 {{ parser(conversation.message) | raw }}
@@ -94,11 +94,11 @@
             <div class="sidebar-body">
                 <dl class="widget-conversation">
                     <dt><span>Participants: </span></dt>
-                    <dd><span>{{ conversation.participants.count }}</span></dd>
+                    <dd><span>{{ conversation.conversationMessage.count }}</span></dd>
                     <dt><span>Réponses: </span></dt>
                     <dd><span>0</span></dd>
                     <dt><span>Dernière réponse: </span></dt>
-                    <dd><span>{{ date_passed(conversation.dateCreation | date('d-m-Y H:i:s')) }}</span></dd>
+                    <dd><span>{{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span></dd>
                     <dt><span>Dernière réponse par: </span></dt>
                     <dd><span><a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a></span></dd>
                 </dl>
@@ -120,15 +120,15 @@
                     </a>
                     <div class="staffRole">{{ conversation.expediteur.role.nom }}</div>
                 </div>
-                {% for p in conversation.participants %}
+                {% for p in conversation.conversationMessage %}
                 <div class="sidebar-content-staf">
                     <div class="visitor-avatar">
-                        <img width="38" height="38" alt="{{ p.username }}" src="{{ vich_uploader_asset(  p, 'imageFile') }}"/>
+                        <img width="38" height="38" alt="{{ p.participant.username }}" src="{{ vich_uploader_asset(  p.participant, 'imageFile') }}"/>
                     </div>
-                    <a class="username" href="{{ path('membres.profil', {id: p.id, slug: p.slug})}}">
-                        <span class="pseudoUser{{ p.role.id }}">{{ p.username }}</span>
+                    <a class="username" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug})}}">
+                        <span class="pseudoUser{{ p.participant.role.id }}">{{ p.participant.username }}</span>
                     </a>
-                    <div class="staffRole">{{ p.role.nom }}</div>
+                    <div class="staffRole">{{ p.participant.role.nom }}</div>
                 </div>
                 {% endfor %}
             </div>

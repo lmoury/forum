@@ -116,19 +116,19 @@ class User implements UserInterface,\Serializable
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Messagerie", mappedBy="expediteur")
-     */
-    private $messageries;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Messagerie", mappedBy="participants")
-     */
-    private $participant;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ForumDiscussionView", mappedBy="user")
      */
     private $forumDiscussionViewUser;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Conversation", mappedBy="expediteur")
+     */
+    private $expediteurs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ConversationUser", mappedBy="participant")
+     */
+    private $conversationUsers;
 
 
     public function __construct() {
@@ -145,6 +145,8 @@ class User implements UserInterface,\Serializable
         $this->messageries = new ArrayCollection();
         $this->participant = new ArrayCollection();
         $this->forumDiscussionViewUser = new ArrayCollection();
+        $this->expediteurs = new ArrayCollection();
+        $this->conversationUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -475,65 +477,6 @@ class User implements UserInterface,\Serializable
     }
 
     /**
-     * @return Collection|Messagerie[]
-     */
-    public function getMessageries(): Collection
-    {
-        return $this->messageries;
-    }
-
-    public function addMessagery(Messagerie $messagery): self
-    {
-        if (!$this->messageries->contains($messagery)) {
-            $this->messageries[] = $messagery;
-            $messagery->setExpediteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessagery(Messagerie $messagery): self
-    {
-        if ($this->messageries->contains($messagery)) {
-            $this->messageries->removeElement($messagery);
-            // set the owning side to null (unless already changed)
-            if ($messagery->getExpediteur() === $this) {
-                $messagery->setExpediteur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Messagerie[]
-     */
-    public function getParticipant(): Collection
-    {
-        return $this->participant;
-    }
-
-    public function addParticipant(Messagerie $participant): self
-    {
-        if (!$this->participant->contains($participant)) {
-            $this->participant[] = $participant;
-            $participant->addParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(Messagerie $participant): self
-    {
-        if ($this->participant->contains($participant)) {
-            $this->participant->removeElement($participant);
-            $participant->removeParticipant($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|ForumDiscussionView[]
      */
     public function getForumDiscussionViewUser(): Collection
@@ -558,6 +501,68 @@ class User implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($forumDiscussionViewUser->getUser() === $this) {
                 $forumDiscussionViewUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getExpediteurs(): Collection
+    {
+        return $this->expediteurs;
+    }
+
+    public function addExpediteur(Conversation $expediteur): self
+    {
+        if (!$this->expediteurs->contains($expediteur)) {
+            $this->expediteurs[] = $expediteur;
+            $expediteur->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpediteur(Conversation $expediteur): self
+    {
+        if ($this->expediteurs->contains($expediteur)) {
+            $this->expediteurs->removeElement($expediteur);
+            // set the owning side to null (unless already changed)
+            if ($expediteur->getExpediteur() === $this) {
+                $expediteur->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ConversationUser[]
+     */
+    public function getConversationUsers(): Collection
+    {
+        return $this->conversationUsers;
+    }
+
+    public function addConversationUser(ConversationUser $conversationUser): self
+    {
+        if (!$this->conversationUsers->contains($conversationUser)) {
+            $this->conversationUsers[] = $conversationUser;
+            $conversationUser->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversationUser(ConversationUser $conversationUser): self
+    {
+        if ($this->conversationUsers->contains($conversationUser)) {
+            $this->conversationUsers->removeElement($conversationUser);
+            // set the owning side to null (unless already changed)
+            if ($conversationUser->getParticipant() === $this) {
+                $conversationUser->setParticipant(null);
             }
         }
 

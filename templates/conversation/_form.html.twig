@@ -7,12 +7,12 @@
     {% endfor %}
     <label class="mt-3">Participants:</label>
     <div class="input-group mb-3">
-        {{ form_widget(form.participants) }}
-        {{ form_errors(form.participants) }}
+        {{ form_widget(form.participant) }}
+        {{ form_errors(form.participant) }}
     </div>
     <div class="input-group mt-3 mb-3">
-        {{ form_widget(form.titre, { 'attr': {'placeholder': 'Ajouter un titre'} }) }}
-        {{ form_errors(form.titre) }}
+        {{ form_widget(form.conversation.titre, { 'attr': {'placeholder': 'Ajouter un titre'} }) }}
+        {{ form_errors(form.conversation.titre) }}
     </div>
     <textarea class="editor form-control" name="tMessage" rows="5" id="tMessage"></textarea>
 </div>

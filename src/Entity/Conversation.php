@@ -9,9 +9,9 @@ use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MessagerieRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ConversationRepository")
  */
-class Messagerie
+class Conversation
 {
     /**
      * @ORM\Id()
@@ -21,7 +21,7 @@ class Messagerie
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messageries")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="expediteurs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $expediteur;
@@ -40,23 +40,17 @@ class Messagerie
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_creation;
+    private $created_at;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
+     * @ORM\OneToMany(targetEntity="App\Entity\ConversationUser", mappedBy="conversation")
      */
-    private $lu = false;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="participant")
-     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
-     */
-    private $participants;
+    private $conversationMessage;
 
     public function __construct()
     {
-        $this->date_creation = new \DateTime();
-        $this->participants = new ArrayCollection();
+        $this->created_at = new \DateTime();
+        $this->conversationMessage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,51 +98,44 @@ class Messagerie
         return (new Slugify())->slugify($this->titre);
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date_creation;
+        return $this->created_at;
     }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
-        $this->date_creation = $date_creation;
-
-        return $this;
-    }
-
-    public function getLu(): ?bool
-    {
-        return $this->lu;
-    }
-
-    public function setLu(bool $lu): self
-    {
-        $this->lu = $lu;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|ConversationUser[]
      */
-    public function getParticipants(): Collection
+    public function getConversationMessage(): Collection
     {
-        return $this->participants;
+        return $this->conversationMessage;
     }
 
-    public function addParticipant(User $participant): self
+    public function addConversationMessage(ConversationUser $conversationMessage): self
     {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
+        if (!$this->conversationMessage->contains($conversationMessage)) {
+            $this->conversationMessage[] = $conversationMessage;
+            $conversationMessage->setConversation($this);
         }
 
         return $this;
     }
 
-    public function removeParticipant(User $participant): self
+    public function removeConversationMessage(ConversationUser $conversationMessage): self
     {
-        if ($this->participants->contains($participant)) {
-            $this->participants->removeElement($participant);
+        if ($this->conversationMessage->contains($conversationMessage)) {
+            $this->conversationMessage->removeElement($conversationMessage);
+            // set the owning side to null (unless already changed)
+            if ($conversationMessage->getConversation() === $this) {
+                $conversationMessage->setConversation(null);
+            }
         }
 
         return $this;

@@ -11,7 +11,7 @@
 <h1 class="p-title-value text-center">Conversations</h1>
 
     <div id="btn-conversation-add">
-    	<a href="{{ path('conversations.new') }}">
+    	<a href="{{ path('conversation.new') }}">
     		<span>Démarrer une conversation</span>
     	</a>
     </div>
@@ -32,18 +32,18 @@
                     <tbody>
 
                     {% for u in conversations %}
-                        <tr class="nodeLigne {% if u.lu == false %}converLigne{% endif %}">
+                        <tr class="nodeLigne {% for p in u.conversationMessage if p.participant == app.user and p.lu == false %}converLigne{% endfor %}">
                             <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
                             <td class="discussionCol2">
                                 <div class="nodeTitle">
-                                <a href="{{ path('conversations.message', {id: u.id, slug: u.slug})}}">{{ u.titre }}</a>
+                                <a href="{{ path('conversation.message', {id: u.id, slug: u.slug})}}">{{ u.titre }}</a>
                                 </div>
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
-                                        {% for p in u.participants %}
-                                        <a class="pseudoUser{{ p.role.id }}" href="{{ path('membres.profil', {id: p.id, slug: p.slug}) }}">{{ p.username }}</a>,
+                                        {% for p in u.conversationMessage %}
+                                        <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
                                         {% endfor %}
-                                        <span><i class="fa fa-clock-o"></i> {{ date_passed(u.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                        <span><i class="fa fa-clock-o"></i> {{ date_passed(u.createdAt | date('d-m-Y H:i:s')) }}</span>
                                     </span>
                                 </div>
                             </td>
@@ -51,7 +51,7 @@
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         <div><span>Réponses:</span> <span style="float: right;">0</span></div>
-                                        <div><span>Participants:</span> <span style="float: right;">{{ u.participants.count }}</span></div>
+                                        <div><span>Participants:</span> <span style="float: right;">{{ u.conversationMessage.count }}</span></div>
                                     </div>
                                 </div>
                             </td>
@@ -59,7 +59,7 @@
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         <div>
-                                            <i class="fa fa-clock-o"></i> {{ date_passed(u.dateCreation | date('d-m-Y H:i:s')) }}
+                                            <i class="fa fa-clock-o"></i> {{ date_passed(u.createdAt | date('d-m-Y H:i:s')) }}
                                         </div>
                                         <div>
                                             <span class="noMessages"><i class="fa fa-user-o"></i>

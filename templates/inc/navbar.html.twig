@@ -67,7 +67,7 @@
                 </li>
 
                 {% set nombreMessage = 0 %}
-                {% for nombre in app.user.participant if nombre.lu == false %}
+                {% for nombre in app.user.conversationUsers if nombre.lu == false %}
                 {% set nombreMessage = loop.index %}
                 {% endfor %}
                 <li class="nav-item dropdown" id="profil-pop-messagerie">
@@ -78,13 +78,13 @@
                     <ul class="dropdown-menu" id="dropdown-content-messagerie">
                         <span class="menu-arrow"></span>
                         <h3 class="menu-header">Conversations</h3>
-                        {% for us in app.user.participant if us.lu == false %}
+                        {% for us in app.user.conversationUsers if us.lu == false %}
                         <div class="messagerie-user">
-                            <a href="{{ path('conversations.message', {id: us.id, slug: us.slug})}}">{{ us.titre }}</a>
+                            <a href="{{ path('conversation.message', {id: us.participant.id, slug: us.participant.slug})}}">{{ us.conversation.titre }}</a>
                             <div>
                                 <span class="noMessages"><i class="fa fa-user-o"></i>
-                                    <a class="pseudoUser{{ us.expediteur.role.id }}" href="{{ path('membres.profil', {id: us.expediteur.id, slug: us.expediteur.slug}) }}">{{ us.expediteur.username }}</a>,
-                                    <i class="fa fa-clock-o"></i> {{ date_passed(us.dateCreation | date('d-m-Y H:i:s')) }}
+                                    <a class="pseudoUser{{ us.conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: us.conversation.expediteur.id, slug: us.conversation.expediteur.slug}) }}">{{ us.conversation.expediteur.username }}</a>,
+                                    <i class="fa fa-clock-o"></i> {{ date_passed(us.conversation.createdAt | date('d-m-Y H:i:s')) }}
                                 </span>
                             </div>
                             </a>
@@ -98,7 +98,7 @@
 								<a href="{{ path('conversations') }}">Afficher l'ensemble…</a>
 							</span>
 							<span class="menu-footer-opposite float-right">
-								<a href="{{ path('conversations.new') }}">Nouvelle conversation</a>
+								<a href="{{ path('conversation.new') }}">Nouvelle conversation</a>
 							</span>
 						</div>
                     </ul>
