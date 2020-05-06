@@ -37,7 +37,7 @@
                 {% endif %}
                 <li>
                     <a href="{{ path('membres.bannir', {id: user.id, slug: user.slug}) }}">
-                        <i class="fa fa-ban"></i> {% if user.role.id == 1 %}Bannir le membre{% else %}Débannir le membre{% endif %}
+                        <i class="fa fa-ban"></i> {% if user.role.id == 5 %}Débannir le membre{% else %}Bannir le membre{% endif %}
                     </a>
                 </li>
             </ul>

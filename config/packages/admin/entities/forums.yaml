@@ -14,7 +14,3 @@ easy_admin:
                     - {property: 'parent'}
                     - {property: 'icon'}
                     - {property: 'ordre'}
-        Messagerie:
-            class: App\Entity\Messagerie
-            list:
-                title: 'Messagerie'

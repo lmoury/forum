@@ -26,13 +26,15 @@ class ConversationRepository extends ServiceEntityRepository
     public function getListConversations($value)
     {
         return $this->createQueryBuilder('c')
-            ->addSelect('t')
+            ->addSelect('c', 't')
             ->join('c.conversationMessage', 't')
             ->where('t.participant = :val1')
             ->setParameter('val1', $value)
             ->orWhere('c.expediteur = :val2')
             ->setParameter('val2', $value)
-            ->orderBy('c.created_at', 'DESC')
+            //->addOrderBy('t.important', 'DESC')
+            ->addOrderBy('c.created_at', 'DESC')
+
             ->getQuery()
             ->getResult()
         ;

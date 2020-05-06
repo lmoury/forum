@@ -45,6 +45,8 @@ class UserRoleFixtures extends Fixture implements OrderedFixtureInterface
         $this->addReference('role1', $role1);
         $this->addReference('role2', $role2);
         $this->addReference('role3', $role3);
+        $this->addReference('role4', $role4);
+        $this->addReference('role5', $role5);
     }
 
     public function getOrder() {

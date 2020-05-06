@@ -9,6 +9,12 @@
     <li class="breadcrumb-item active">{{ conversation.titre }}</li>
 </ol>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
 <h1 class="p-title-value text-center">{{ conversation.titre }}</h1>
 <p class="text-center pDescription">
 	<i class="fa fa-users"></i> <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>,
@@ -40,9 +46,17 @@
         <br/>
         {% endif %}
         <div class="btn-group float-right">
-            <div id="btn-article-add" class="mr-2"><a href="" class="">Fermer la conversation</a></div>
-            <div id="btn-article-add" class="mr-2"><a href="" class="">Définir comme important</a></div>
-            <div id="btn-article-add"><a href="" class="">Quitter la conversation</a></div>
+            <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Définir comme important</a></div>
+            {% if app.user == conversation.expediteur or is_granted('ROLE_MODERATEUR') %}
+                {% if conversation.locked %}
+                <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Réouvrir la conversation</a></div>
+                {% else %}
+                <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Fermer la conversation</a></div>
+                {% endif %}
+            {% endif %}
+            {% if app.user != conversation.expediteur and conversation.conversationMessage.count > 1 %}
+            <div id="btn-article-add"><a href="">Quitter la conversation</a></div>
+            {% endif %}
         </div>
         <div class="clearfix"></div>
         <br/>
@@ -68,6 +82,11 @@
             </div>
         </div>
         <br/>
+        {% if conversation.locked %}
+        <div class="alert alert-danger">
+            <strong><i class="fa fa-warning"></i> Statut de la conversation:</strong> N'est pas ouverte pour d'autres réponses.
+        </div>
+        {% else %}
         <div id="content-section" class="no-padding">
         	<form action="" method="POST" id="formAncre">
         		<div class="article-content">
@@ -83,7 +102,7 @@
         		<div class="clearfix"></div>
         	</form>
         </div>
-
+        {% endif %}
     </div>
     <div class="col-sm-3">
         <div class="sidebar-content">

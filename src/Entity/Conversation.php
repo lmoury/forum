@@ -47,6 +47,11 @@ class Conversation
      */
     private $conversationMessage;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $locked = false;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -137,6 +142,18 @@ class Conversation
                 $conversationMessage->setConversation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): self
+    {
+        $this->locked = $locked;
 
         return $this;
     }

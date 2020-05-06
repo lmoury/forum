@@ -41,6 +41,7 @@
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
                                         {% for p in u.conversationMessage %}
+                                        {{dump(u) }}
                                         <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
                                         {% endfor %}
                                         <span><i class="fa fa-clock-o"></i> {{ date_passed(u.createdAt | date('d-m-Y H:i:s')) }}</span>

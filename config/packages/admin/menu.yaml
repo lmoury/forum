@@ -5,7 +5,6 @@ easy_admin:
                 - '/assets/css/admin.css'
                 - '/assets/css/username.css'
         menu:
-            - {entity: 'Messagerie', icon: 'share-alt', label: 'Messagerie'}
             - label: 'Dashboard'
               icon: 'dashboard'
               children:
