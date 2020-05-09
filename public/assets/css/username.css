@@ -66,7 +66,7 @@
 }
 
 
-.userBannerDiscu.b3
+.userBannerDiscu.b3, .userBannerDiscuV2.b3
 {
 color: white;
 background-color: red;
@@ -76,7 +76,7 @@ border-color: #F88;
 background-color: #F88;
 }
 
-.userBannerDiscu.b1
+.userBannerDiscu.b1, .userBannerDiscuV2.b1
 {
   color: white;
   background-color: green;
@@ -86,7 +86,7 @@ background-color: #F88;
   background-color: darkgreen;
 }
 
-.userBannerDiscu.b5
+.userBannerDiscu.b5, .userBannerDiscuV2.b5
 {
   color: black;
   background-color: gold;
@@ -106,12 +106,12 @@ background-color: #F88;
   background-color: gold;
 }
 
-.userBannerDiscu.b2
+.userBannerDiscu.b2, .userBannerDiscuV2.b2
 {
   color: white;
   background-color: royalblue;
   border-color: #81A9E1;
 }
-.wrappedDiscu.userBannerDiscu.b4 span.after , .wrappedDiscu.userBannerDiscu.b4 span.before {
+.wrappedDiscu.userBannerDiscu.b2 span.after , .wrappedDiscu.userBannerDiscu.b2 span.before {
   background-color: #81A9E1;
 }

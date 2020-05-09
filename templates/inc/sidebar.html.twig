@@ -9,8 +9,10 @@
 	{{ include('inc/sidebar/sidebar_connexion.html.twig') }}
 	<br/>
 	{% endif %}
+	{% if is_granted('ROLE_USER') %}
 	{{ render(controller("App\\Controller\\SidebarController:forum")) }}
 	<br/>
+	{% endif %}
 	{{ render(controller("App\\Controller\\SidebarController:statistique")) }}
 	<br/>
 	{{ render(controller("App\\Controller\\SidebarController:social")) }}

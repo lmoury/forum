@@ -27,9 +27,13 @@ class LayoutController extends AbstractController
      */
     public function notice(NoticeRepository $repository)
     {
+
         if ($this->getUser() !== null) {
             $this->getUser()->setDateVisite(new \DateTime());
             $this->em->flush();
+            if($this->getUser()->getRole()->getId() == 5) {
+                //return $this->redirectToRoute('/');
+            }
         }
         $notices = $repository->findAll();
         return $this->render('inc/notice.html.twig', [

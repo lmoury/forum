@@ -130,6 +130,11 @@ class User implements UserInterface,\Serializable
      */
     private $conversationUsers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ConversationReponse", mappedBy="auteur")
+     */
+    private $conversationRepAuteur;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -147,6 +152,7 @@ class User implements UserInterface,\Serializable
         $this->forumDiscussionViewUser = new ArrayCollection();
         $this->expediteurs = new ArrayCollection();
         $this->conversationUsers = new ArrayCollection();
+        $this->conversationRepAuteur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -563,6 +569,37 @@ class User implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($conversationUser->getParticipant() === $this) {
                 $conversationUser->setParticipant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ConversationReponse[]
+     */
+    public function getConversationRepAuteur(): Collection
+    {
+        return $this->conversationRepAuteur;
+    }
+
+    public function addConversationRepAuteur(ConversationReponse $conversationRepAuteur): self
+    {
+        if (!$this->conversationRepAuteur->contains($conversationRepAuteur)) {
+            $this->conversationRepAuteur[] = $conversationRepAuteur;
+            $conversationRepAuteur->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversationRepAuteur(ConversationReponse $conversationRepAuteur): self
+    {
+        if ($this->conversationRepAuteur->contains($conversationRepAuteur)) {
+            $this->conversationRepAuteur->removeElement($conversationRepAuteur);
+            // set the owning side to null (unless already changed)
+            if ($conversationRepAuteur->getAuteur() === $this) {
+                $conversationRepAuteur->setAuteur(null);
             }
         }
 

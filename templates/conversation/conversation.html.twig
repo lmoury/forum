@@ -17,16 +17,16 @@
 
 <h1 class="p-title-value text-center">{{ conversation.titre }}</h1>
 <p class="text-center pDescription">
-	<i class="fa fa-users"></i> <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>,
     {% set blockMessageAutor = false %}
     {% for p in conversation.conversationMessage %}
         {% if p.participant.role.id == 3 or p.participant.role.id == 2 %}
          {% set blockMessageAutor = true %}
         {% endif %}
-        <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
+        <i class="fa fa-users"></i> <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
     {% endfor %}
     <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span>.
 </p>
+
 <div class="row">
     <div class="col-sm-9">
         {% if blockMessageAutor == false and conversation.expediteur.role.id != 3 and conversation.expediteur.role.id != 2  %}
@@ -46,7 +46,14 @@
         <br/>
         {% endif %}
         <div class="btn-group float-right">
+            {% if blockMessageAutor == false and conversation.expediteur.role.id != 3 and conversation.expediteur.role.id != 2  %}
+            <div id="btn-article-add" class="mr-2"><a data-toggle="modal" href="#" data-target="#modalAddStaff" data-id="{{ conversation.id }}">Inviter un membre de l'équipe</a></div>
+            {% endif %}
+            {% for p in conversation.conversationMessage if p.participant == app.user and p.important == false %}
             <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Définir comme important</a></div>
+            {% else %}
+            <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Définir comme plus important</a></div>
+            {% endfor %}
             {% if app.user == conversation.expediteur or is_granted('ROLE_MODERATEUR') %}
                 {% if conversation.locked %}
                 <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Réouvrir la conversation</a></div>
@@ -54,12 +61,17 @@
                 <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Fermer la conversation</a></div>
                 {% endif %}
             {% endif %}
-            {% if app.user != conversation.expediteur and conversation.conversationMessage.count > 1 %}
-            <div id="btn-article-add"><a href="">Quitter la conversation</a></div>
+            {% if conversation.conversationMessage.count > 1 %}
+            <div id="btn-article-add"><a href="{{ path('conversation.quitter', {id: conversation.id})}}">Quitter la conversation</a></div>
+            {% else %}
+            <div id="btn-article-add"><a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" >Supprimer la conversation</a></div>
             {% endif %}
         </div>
         <div class="clearfix"></div>
         <br/>
+        <div class="pagination">
+            {{ knp_pagination_render(reponses) }}
+        </div>
         <div id="content-section" class="no-padding">
             <section>
                 <div class="conversation-padding">
@@ -68,7 +80,7 @@
                     </div>
                     <div class="conversation-expediteur">
                         <a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a>
-                        <div class="staffRole">{{ conversation.expediteur.role.nom }}</div>
+                        <div class="staffRole userBannerDiscuV2 b{{ conversation.expediteur.role.id }}">{{ conversation.expediteur.role.nom }}</div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -82,13 +94,41 @@
             </div>
         </div>
         <br/>
+
+        {% for rep in reponses %}
+            <div id="content-section" class="no-padding">
+                <section>
+                    <div class="conversation-padding">
+                        <div class="visitor-avatar mr-3 mb-2">
+                            <img width="50" height="50" src="{{ vich_uploader_asset( rep.auteur, 'imageFile') }}" alt="{{  rep.auteur.username }}" />
+                        </div>
+                        <div class="conversation-expediteur">
+                            <a class="pseudoUser{{ rep.auteur.role.id }}" href="{{ path('membres.profil', {id: rep.auteur.id, slug: rep.auteur.slug}) }}">{{ rep.auteur.username }}</a>
+                            <div class="staffRole userBannerDiscuV2 b{{ rep.auteur.role.id }}">{{ rep.auteur.role.nom }}</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </section>
+                <div class="conversation-padding message-attribution-bg">
+                    <span class="message-userArrow userArrow-reponse"></span>
+                    <span><i class="fa fa-clock-o"></i> {{ date_passed(rep.createdAt | date('d-m-Y H:i:s')) }}</span>
+                </div>
+                <div class="conversation-padding">
+                    {{ parser(rep.message) | raw }}
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+        <div class="pagination">
+            {{ knp_pagination_render(reponses) }}
+        </div>
         {% if conversation.locked %}
         <div class="alert alert-danger">
             <strong><i class="fa fa-warning"></i> Statut de la conversation:</strong> N'est pas ouverte pour d'autres réponses.
         </div>
         {% else %}
         <div id="content-section" class="no-padding">
-        	<form action="" method="POST" id="formAncre">
+        	<form action="{{ path("conversation.reponse.new", {id: conversation.id}) }}" method="POST">
         		<div class="article-content">
         			<div>
         				<textarea class="editor form-control" name="tMessage" rows="5" id="comment"></textarea>
@@ -115,11 +155,19 @@
                     <dt><span>Participants: </span></dt>
                     <dd><span>{{ conversation.conversationMessage.count }}</span></dd>
                     <dt><span>Réponses: </span></dt>
-                    <dd><span>0</span></dd>
-                    <dt><span>Dernière réponse: </span></dt>
-                    <dd><span>{{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span></dd>
-                    <dt><span>Dernière réponse par: </span></dt>
-                    <dd><span><a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a></span></dd>
+                    <dd><span>{{ conversation.conversationReponses.count }}</span></dd>
+                    {% if conversation.conversationReponses.count > 0 %}
+                        {% set  lastRep = reponses | last %}
+                        <dt><span>Dernière réponse: </span></dt>
+                        <dd><span>{{ date_passed(lastRep.createdAt | date('d-m-Y H:i:s')) }}</span></dd>
+                        <dt><span>Dernière réponse par: </span></dt>
+                        <dd><span><a class="pseudoUser{{ lastRep.auteur.role.id }}" href="{{ path('membres.profil', {id: lastRep.auteur.id, slug: lastRep.auteur.slug}) }}">{{ lastRep.auteur.username }}</a></span></dd>
+                    {% else %}
+                        <dt><span>Dernière réponse: </span></dt>
+                        <dd><span>{{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span></dd>
+                        <dt><span>Dernière réponse par: </span></dt>
+                        <dd><span><a class="pseudoUser{{ conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug}) }}">{{ conversation.expediteur.username }}</a></span></dd>
+                        {% endif %}
                 </dl>
             </div>
         </div>
@@ -130,15 +178,6 @@
                 <span class="">Participants à la conversation</span>
             </div>
             <div class="sidebar-body">
-                <div class="sidebar-content-staf">
-                    <div class="visitor-avatar">
-                        <img width="38" height="38" alt="{{ conversation.expediteur.username }}" src="{{ vich_uploader_asset(  conversation.expediteur, 'imageFile') }}"/>
-                    </div>
-                    <a class="username" href="{{ path('membres.profil', {id: conversation.expediteur.id, slug: conversation.expediteur.slug})}}">
-                        <span class="pseudoUser{{ conversation.expediteur.role.id }}">{{ conversation.expediteur.username }}</span>
-                    </a>
-                    <div class="staffRole">{{ conversation.expediteur.role.nom }}</div>
-                </div>
                 {% for p in conversation.conversationMessage %}
                 <div class="sidebar-content-staf">
                     <div class="visitor-avatar">
@@ -154,11 +193,51 @@
         </div>
     </div>
 </div>
+<!-- Modal ajoutUserStaff -->
+<div class="modal fade" id="modalAddStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<!-- Modal delete conversation -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Vos commentaires seront supprimé également</div>
+            </div>
+            <div class="modal-footer">
+            <form method="post" action="{{ path('conversation.delete', {id: conversation.id})}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ conversation.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
+    <script>
+    $('#modalAddStaff').on('shown.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const id = button.attr('data-id');
+        var url = "{{ (path('conversation.add.staff', {id: 'ReplaceMeWithCorrectValue'})) }}";
+        url = url.replace("ReplaceMeWithCorrectValue", id);
+        var modal = $(this);
+        $.ajax({
+            url: url,
+            success: function(data) {
+                modal.find('.modal-content').html(data);
+            }
+        });
+    });
+    </script>
     <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
     <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
     <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>

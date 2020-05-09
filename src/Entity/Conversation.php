@@ -21,7 +21,7 @@ class Conversation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="expediteurs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="expediteurs", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $expediteur;
@@ -43,7 +43,7 @@ class Conversation
     private $created_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ConversationUser", mappedBy="conversation")
+     * @ORM\OneToMany(targetEntity="App\Entity\ConversationUser", mappedBy="conversation", fetch="EAGER" , cascade={"remove"})
      */
     private $conversationMessage;
 
@@ -52,10 +52,16 @@ class Conversation
      */
     private $locked = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ConversationReponse", mappedBy="conversationRep", fetch="EAGER", cascade={"remove"})
+     */
+    private $conversationReponses;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->conversationMessage = new ArrayCollection();
+        $this->conversationReponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +160,37 @@ class Conversation
     public function setLocked(bool $locked): self
     {
         $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ConversationReponse[]
+     */
+    public function getConversationReponses(): Collection
+    {
+        return $this->conversationReponses;
+    }
+
+    public function addConversationReponse(ConversationReponse $conversationReponse): self
+    {
+        if (!$this->conversationReponses->contains($conversationReponse)) {
+            $this->conversationReponses[] = $conversationReponse;
+            $conversationReponse->setConversationRep($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversationReponse(ConversationReponse $conversationReponse): self
+    {
+        if ($this->conversationReponses->contains($conversationReponse)) {
+            $this->conversationReponses->removeElement($conversationReponse);
+            // set the owning side to null (unless already changed)
+            if ($conversationReponse->getConversationRep() === $this) {
+                $conversationReponse->setConversationRep(null);
+            }
+        }
 
         return $this;
     }

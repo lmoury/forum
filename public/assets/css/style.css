@@ -1208,6 +1208,16 @@ td.discussionCol1 {
     margin-left: -6px;
     margin-right: -6px;
 }
+.userBannerDiscuV2 {
+    background: transparent;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+    padding: 1px 5px;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    display: table;
+    margin-top: 1px;
+}
 .userBannerDiscu.wrappedDiscu span.before {
     border-top-left-radius: 3px;
     left: -1px;
@@ -1309,6 +1319,9 @@ td.discussionCol1 {
     border-top-width: 0px;
     border-bottom-color: rgba(0, 0, 0, 0.1);
 }
+.userArrow-reponse {
+    left: 20px;
+}
 .staffRole {
     font-size: 13px;
 }
@@ -1353,6 +1366,7 @@ td.discussionCol1 {
 	box-shadow: 0 .25rem .75rem rgba(0,0,0,.1);
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
+    border-top: solid #2f78a0;
 }
 .sidebar-body span.virguleDisplay::after:last-child {
 	content: ',';
@@ -1417,4 +1431,32 @@ dl.widget-conversation {
 }
 #dateInputCustom {
     padding-left: 0px;
+}
+
+#modalAddStaff .modal-dialog {
+    max-width: 60%;
+}
+#modalAddStaff .modal-footer > :not(:first-child) {
+	margin-left: 0;
+}
+#modalAddStaff .modal-footer {
+	display: block;
+	padding: 0;
+}
+#modalAddStaff .modal-header {
+	background: #2f78a0;
+	color: white;
+}
+#modalAddStaff .modal-content {
+	border: none;
+}
+#modalAddStaff .close {
+    color: white;
+}
+#modalAddStaff .modal-body {
+    padding: 0;
+}
+#modalAddStaff .modal-body-alert {
+    padding: 1rem 1rem 0 1rem;
+    border-bottom: 1px solid rgba(0,0,0,.1);
 }

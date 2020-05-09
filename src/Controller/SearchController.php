@@ -14,9 +14,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
-/**
- * @Security("has_role('ROLE_USER')")
- */
 class SearchController extends AbstractController
 {
 
@@ -41,7 +38,8 @@ class SearchController extends AbstractController
 
 
     /**
-    * @Route("/search", name="search")
+     * @Route("/search", name="search")
+     * @Security("has_role('ROLE_USER')")
      * @param ObjectManager em
      * @param Request $request
      * @param ForumDiscussionRepository $repository

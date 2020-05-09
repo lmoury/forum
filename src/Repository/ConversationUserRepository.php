@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\ConversationUser;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,22 +21,36 @@ class ConversationUserRepository extends ServiceEntityRepository
         parent::__construct($registry, ConversationUser::class);
     }
 
-    // /**
-    //  * @return ConversationUser[] Returns an array of ConversationUser objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    /**
+    * @return Query
+    */
+    public function getList($participant): Query
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->addSelect('c', 't')
+            ->join('c.conversation', 't')
+            ->andWhere('c.participant = :val')
+            ->setParameter('val', $participant)
+            ->addOrderBy('c.important', 'DESC')
+            ->addOrderBy('t.created_at', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+
+    /**
+    * @return ConversationUser[] Returns an array of ConversationUser objects
+    */
+    public function getListConversationUser($conversation)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.conversation = :val')
+            ->setParameter('val', $conversation)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
 
     public function getConversationUser($conversation, $participant): ?ConversationUser

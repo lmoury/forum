@@ -8,6 +8,12 @@
     <li class="breadcrumb-item active">Conversations</li>
 </ol>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
 <h1 class="p-title-value text-center">Conversations</h1>
 
     <div id="btn-conversation-add">
@@ -18,6 +24,9 @@
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-sm-12">
+            <div class="pagination">
+                {{ knp_pagination_render(conversations) }}
+            </div>
             <div class="discussionRepAfi no-padding" id="content-section">
                 <table>
                     <thead>
@@ -32,27 +41,33 @@
                     <tbody>
 
                     {% for u in conversations %}
-                        <tr class="nodeLigne {% for p in u.conversationMessage if p.participant == app.user and p.lu == false %}converLigne{% endfor %}">
+                        <tr class="nodeLigne {% for p in u.conversation.conversationMessage if p.participant == app.user and p.lu == false %}converLigne{% endfor %}">
                             <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
                             <td class="discussionCol2">
+                                {% if u.conversation.locked %}
+                                <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
+                                {% endif %}
+                                {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important %}
+                                <span style="float:right; color:#f79e12;"><i class="fa fa-thumb-tack"></i></span>
+                                {% endfor %}
                                 <div class="nodeTitle">
-                                <a href="{{ path('conversation.message', {id: u.id, slug: u.slug})}}">{{ u.titre }}</a>
+                                <a href="{{ path('conversation.message', {id: u.conversation.id, slug: u.conversation.slug})}}">{{ u.conversation.titre }}</a>
                                 </div>
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
-                                        {% for p in u.conversationMessage %}
-                                        {{dump(u) }}
+                                        {% for p in u.conversation.conversationMessage %}
+
                                         <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
                                         {% endfor %}
-                                        <span><i class="fa fa-clock-o"></i> {{ date_passed(u.createdAt | date('d-m-Y H:i:s')) }}</span>
+                                        <span><i class="fa fa-clock-o"></i> {{ date_passed(u.conversation.createdAt | date('d-m-Y H:i:s')) }}</span>
                                     </span>
                                 </div>
                             </td>
                             <td class="discussionCol3 discussionRepAfiBis">
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
-                                        <div><span>Réponses:</span> <span style="float: right;">0</span></div>
-                                        <div><span>Participants:</span> <span style="float: right;">{{ u.conversationMessage.count }}</span></div>
+                                        <div><span>Réponses:</span> <span style="float: right;">{{ u.conversation.conversationReponses.count }}</span></div>
+                                        <div><span>Participants:</span> <span style="float: right;">{{ u.conversation.conversationMessage.count }}</span></div>
                                     </div>
                                 </div>
                             </td>
@@ -60,11 +75,11 @@
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         <div>
-                                            <i class="fa fa-clock-o"></i> {{ date_passed(u.createdAt | date('d-m-Y H:i:s')) }}
+                                            <i class="fa fa-clock-o"></i> {{ date_passed(u.conversation.createdAt | date('d-m-Y H:i:s')) }}
                                         </div>
                                         <div>
                                             <span class="noMessages"><i class="fa fa-user-o"></i>
-                                                <a class="pseudoUser{{ u.expediteur.role.id }}" href="{{ path('membres.profil', {id: u.expediteur.id, slug: u.expediteur.slug}) }}">{{ u.expediteur.username }}</a>
+                                                <a class="pseudoUser{{ u.conversation.expediteur.role.id }}" href="{{ path('membres.profil', {id: u.conversation.expediteur.id, slug: u.conversation.expediteur.slug}) }}">{{ u.conversation.expediteur.username }}</a>
                                             </span>
                                         </div>
                                     </div>
@@ -84,6 +99,9 @@
                 </table>
             </div>
             <br/>
+            <div class="pagination">
+                {{ knp_pagination_render(conversations) }}
+            </div>
         </div>
     </div>
 {% endblock %}

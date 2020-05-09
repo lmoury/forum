@@ -59,6 +59,7 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/forums/{slug}.{id}", name="forum.discussions", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
+     * @Security("has_role('ROLE_USER')")
      * @param PaginatorInterface paginator
      * @param ForumCategorie $categorie
      * @param ForumDiscussionRepository $repository
@@ -71,7 +72,7 @@ class ForumController extends AbstractController
              return $this->redirectToRoute('forum.discussions', ['id' => $categorie->getId(), 'slug' => $categorie->getSlug()], 301);
          }
 
-         $discussions =  $this->paginator->paginate(
+         $discussions = $this->paginator->paginate(
              $repository->getListDiscussions($categorie->getId()),
              $request->query->getInt('page', 1),
              10

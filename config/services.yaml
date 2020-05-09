@@ -60,3 +60,9 @@ services:
     App\Security\Voter\ForumCommentaireVoter:
         tags:
             - { name: security.voter }
+
+    lre_platform.curentuser:
+        class: App\Form\ConversationUserType
+        arguments:
+            - "@security.token_storage"
+        tags: [{ name: form.type }]

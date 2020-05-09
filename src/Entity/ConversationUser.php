@@ -25,7 +25,7 @@ class ConversationUser
     private $conversation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="conversationUsers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="conversationUsers", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $participant;
