@@ -1259,8 +1259,11 @@ td.discussionCol1 {
 	float: right;
 	margin-bottom: 20px;
 }
-.converLigne, .ligneImportantDiscu {
+.ligneImportantDiscu {
 	background-color: #ddd;
+}
+.converLigne {
+	background-color: #bbb;
 }
 .alertMessagerie {
 	font-size: 10px;

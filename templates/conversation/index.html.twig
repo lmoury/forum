@@ -41,7 +41,7 @@
                     <tbody>
 
                     {% for u in conversations %}
-                        <tr class="nodeLigne {% for p in u.conversation.conversationMessage if p.participant == app.user and p.lu == false %}converLigne{% endfor %}">
+                        <tr class="nodeLigne {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important %}ligneImportantDiscu{% endfor %} {% for p in u.conversation.conversationMessage if p.participant == app.user and p.lu == false %}converLigne{% endfor %}">
                             <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
                             <td class="discussionCol2">
                                 {% if u.conversation.locked %}
@@ -75,12 +75,12 @@
                                         {% if u.conversation.conversationMessage.count > 1 %}
                                         <a href="{{ path('conversation.quitter', {id: u.conversation.id})}}">Quitter la conversation</a>
                                         {% else %}
-                                        <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" >Supprimer la conversation</a>
+                                        <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete{{ u.conversation.id }}" >Supprimer la conversation</a>
                                         {% endif %}
     								</ul>
     							</span>
                                 <!-- Modal delete conversation -->
-                                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                <div class="modal fade" id="delete{{ u.conversation.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-body">
