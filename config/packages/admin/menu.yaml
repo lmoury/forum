@@ -25,3 +25,4 @@ easy_admin:
               children:
                   - {entity: 'ForumCategorie', icon: 'list-ol', label: 'Liste des forums'}
                   - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }
+                  - {entity: 'Tag', icon: 'tags', label: 'Tags'}

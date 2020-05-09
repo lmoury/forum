@@ -14,3 +14,15 @@ easy_admin:
                     - {property: 'parent'}
                     - {property: 'icon'}
                     - {property: 'ordre'}
+        Tag:
+            class: App\Entity\Tag
+            list:
+                title: 'Tag'
+            new:
+                title: 'Nouveau tag'
+            edit:
+                title: 'Editer le tag'
+            form:
+                fields:
+                    - {property: 'nom'}
+                    - {property: 'slug'}
