@@ -72,8 +72,32 @@
                                             {% endif %}
                                             </li>
                                         {% endif %}
+                                        {% if u.conversation.conversationMessage.count > 1 %}
+                                        <a href="{{ path('conversation.quitter', {id: u.conversation.id})}}">Quitter la conversation</a>
+                                        {% else %}
+                                        <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" >Supprimer la conversation</a>
+                                        {% endif %}
     								</ul>
     							</span>
+                                <!-- Modal delete conversation -->
+                                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+                                                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Vos commentaires seront supprimé également</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <form method="post" action="{{ path('conversation.delete', {id: u.conversation.id})}}">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ u.conversation.id) }}">
+                                                <button class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
                                         {% for p in u.conversation.conversationMessage %}
