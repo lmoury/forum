@@ -256,6 +256,7 @@ class ConversationController extends AbstractController
 
       /**
       * @Route("/conversation/{id}", name="conversation.delete", methods="DELETE")
+      * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
       * @param ObjectManager em
       * @param Conversation $conversation
       * @param Request $request

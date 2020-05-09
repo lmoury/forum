@@ -53,6 +53,27 @@
                                 <div class="nodeTitle">
                                 <a href="{{ path('conversation.message', {id: u.conversation.id, slug: u.conversation.slug})}}">{{ u.conversation.titre }}</a>
                                 </div>
+                                <span class="dropdown noMessages open float-right" id="editDiscussion">
+    							    <a aria-expanded="true" href="#" type="button" data-toggle="dropdown">Editer</a>
+    						    	<ul class="dropdown-menu">
+                                        <li>
+                                        {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important == false %}
+                                        <a href="{{ path('conversation.important', {id: u.conversation.id})}}">Définir comme important</a>
+                                        {% else %}
+                                        <a href="{{ path('conversation.important', {id: u.conversation.id})}}">Définir comme plus important</a>
+                                        {% endfor %}
+                                        </li>
+                                        {% if app.user == u.conversation.expediteur or is_granted('ROLE_MODERATEUR') %}
+                                            <li>
+                                            {% if u.conversation.locked %}
+                                            <a href="{{ path('conversation.locked', {id: u.conversation.id})}}">Réouvrir la conversation</a>
+                                            {% else %}
+                                            <a href="{{ path('conversation.locked', {id: u.conversation.id})}}">Fermer la conversation</a>
+                                            {% endif %}
+                                            </li>
+                                        {% endif %}
+    								</ul>
+    							</span>
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
                                         {% for p in u.conversation.conversationMessage %}
