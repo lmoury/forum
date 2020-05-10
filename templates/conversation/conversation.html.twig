@@ -19,9 +19,6 @@
 <p class="text-center pDescription">
     {% set blockMessageAutor = false %}
     {% for p in conversation.conversationMessage %}
-        {% if p.participant.role.id == 3 or p.participant.role.id == 2 %}
-         {% set blockMessageAutor = true %}
-        {% endif %}
         <i class="fa fa-users"></i> <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
     {% endfor %}
     <span><i class="fa fa-clock-o"></i> {{ date_passed(conversation.createdAt | date('d-m-Y H:i:s')) }}</span>.
@@ -29,7 +26,7 @@
 
 <div class="row">
     <div class="col-sm-9">
-        {% if blockMessageAutor == false and conversation.expediteur.role.id != 3 and conversation.expediteur.role.id != 2  %}
+        {% if is_granted('STAFF_CONVERSATION', conversation) == false %}
         <div class="blockMessage blockMessage--error blockMessage--iconic">
             <table>
                 <tr>
@@ -46,7 +43,7 @@
         <br/>
         {% endif %}
         <div class="btn-group float-right">
-            {% if blockMessageAutor == false and conversation.expediteur.role.id != 3 and conversation.expediteur.role.id != 2  %}
+            {% if is_granted('STAFF_CONVERSATION', conversation) == false %}
             <div id="btn-article-add" class="mr-2"><a data-toggle="modal" href="#" data-target="#modalAddStaff" data-id="{{ conversation.id }}">Inviter un membre de l'équipe</a></div>
             {% endif %}
             {% for p in conversation.conversationMessage if p.participant == app.user and p.important == false %}

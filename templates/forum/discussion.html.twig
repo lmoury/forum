@@ -17,7 +17,7 @@
     créé par <a class="pseudoUser{{ discussion.auteur.role.id }}" href="{{ path('membres.profil', {id: discussion.auteur.id, slug: discussion.auteur.slug})}}">{{ discussion.auteur.username }}</a>,
     <span> le {{ discussion.dateCreation | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</span>.
     {% if discussion.tags.snapshot != [] %}
-    <span><i class="fa fa-tags"></i> {% for t in discussion.tags %}<span class="tagItem">{{ t.nom }}</span>{% endfor %}</span>
+    <span><i class="fa fa-tags"></i> {% for t in discussion.tags %}<a href="{{ path('tags', {id: t.id, slug: t.slug})}}" class="tagItem">{{ t.nom }}</a>{% endfor %}</span>
     {% endif %}
 </p>
 

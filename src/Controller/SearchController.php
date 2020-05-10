@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ForumDiscussionSearch;
+use App\Entity\Tag;
 use App\Repository\ForumDiscussionRepository;
 use App\Form\ForumDiscussionSearchType;
 use App\Form\ForumDiscussionSearchNavbarType;
@@ -39,7 +40,7 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/search", name="search")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @param ObjectManager em
      * @param Request $request
      * @param ForumDiscussionRepository $repository
@@ -61,7 +62,7 @@ class SearchController extends AbstractController
             return $this->render('search/index.html.twig', [
                 'current_url' => $this->current_url,
                 'discussions' => $discussions,
-                'recherche' => $search->getMotCle()
+                'recherche' => 'Résultats de la recherche: '.$search->getMotCle()
             ]);
         }
         else {
@@ -89,6 +90,34 @@ class SearchController extends AbstractController
 
         return $this->render('inc\navbar\_form-search.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/tags/{slug}.{id}", name="tags", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
+     * @Security("is_granted('ROLE_USER')")
+     * @param ObjectManager em
+     * @param Request $request
+     * @param Tag $tag
+     * @param ForumDiscussionRepository $repository
+     * @param string $slug
+     */
+    public function tags(ForumDiscussionRepository $repository, Request $request, Tag $tag, string $slug)
+    {
+        if($tag->getSlug() !== $slug) {
+            return $this->redirectToRoute('tags', ['id' => $tag->getId(), 'slug' => $tag->getSlug()], 301);
+        }
+
+        $discussions =  $this->paginator->paginate(
+            $repository->getListDiscussionsTag($tag->getId()),
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('search/index.html.twig', [
+            'discussions' => $discussions,
+            'recherche' => 'Résultats pour le tag: '.$tag->getNom()
         ]);
     }
 }

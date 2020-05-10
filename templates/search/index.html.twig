@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Résultats de la recherche: {{ recherche }} {{ parent() }}{% endblock %}
+{% block title %}{{ recherche }} {{ parent() }}{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,7 @@
 </ol>
 
 <div class="col-sm-12">
-    <h1 class="p-title-value text-center">Résultats de la recherche: {{ recherche }}</h1>
+    <h1 class="p-title-value text-center">{{ recherche }}</h1>
 </div>
 
 <div class="row">

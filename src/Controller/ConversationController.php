@@ -70,13 +70,13 @@ class ConversationController extends AbstractController
      */
     public function conversation(ConversationUserRepository $repository, Request $request, ConversationReponseRepository $repoRep, Conversation $conversation, string $slug)
     {
-        $lu = $repository->getConversationUser($conversation, $this->getUser());
-        $lu->setLu(true);
-        $this->em->flush();
-
         if($conversation->getSlug() !== $slug) {
           return $this->redirectToRoute('conversations', ['id' => $conversation->getId(), 'slug' => $conversation->getSlug()], 301);
         }
+        
+        $lu = $repository->getConversationUser($conversation, $this->getUser());
+        $lu->setLu(true);
+        $this->em->flush();
 
         $reponses = $this->paginator->paginate(
             $repoRep->getConversationReponses($conversation),

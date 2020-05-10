@@ -45,6 +45,32 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+
+    /**
+     * @return Query
+    */
+    public function getListDiscussionsTag($value): Query
+    {
+        return $this->createQueryBuilder('d')
+            ->addSelect('d', 'c')
+            ->leftJoin('d.forumCommentaires', 'c')
+            ->leftJoin('c.auteur', 'ca')
+            ->addSelect('c', 'ca')
+            ->leftJoin('d.auteur', 'a')
+            ->addSelect('d', 'a')
+            ->addSelect('a', 'r')
+            ->leftJoin('a.role', 'r')
+            ->leftJoin('d.categorie', 'cat')
+            ->addSelect('d', 'cat')
+            ->leftJoin('d.tags', 'tag')
+            ->addSelect('tag')
+            ->andWhere('tag = :val')
+            ->setParameter('val', $value)
+            ->addOrderBy('d.important', 'DESC')
+            ->addOrderBy('d.date_new_com', 'DESC')
+            ->getQuery();
+    }
+
     /**
      * @return ForumDiscussion[]
      */
