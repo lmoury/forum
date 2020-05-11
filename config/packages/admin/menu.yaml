@@ -26,3 +26,4 @@ easy_admin:
                   - {entity: 'ForumCategorie', icon: 'list-ol', label: 'Liste des forums'}
                   - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }
                   - {entity: 'Tag', icon: 'tags', label: 'Tags'}
+            - {entity: 'Contact', icon: 'envelope', label: 'Contact'}

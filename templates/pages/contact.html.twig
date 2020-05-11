@@ -1,0 +1,91 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Nous contacter {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Nous contacter</li>
+</ol>
+<div class="content-section no-padding">
+    {{ form_start(form) }}
+        <div class="block-container">
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="name">Votre nom : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.nom) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.nom) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="email">Votre adresse email : </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.email) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.email) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="sujet">Sujet: </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.sujet) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa fa-text-width" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.sujet) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="message">Message: </label>
+                    <dfn class="formRow-hint">Requis</dfn>
+                </dt>
+                <dd>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form_widget(form.message) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-edit" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        {{ form_errors(form.message) }}
+                    </div>
+                </dd>
+            </dl>
+            {{ form_rest(form) }}
+            <div class="text-center btn-container">
+                <button class="btn">Envoyer</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

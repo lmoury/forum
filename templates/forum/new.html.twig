@@ -10,7 +10,9 @@
 </ol>
 
 <h1 class="p-title-value text-center">Créer une discussion</h1>
-
+<div class="alert alert-info">
+    <strong>Attention !!!</strong> Assurez-vous qu'aucune discussion similaire n'existe avant de créer le votre ! Les doublons sont supprimés.
+</div>
 <div id="content-section" class="page-connexion">
     {{ include('forum/_form.html.twig', {form: form, button:'Créer une discussion'}) }}
 </div>

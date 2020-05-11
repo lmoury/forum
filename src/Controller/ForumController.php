@@ -332,7 +332,7 @@ class ForumController extends AbstractController
             return $this->redirectToRoute('forum.discussions', ['id' => $discussion->getCategorie()->getId(), 'slug' => $discussion->getCategorie()->getSlug()]);
         }
 
-        return $this->render('forum/deplacerform.html.twig', [
+        return $this->render('forum/_formDeplacerDiscussion.html.twig', [
             'form' => $form->createView(),
             'deplacer' => $discussion
         ]);

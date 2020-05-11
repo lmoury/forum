@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        Contact:
+            class: App\Entity\Contact
+            list:
+                actions:
+                    - { name: '-edit'}
+                    - { name: '-new'}
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+            show:
+                actions: ['-edit']
