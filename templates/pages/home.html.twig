@@ -7,6 +7,12 @@
     <li class="breadcrumb-item active">Home</li>
 </ol>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
 <div class="row">
     <div class="col-sm-12">
         {% if is_granted('ROLE_BANNI') %}

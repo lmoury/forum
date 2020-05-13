@@ -44,7 +44,7 @@ class MembresController extends AbstractController
      * @Route("/membres", name="membres")
      * @param UserRepository repoUser
      */
-    public function index(Request $request)
+    public function index()
     {
 
         $users = $this->repoUser->getListUser();
@@ -123,7 +123,6 @@ class MembresController extends AbstractController
      */
     public function bannir(User $user, string $slug, UserRoleRepository $repoRole)
     {
-
         if($user->getRole()->getId() == 5) {
             $user->setRole($repoRole->find(1));
             $this->addFlash('success', 'Utilisateur débanni');

@@ -43,20 +43,16 @@ class PagesController extends AbstractController
      */
     public function rules()
     {
-        return $this->render('pages/rules.html.twig', [
-
-        ]);
+        return $this->render('pages/rules.html.twig');
     }
 
 
     /**
-     * @Route("/privacy-policy", name="privacy-policy")
+     * @Route("/cookies", name="cookies")
      */
-    public function privacyPolicy()
+    public function cookies()
     {
-        return $this->render('pages/privacy-policy.html.twig', [
-
-        ]);
+        return $this->render('pages/cookies.html.twig');
     }
 
     /**
@@ -69,6 +65,10 @@ class PagesController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            if($this->getUser()) {
+                $contact->setNom($this->getUser()->getUsername());
+                $contact->setEmail($this->getUser()->getEmail());
+            }
             $this->em->persist($contact);
             $this->em->flush();
             $this->addFlash('success', 'Votre message à été envoyé, nous vous répondrons le plus vite possible.');

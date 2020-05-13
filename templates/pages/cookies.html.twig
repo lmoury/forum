@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Utilisation des cookies {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Utilisation des cookies</li>
+</ol>
+<h1 class="p-title-value text-center">Utilisation des cookies</h1>
+<div id="content-section" class="page-color">
+    <p>La page explique comment les cookies sont utilisés par ce site. Si vous continuez à utiliser ce site, vous consentez à utiliser les cookies..</p>
+    <h3 class="textHeading">Que sont les cookies ?</h3>
+    <p>Les cookies sont de petits fichiers stockés sur votre ordinateur par votre navigateur web (comme Internet Explorer ou Firefox) à la demande d'un site que vous consultez. Cela permet au site que vous consultez à se souvenir des choses sur vous, comme vos préférences, de l'histoire ou du maintien de votre identification.</p>
+    <p>Les cookies peuvent être stockés sur votre ordinateur pendant une courte période (par exemple, que si votre navigateur est ouvert) ou pour une période de temps prolongée, voire des années. Les cookies créées par ce site ne seront pas accessibles pour nous.</p>
+    <h3 class="textHeading">Notre utilisation des cookies</h3>
+    <p>Ce site utilise des cookies pour de nombreuses choses, y compris:</p>
+    <ul>
+    <li>L'inscription et le maintien de vos préférences. Il faut s'assurer que vous pouvez rester connecté et de garder le site dans la langue ou l'apparence que vous avez demandé.</li>
+    <li>Google Analytics. Cela nous permet de déterminer comment les gens utilisent le site et l'améliorer.</li>
+    <li>Cookies publicitaires (éventuellement la troisième partie). Si ce site affiche des publicités, les cookies peuvent être fixés par les annonceurs afin de déterminer qui a vu une annonce ou des choses semblables. Ces cookies peuvent être fixés par des tiers, dans ce cas, ce site n'a pas la capacité de lire ou de modifier ces cookies.</li>
+    <li>Autres cookies pour des choses comme Facebook ou Twitter. Le partage de ces cookies sera généralement fixé par les tiers, indépendamment, de sorte que ce site n'aura pas la capacité d'y accéder.</li>
+    </ul>
+    <h3 class="textHeading">Retrait / désactivation des cookies</h3>
+    <p>Le contrôle des cookies et leur préférences doivent être manipulés au sein de votre navigateur. Voici une liste de guides sur la façon de faire cela pour un logiciel de navigation populaires:</p>
+    <ul>
+    <li><a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies">Internet Explorer</a></li>
+    <li><a href="http://support.mozilla.org/kb/cookies-information-websites-store-on-your-computer">Firefox</a></li>
+    <li><a href="https://support.google.com/chrome/answer/95647?hl=en">Chrome</a></li>
+    <li><a href="http://support.apple.com/kb/PH17191">Safari</a></li>
+    <li><a href="http://www.opera.com/help/tutorials/security/privacy/">Opera</a></li>
+    </ul>
+</div>
+{% endblock %}
