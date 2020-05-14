@@ -17,7 +17,15 @@
     <div class="col-sm-12">
         {% if is_granted('ROLE_BANNI') %}
         <div class="alert alert-danger">
-            <strong>Vous êtes banni du site.</strong>
+            <strong>
+                Vous êtes banni du site
+                {% if app.user.userBannir.fin %}
+                jusqu'au {{ app.user.userBannir.fin | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}
+                {% else %}
+                de façon permanent
+                {% endif %}
+                pour la raison suivante: {{ app.user.userBannir.motif }}.
+            </strong>
         </div>
         {% endif %}
     </div>

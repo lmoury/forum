@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserBannir;
 use App\Repository\UserRepository;
 use App\Repository\UserRoleRepository;
+use App\Repository\UserBannirRepository;
 use App\Form\EditMembreType;
 use App\Form\EditPasswordMembreType;
+use App\Form\EditBannirMembreType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -114,24 +117,43 @@ class MembresController extends AbstractController
 
 
     /**
-     * @Route("/membres/banni/{slug}.{id}", name="membres.bannir", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
+     * @Route("/membres/banni/{id}", name="membres.bannir")
      * @Security("is_granted('ROLE_MODERATEUR')")
-     * @param ObjectManager em
+     * @param ObjectManager $this->em
+     * @param Request $request
      * @param UserRoleRepository $repoRole
+     * @param UserBannirRepository $repoBannir
      * @param User $user
-     * @param string $slug
      */
-    public function bannir(User $user, string $slug, UserRoleRepository $repoRole)
+    public function bannir(User $user, Request $request, UserRoleRepository $repoRole, UserBannirRepository $repoBannir)
     {
-        if($user->getRole()->getId() == 5) {
-            $user->setRole($repoRole->find(1));
-            $this->addFlash('success', 'Utilisateur débanni');
+        if($user->getRole()->getId() != 5) {
+            $bannir = new UserBannir();
+            $form = $this->createForm(EditBannirMembreType::class, $bannir, [
+                'action' => $this->generateUrl('membres.bannir', ['id' => $user->getId()]),
+            ]);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()) {
+                $user->setRole($repoRole->find(5));
+                $bannir->setBanni($user);
+                $this->em->persist($bannir);
+                $this->em->flush();
+                $this->addFlash('success', 'Vous avez banni '.$user->getUsername());
+                return $this->redirectToRoute('membres.profil', ['id' => $user->getId(), 'slug' => $user->getSlug()]);
+            }
+            return $this->render('membres/_formBannir.html.twig', [
+                'form' => $form->createView(),
+                'membre' => $user
+            ]);
         }
         else {
-            $user->setRole($repoRole->find(5));
-            $this->addFlash('success', 'Utilisateur banni');
+            $debannir = $repoBannir->getUserBanni($user);
+            $this->em->remove($debannir);
+            $user->setRole($repoRole->find(1));
+            $this->addFlash('success', 'Vous avez débanni '.$user->getUsername());
+            $this->em->flush();
         }
-        $this->em->flush();
         return $this->redirectToRoute('membres.profil', ['id' => $user->getId(), 'slug' => $user->getSlug()]);
     }
 }

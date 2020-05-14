@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\NoticeRepository;
+use App\Repository\UserBannirRepository;
+use App\Repository\UserRoleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -24,15 +26,21 @@ class LayoutController extends AbstractController
     /**
      * @param ObjectManager em
      * @param NoticeRepository $repository
+     * @param UserBannirRepository $repoBannir
      */
-    public function notice(NoticeRepository $repository)
+    public function notice(NoticeRepository $repository, UserRoleRepository $repoRole, UserBannirRepository $repoBannir)
     {
-
         if ($this->getUser() !== null) {
             $this->getUser()->setDateVisite(new \DateTime());
             $this->em->flush();
-            if($this->getUser()->getRole()->getId() == 5) {
-                //return $this->redirectToRoute('/');
+            if($this->getUser()->getRole()->getId() == 5 and $this->getUser()->getUserBannir()->getFin()) {
+                $date= new \DateTime();
+                if($this->getUser()->getUserBannir()->getFin() < $date) {
+                    $debannir = $repoBannir->getUserBanni($this->getUser());
+                    $this->em->remove($debannir);
+                    $this->getUser()->setRole($repoRole->find(1));
+                    $this->em->flush();
+                }
             }
         }
         $notices = $repository->findAll();

@@ -1436,30 +1436,30 @@ dl.widget-conversation {
     padding-left: 0px;
 }
 
-#modalAddStaff .modal-dialog,  #modalDeplaDiscu .modal-dialog {
+.modal-custom .modal-dialog,  #modalDeplaDiscu .modal-dialog {
     max-width: 60%;
 }
-#modalAddStaff .modal-footer > :not(:first-child), #modalDeplaDiscu .modal-footer > :not(:first-child) {
+.modal-custom .modal-footer > :not(:first-child), #modalDeplaDiscu .modal-footer > :not(:first-child) {
 	margin-left: 0;
 }
-#modalAddStaff .modal-footer, #modalDeplaDiscu .modal-footer {
+.modal-custom .modal-footer, #modalDeplaDiscu .modal-footer {
 	display: block;
 	padding: 0;
 }
-#modalAddStaff .modal-header, #modalDeplaDiscu .modal-header {
+.modal-custom .modal-header, #modalDeplaDiscu .modal-header {
 	background: #2f78a0;
 	color: white;
 }
-#modalAddStaff .modal-content, #modalDeplaDiscu .modal-content {
+.modal-custom .modal-content, #modalDeplaDiscu .modal-content {
 	border: none;
 }
-#modalAddStaff .close, #modalDeplaDiscu .close {
+.modal-custom .close, #modalDeplaDiscu .close {
     color: white;
 }
-#modalAddStaff .modal-body, #modalDeplaDiscu .modal-body {
+.modal-custom .modal-body, #modalDeplaDiscu .modal-body {
     padding: 0;
 }
-#modalAddStaff .modal-body-alert, #modalDeplaDiscu .modal-body-alert {
+.modal-custom .modal-body-alert, #modalDeplaDiscu .modal-body-alert {
     padding: 1rem 1rem 0 1rem;
     border-bottom: 1px solid rgba(0,0,0,.1);
 }

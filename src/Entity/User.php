@@ -135,6 +135,11 @@ class User implements UserInterface,\Serializable
      */
     private $conversationRepAuteur;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserBannir", mappedBy="banni", cascade={"persist", "remove"})
+     */
+    private $userBannir;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -601,6 +606,23 @@ class User implements UserInterface,\Serializable
             if ($conversationRepAuteur->getAuteur() === $this) {
                 $conversationRepAuteur->setAuteur(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getUserBannir(): ?UserBannir
+    {
+        return $this->userBannir;
+    }
+
+    public function setUserBannir(UserBannir $userBannir): self
+    {
+        $this->userBannir = $userBannir;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $userBannir->getBanni()) {
+            $userBannir->setBanni($this);
         }
 
         return $this;
