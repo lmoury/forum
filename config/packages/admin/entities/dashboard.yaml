@@ -4,10 +4,10 @@ easy_admin:
             class: App\Entity\Config
             list:
                 title: 'Paramètre général'
-            new:
-                title: 'Créer un paramètre'
+                actions: ['-delete','-new']
             edit:
                 title: 'Editer le paramètre'
+                actions: ['-delete']
         Social:
             class: App\Entity\Social
             list:

@@ -59,7 +59,7 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/forums/{slug}.{id}", name="forum.discussions", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @param PaginatorInterface paginator
      * @param ForumCategorie $categorie
      * @param ForumDiscussionRepository $repository
@@ -88,7 +88,7 @@ class ForumController extends AbstractController
 
      /**
     * @Route("/forums/{slug}.{id}/new", name="forum.discussions.new", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-    * @Security("has_role('ROLE_USER')", message="You have to be logged in")
+    * @Security("is_granted('ROLE_USER')", message="You have to be logged in")
     * @param ObjectManager em
     * @param ForumCategorie $categorie
     * @param Request $request
@@ -124,7 +124,7 @@ class ForumController extends AbstractController
     /**
     * @Route("/discussion/{slug}.{id}", name="forum.discussion", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
     * @Route("/discussion/{slug}.{id}/edit/{idCom}", name="forum.commentaire.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-    * @Security("has_role('ROLE_USER')")
+    * @Security("is_granted('ROLE_USER')")
     * @param PaginatorInterface paginator
     * @param ObjectManager em
     * @param ForumDiscussion $discussion
@@ -230,7 +230,7 @@ class ForumController extends AbstractController
 
     /**
    * @Route("/commentaire/new-{id}", name="forum.commentaire.new")
-   * @Security("has_role('ROLE_USER')")
+   * @Security("is_granted('ROLE_USER')")
    * @param ObjectManager em
    * @param ForumDiscussion $discussion
    * @param Request $request

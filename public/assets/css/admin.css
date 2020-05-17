@@ -171,3 +171,19 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
 	border: 1px solid #2f78a0;
 	box-shadow: 0px 1px 0px rgba(255,255,255,0.25), inset 0px 1px 5px black;
 }
+.CodeMirror-sizer {
+    min-width: 100%!important;
+}
+.CodeMirror {
+    width: 100%;
+    display: inline-grid;
+}
+#form-template {
+    padding: 0px;
+}
+.table-responsive {
+	display: inline-table;
+}
+#navigation-toggler {
+	color: white;
+}

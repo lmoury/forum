@@ -1,0 +1,62 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Logs
+    <a href="#" class="btn btn-danger float-right" data-title="Delete" data-toggle="modal" data-target="#deleteLog" >Vider les logs</a>
+{% endblock %}
+
+{% block main %}
+<table class="table table-bordered table-responsive text-center" id="tableUsers">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Type id</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>User</th>
+            <th>Ip</th>
+       </tr>
+    </thead>
+    <tbody>
+        {% for a in audit %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ a['type_id'] }}</td>
+                <td>{{ a['type'] }}</td>
+                <td>{{ a['description'] }}</td>
+                <td>{{ date_passed(a['event_time'] | date('d-m-Y H:i:s'))}}</td>
+                <td>{{ a['user'] }}</td>
+                <td>{{ a['ip'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- Modal delete conversation -->
+<div class="modal fade" id="deleteLog" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" href="{{ path('admin.auditlog.delete') }}">Supprimer</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block body_javascript %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/plugins/dataTable/css/dataTables.bootstrap4.min.css">
+    <script src="/assets/plugins/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/plugins/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tableUsers').DataTable({
+            "iDisplayLength": 50
+        });
+    } );
+    </script>
+{% endblock %}

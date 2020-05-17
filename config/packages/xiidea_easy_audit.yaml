@@ -1,0 +1,3 @@
+xiidea_easy_audit:
+    entity_class: Xiidea\EasyAuditBundle\Entity\BaseAuditLog
+    audit_log_class : App\Entity\AuditLog

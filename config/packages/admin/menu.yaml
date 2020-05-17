@@ -26,9 +26,6 @@ easy_admin:
                   - {entity: 'ForumCategorie', icon: 'list-ol', label: 'Liste des forums'}
                   - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }
                   - {entity: 'Tag', icon: 'tags', label: 'Tags'}
-            - label: 'Pages'
-              icon: 'file'
-              children:
-                  - {label: 'Réglement', icon: 'gavel', route: 'admin.pages.rules'}
-                  - {label: 'Cookies', icon: 'cookie', route: 'admin.pages.cookies'}
+            - {label: 'Templates', icon: 'file', route: 'admin.templates' }
+            - {label: 'Logs', icon: 'link', route: 'admin.auditlog' }
             - {entity: 'Contact', icon: 'envelope', label: 'Contact'}

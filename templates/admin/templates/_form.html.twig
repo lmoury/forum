@@ -1,0 +1,78 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    {{ app.request.query.get('url') }}
+{% endblock %}
+
+{% block main %}
+<form id="form-template" action="{{ path("admin.templates.fichier") }}" method="get">
+    <div>
+        <textarea class="form-control edittext" name="tMessage" rows="15" id="comment">{{ fichier }}</textarea>
+    </div>
+    <input type="hidden" name="action" value="{{ app.request.query.get('action') }}">
+    <input type="hidden" name="url" value="{{ app.request.query.get('url') }}">
+    <br/>
+    <div class="text-center btn-container">
+        <button class="btn btn-primary" type="submit">
+            <i class="fa fa-save" aria-hidden="true"></i> Sauvegarder
+        </button>
+    </div>
+</form>
+{% endblock %}
+{% block body_javascript %}
+    {{ parent() }}
+    {% if app.request.query.get('action') == 'css' %}
+    <!-- CSS -->
+	<script src="/assets/plugins/codemirror-5.27.4/lib/codemirror.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/lib/codemirror.css">
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/theme/rubyblue.css">
+	<script src="/assets/plugins/codemirror-5.27.4/mode/css/css.js"></script>
+	<script src="/assets/plugins/codemirror-5.27.4/addon/hint/show-hint.js"></script>
+	<script src="/assets/plugins/codemirror-5.27.4/addon/hint/css-hint.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/addon/hint/show-hint.css">
+	<script>
+	$(document).ready(function() {
+
+		var code = $(".edittext")[0];
+	  	var editor = CodeMirror.fromTextArea(code, {
+	    lineNumbers: true,
+	    extraKeys: {"Ctrl-Space": "autocomplete"},
+	    theme:"rubyblue"
+	  });
+	});
+	</script>
+    {% elseif app.request.query.get('action') == 'js' %}
+    <script src="/assets/plugins/codemirror-5.27.4/lib/codemirror.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/lib/codemirror.css">
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/theme/rubyblue.css">
+	<script src="/assets/plugins/codemirror-5.27.4/mode/javascript/javascript.js"></script>
+	<script src="/assets/plugins/codemirror-5.27.4/addon/hint/show-hint.js"></script>
+	<script src="/assets/plugins/codemirror-5.27.4/addon/hint/javascript-hint.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/addon/hint/show-hint.css">
+	<script>
+	$(document).ready(function() {
+
+		var code = $(".edittext")[0];
+	  	var editor = CodeMirror.fromTextArea(code, {
+	    lineNumbers: true,
+	    extraKeys: {"Ctrl-Space": "autocomplete"},
+	    theme:"rubyblue"
+	  });
+	});
+	</script>
+    {% else %}
+    <script src="/assets/plugins/codemirror-5.27.4/lib/codemirror.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/lib/codemirror.css">
+	<link rel="stylesheet" href="/assets/plugins/codemirror-5.27.4/theme/rubyblue.css">
+	<script>
+	$(document).ready(function() {
+
+		var code = $(".edittext")[0];
+	  	var editor = CodeMirror.fromTextArea(code, {
+	    lineNumbers: true,
+	    theme:"rubyblue"
+	  });
+	});
+	</script>
+    {% endif %}
+{% endblock %}

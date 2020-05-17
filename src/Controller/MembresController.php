@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class MembresController extends AbstractController
 {
@@ -33,24 +33,23 @@ class MembresController extends AbstractController
     /**
      * @var UserRepository
      */
-    private $repoUser;
+    private $repository;
 
 
-    public function __construct(ObjectManager $em, UserRepository $repoUser)
+    public function __construct(ObjectManager $em, UserRepository $repository)
     {
         $this->em = $em;
-        $this->repoUser = $repoUser;
+        $this->repository = $repository;
     }
 
 
     /**
      * @Route("/membres", name="membres")
-     * @param UserRepository repoUser
+     * @param UserRepository $this->repository
      */
     public function index()
     {
-
-        $users = $this->repoUser->getListUser();
+        $users = $this->repository->getListUser();
         return $this->render('membres/index.html.twig', [
             'current_url' => $this->current_url,
             'users' => $users
@@ -60,7 +59,7 @@ class MembresController extends AbstractController
 
     /**
      * @Route("/membres/{slug}.{id}", name="membres.profil", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-     * @param UserRepository repoUser
+     * @param UserRepository $this->repository
      * @param User $user
      * @param string $slug
      */
@@ -69,9 +68,7 @@ class MembresController extends AbstractController
         if($user->getSlug() !== $slug) {
             return $this->redirectToRoute('membres.profil', ['id' => $user->getId(), 'slug' => $user->getSlug()], 301);
         }
-
-        $user = $this->repoUser->getUser($user->getId());
-
+        $user = $this->repository->getUser($user->getId());
         return $this->render('membres/profil.html.twig', [
             'current_url' => $this->current_url,
             'user' => $user
@@ -81,7 +78,7 @@ class MembresController extends AbstractController
 
     /**
      * @Route("/membres/compte", name="membres.compte")
-     * @param UserRepository repoUser
+     * @param UserRepository $this->repository
      * @param ObjectManager em
      * @param UserPasswordEncoderInterface $encoder
      * @param Request $request

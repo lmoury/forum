@@ -36,15 +36,14 @@ class ConfigRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Config
+
+    public function getUrlAbsolute(): ?Config
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.id = :val')
+            ->setParameter('val', 2)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
