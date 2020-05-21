@@ -2,7 +2,11 @@ easy_admin:
     entities:
         User:
             class: App\Entity\User
+            password_encoding: { algorithm: 'bcrypt', cost: 12 }
             list:
+                actions:
+                    - { name: '-delete'}
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
                 title: 'Liste des utilisateurs'
                 fields:
                     - { property: 'id', label: '#' }
@@ -10,8 +14,7 @@ easy_admin:
                     - { property: 'username', label: 'Nom' }
                     - { property: 'email', label: 'Email', type: 'email' }
                     - { property: 'role', label: 'Role'}
-                    - { property: 'sexeType', label: 'Sexe'}
-                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_naissance', label: 'Naissance'}
                     - { property: 'date_inscription', label: 'Inscription'}
             new:
                 title: 'Créer un utilisateur'
@@ -19,12 +22,12 @@ easy_admin:
                 title: 'Editer un utilisateur'
             form:
                 fields:
-                    - {property: 'username'}
-                    - {property: 'email'}
+                    - {property: 'username', label: 'Nom'}
+                    - {property: 'email', label: 'Adresse email'}
+                    - {property: 'plainPassword', label: 'Password', type: 'password'}
+                    - {property: 'date_naissance', type: birthday}
                     - {property: 'sexe', type: choice, type_options: { choices: {"Inconnu": "0","Masculin": "1", "Feminin": "2"} } }
                     - {property: 'avatar'}
-                    - {property: 'password'}
-                    - {property: 'date_naissance', type: birthday}
                     - {property: 'role'}
             show:
                 fields:
@@ -66,8 +69,7 @@ easy_admin:
                     - { property: 'username', label: 'Nom' }
                     - { property: 'email', label: 'Email', type: 'email' }
                     - { property: 'role', label: 'role'}
-                    - { property: 'sexeType', label: 'sexe'}
-                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_naissance', label: 'Naissance'}
                     - { property: 'date_inscription', label: 'Inscription'}
             edit:
                 title: 'Editer un utilisateur banni'

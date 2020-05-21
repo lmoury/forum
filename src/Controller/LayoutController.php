@@ -24,9 +24,10 @@ class LayoutController extends AbstractController
 
 
     /**
-     * @param ObjectManager em
+     * @param ObjectManager $this->em
      * @param NoticeRepository $repository
      * @param UserBannirRepository $repoBannir
+     * @param UserRoleRepository $repoRole
      */
     public function notice(NoticeRepository $repository, UserRoleRepository $repoRole, UserBannirRepository $repoBannir)
     {

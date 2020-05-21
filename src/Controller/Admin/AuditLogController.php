@@ -20,7 +20,7 @@ class AuditLogController extends AbstractController
      */
     public function index(Connection $connection)
     {
-        $audit= $connection->fetchAll('SELECT * FROM audit_log');
+        $audit= $connection->fetchAll('SELECT * FROM audit_log ORDER BY event_time DESC');
         return $this->render('admin/auditlog/index.html.twig', [
             'audit' => $audit
         ]);

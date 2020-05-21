@@ -14,6 +14,7 @@ class TemplatesController extends AbstractController
     /**
      * @Route("/admin/templates", name="admin.templates")
      * @param Request $request
+     * @param ConfigRepository $repository
      */
     public function index(Request $request, ConfigRepository $repository)
     {

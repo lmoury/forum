@@ -140,6 +140,8 @@ class User implements UserInterface,\Serializable
      */
     private $userBannir;
 
+    private $plainPassword = null;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -158,6 +160,18 @@ class User implements UserInterface,\Serializable
         $this->expediteurs = new ArrayCollection();
         $this->conversationUsers = new ArrayCollection();
         $this->conversationRepAuteur = new ArrayCollection();
+    }
+
+
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $password): void
+    {
+        $this->plainPassword = $password;
     }
 
     public function getId(): ?int

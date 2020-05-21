@@ -39,6 +39,20 @@ class ForumCategorieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return ForumCategorie[]
+     */
+    public function getCategorieParent(): array
+    {
+        return $this->findVisibleQuery()
+            ->addSelect('p.id')
+            ->addSelect('p.categorie')
+            ->andWhere('p.parent is null')
+            ->addOrderBy('p.ordre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     private function findVisibleQuery()
     {
         return $this->createQueryBuilder('p');

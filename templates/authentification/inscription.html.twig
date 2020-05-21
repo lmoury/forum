@@ -64,6 +64,7 @@
                             </div>
                         </div>
                         {{ form_errors(form.password.first) }}
+                        {{ include("inc/passwordSecurity.html.twig") }}
                     </div>
                 </dd>
             </dl>
@@ -126,7 +127,7 @@
                 <dd>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="validerReglem" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">En vous inscrivant, vous acceptez nos <a href="">termes et règles.</a></label><br/><br/>
+                        <label class="custom-control-label" for="customCheck">En vous inscrivant, vous acceptez nos <a href="{{ path('rules') }}">Conditions et règles.</a></label><br/><br/>
                     </div>
                 </dd>
             </dl>

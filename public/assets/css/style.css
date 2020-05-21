@@ -512,17 +512,7 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
   line-height: 21px;
   padding-left: 22px;
 }
-#pswd_info::before {
-    background: #dfdfdf none repeat scroll 0 0;
-    content: "";
-    height: 25px;
-    left: -13px;
-    margin-top: -12.5px;
-    position: absolute;
-    top: 50%;
-    transform: rotate(45deg);
-    width: 25px;
-}
+
 #pswd_info {
     display:none;
     transition: all .5s ease-in;
@@ -1485,4 +1475,9 @@ dl.widget-conversation {
 }
 .page-color p {
     color: #000;
+}
+.inputChoices-explain {
+    margin-left: 20px;
+    font-size: 12px;
+    color: #8c8c8c;
 }

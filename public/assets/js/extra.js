@@ -14,7 +14,7 @@ $(document).ready(function(){
         return false;
     });
 
-    $('input[name="ePassword"]').keyup(function() {
+    $('input[id="edit_password_membre_password_first"], input[id="inscription_password_first"]').keyup(function() {
         var pswd = $(this).val();
 
         //validate the length
@@ -78,5 +78,5 @@ $(document).ready(function() {
         readURL(this);
     });
 
-    
+
 });

@@ -23,8 +23,8 @@ easy_admin:
             - label: 'Forums'
               icon: 'comments'
               children:
-                  - {entity: 'ForumCategorie', icon: 'list-ol', label: 'Liste des forums'}
-                  - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }
+                  - {label: 'Liste des forums', icon: 'list-ol', route: 'admin.categories' }
+                  - {label: 'Créer une catégorie', icon: 'inbox', route: 'admin.categorie.new' }
                   - {entity: 'Tag', icon: 'tags', label: 'Tags'}
             - {label: 'Templates', icon: 'file', route: 'admin.templates' }
             - {label: 'Logs', icon: 'link', route: 'admin.auditlog' }

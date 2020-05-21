@@ -18,11 +18,11 @@ class DiscussionType extends AbstractType
         $builder
             ->add('titre')
             ->add('locked', CheckboxType::class, [
-                'label' => 'Vérrouiller la discussion',
+                'label' => 'Vérrouiller',
                 'required' => false
             ])
             ->add('important', CheckboxType::class, [
-                'label' => 'Mettre la discussion en important',
+                'label' => 'Importante',
                 'required' => false
             ])
             ->add('tags', EntityType::class, [

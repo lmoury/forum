@@ -5,48 +5,50 @@
 {% endblock %}
 
 {% block main %}
-<div class="sidebar-content">
-    <div class="serverTitle">
-        <div class="panel-title">
-            <span class="server-title">Rapport sur l'environnement du serveur</span>
-        </div>
-    </div>
-    <table class="table table-borderless">
-        <tr>
-            <td>PHP version:</td>
-            <td>{{ serverInfo[0] }}</td>
-        </tr>
-        <tr>
-            <td>Server software:</td>
-            <td>{{ serverInfo[1] }}</td>
-        </tr>
-        <tr>
-            <td>cURL version:</td>
-            <td>{{ serverInfo[3] }}</td>
-        </tr>
-        <tr>
-            <td>SSL version:</td>
-            <td>{{ serverInfo[2] }}</td>
-        </tr>
-    </table>
-</div>
-<br/>
-<div class="sidebar-content">
-    <div class="serverTitle">
-        <div class="panel-title">
-            <span class="server-title">Membres de l'équipe en ligne</span>
-        </div>
-    </div>
-    <div class="sidebar-body-staf">
-        {% for staff in userStaff %}
-        <div class="sidebar-content-staf">
-            <div class="visitor-avatar">
-                <img width="38" height="38" alt="{{ staff.username }}" src="{{ vich_uploader_asset(  staff, 'imageFile') }}"/>
+<div class="padding-admin">
+    <div class="sidebar-content">
+        <div class="serverTitle">
+            <div class="panel-title">
+                <span class="server-title">Rapport sur l'environnement du serveur</span>
             </div>
-            <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">{{ staff.username }}</a>
-            <div class="staffRole">{{ staff.role.nom }}</div>
         </div>
-        {% endfor %}
+        <table class="table table-borderless">
+            <tr>
+                <td>PHP version:</td>
+                <td>{{ serverInfo[0] }}</td>
+            </tr>
+            <tr>
+                <td>Server software:</td>
+                <td>{{ serverInfo[1] }}</td>
+            </tr>
+            <tr>
+                <td>cURL version:</td>
+                <td>{{ serverInfo[3] }}</td>
+            </tr>
+            <tr>
+                <td>SSL version:</td>
+                <td>{{ serverInfo[2] }}</td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <div class="sidebar-content">
+        <div class="serverTitle">
+            <div class="panel-title">
+                <span class="server-title">Membres de l'équipe en ligne</span>
+            </div>
+        </div>
+        <div class="sidebar-body-staf">
+            {% for staff in userStaff %}
+            <div class="sidebar-content-staf">
+                <div class="visitor-avatar">
+                    <img width="38" height="38" alt="{{ staff.username }}" src="{{ vich_uploader_asset(  staff, 'imageFile') }}"/>
+                </div>
+                <a class="username" href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">{{ staff.username }}</a>
+                <div class="staffRole">{{ staff.role.nom }}</div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -107,14 +107,15 @@
            </dt>
            <dd>
                <div class="form-group">
-                   <div class="input-group mb-3">
+                    <div class="input-group mb-3">
                        {{ form_widget(formPass.password.first, { 'attr': {'placeholder': 'Entrer votre mot de passe'} }) }}
                        <div class="input-group-prepend">
                            <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                        </div>
 
-                   </div>
-                   {{ form_errors(formPass.password.first) }}
+                    </div>
+                    {{ form_errors(formPass.password.first) }}
+                    {{ include("inc/passwordSecurity.html.twig") }}
                </div>
            </dd>
        </dl>

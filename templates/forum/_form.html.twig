@@ -31,13 +31,15 @@
         </dt>
         <dd>
             <div class="form-group">
-                <div class="input-group mb-2">
+                <div class="mb-2">
                     {{ form_widget(form.locked) }}
                     {{ form_errors(form.locked) }}
+                    <dfn class="inputChoices-explain">Les membres ne peuvent plus répondre à cette discussion</dfn>
                 </div>
-                <div class="input-group mb-3" style="{% if is_granted('ROLE_MODERATEUR') %}{% else %}display: none{% endif %}">
+                <div class="mb-3" style="{% if is_granted('ROLE_MODERATEUR') %}{% else %}display: none{% endif %}">
                     {{ form_widget(form.important) }}
                     {{ form_errors(form.important) }}
+                    <dfn class="inputChoices-explain">Les discussions importantes apparaissent tout en haut de la 1ère page de la liste des discussions dans leur forum parent</dfn>
                 </div>
             </div>
         </dd>

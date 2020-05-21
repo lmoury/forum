@@ -68,24 +68,20 @@ services:
         tags: [{ name: form.type }]
 xiidea_easy_audit:
     resolver: xiidea.easy_audit.default_event_resolver                             #Optional
-    #audit_log_class : MyProject\Bundle\MyBundle\Entity\AuditLog                    #Required
     doctrine_event_resolver : xiidea.easy_audit.default_doctrine_event_resolver    #Optional
     default_logger : true                                                          #Optional
 
-    #user property to use as actor of an event
-    #valid value will be any valid property of your user class ~
     user_property : username                                               #Required
 
     doctrine_objects :                                                          #Optional
         App\Entity\User : [created, updated, deleted]
         App\Entity\ForumDiscussion : [created, updated, deleted]
         App\Entity\ForumCommentaire : [created, updated, deleted]
+        App\Entity\Likes : [created, updated, deleted]
 
-    #List all events you want to track  (Optional from v1.2.1 you can now use subscriber to define it)
     events :                                                                      #Optional
         - security.interactive_login
         - security.authentication.failure : user.event_resolver
-       #- //More event
 
     logger_channel:
         xiidea.easy_audit.logger.service: ["info", "debug"]

@@ -1,0 +1,54 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Editer la catégorie: <strong>{{ categorie.categorie }}</strong>
+{% endblock %}
+{% block main %}
+<div class="padding-admin">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-12 ">
+            <div class="form-group  field-text"><label for="forumcategorie_categorie" class="form-control-label required">Categorie</label>
+                <div class="form-widget">
+                    {{ form_widget(form.categorie) }}
+                    {{ form_errors(form.categorie) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ">
+            <div class="form-group  field-integer"><label for="forumcategorie_parent" class="form-control-label">Parent</label>
+                <div class="form-widget">
+                    {{ form_widget(form.parent) }}
+                    {{ form_errors(form.parent) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ">
+            <div class="form-group  field-text"><label for="forumcategorie_icon" class="form-control-label">Icon</label>
+                <div class="form-widget">
+                    {{ form_widget(form.icon) }}
+                    {{ form_errors(form.icon) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ">
+            <div class="form-group  field-integer"><label for="forumcategorie_ordre" class="form-control-label required">Ordre</label>
+                <div class="form-widget">
+                    {{ form_widget(form.ordre) }}
+                    {{ form_errors(form.ordre) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+
+    {% endblock %}
+    {% block content_footer %}
+    <div class="text-center btn-container float-right">
+        <button class="btn mr-2">Retour à la liste</button>
+        <button class="btn btn-primary">{{ button|default('Sauvegarder les modifications')}}</button>
+    </div>
+    <div class="clearfix"></div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

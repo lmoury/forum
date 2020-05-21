@@ -6,32 +6,34 @@
 {% endblock %}
 
 {% block main %}
-<table class="table table-bordered table-responsive text-center" id="tableUsers">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Type id</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>User</th>
-            <th>Ip</th>
-       </tr>
-    </thead>
-    <tbody>
-        {% for a in audit %}
+<div class="padding-admin">
+    <table class="table table-bordered table-responsive text-center" id="tableUsers">
+        <thead>
             <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ a['type_id'] }}</td>
-                <td>{{ a['type'] }}</td>
-                <td>{{ a['description'] }}</td>
-                <td>{{ date_passed(a['event_time'] | date('d-m-Y H:i:s'))}}</td>
-                <td>{{ a['user'] }}</td>
-                <td>{{ a['ip'] }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <th>#</th>
+                <th>Type id</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>User</th>
+                <th>Ip</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for a in audit %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ a['type_id'] }}</td>
+                    <td>{{ a['type'] }}</td>
+                    <td>{{ a['description'] }}</td>
+                    <td>{{ date_passed(a['event_time'] | date('d-m-Y H:i:s'))}}</td>
+                    <td>{{ a['user'] }}</td>
+                    <td>{{ a['ip'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <!-- Modal delete conversation -->
 <div class="modal fade" id="deleteLog" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
