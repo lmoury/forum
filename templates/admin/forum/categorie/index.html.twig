@@ -10,14 +10,12 @@
     <tr>
         <td>
             <span><i class="fa fa-list mr-4"></i><a href="{{ path('admin.categorie.editer', {id: categ.id, slug: categ.slug})}}"><strong>{{ categ.categorie }}</strong> <span class="dataList-hint">Catégorie</span></a></span>
-            <span class="float-right"><a class="btn btn-danger" href=""><i class="fa fa-trash"></i></a></span>
         </td>
     </tr>
         {% for sousCateg in categories if sousCateg.parent == categ.id %}
         <tr>
             <td>
                 <span><i class="fa fa-comments mr-5"></i><a href="{{ path('admin.categorie.editer', {id: sousCateg.id, slug: sousCateg.slug})}}"><strong>{{ sousCateg.categorie }}</strong> <span class="dataList-hint">Forum</span></a></span>
-                <span class="float-right"><a class="btn btn-danger" href=""><i class="fa fa-trash"></i></a></span>
             </td>
         </tr>
         {% endfor %}

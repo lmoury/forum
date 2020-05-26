@@ -46,9 +46,27 @@
     {% block content_footer %}
     <div class="text-center btn-container float-right">
         <button class="btn mr-2">Retour à la liste</button>
+        <span class="mr-2"><a class="btn btn-danger" href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i></a></span>
         <button class="btn btn-primary">{{ button|default('Sauvegarder les modifications')}}</button>
     </div>
     <div class="clearfix"></div>
     {{ form_end(form) }}
+</div>
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+            </div>
+            <div class="modal-footer">
+            <form method="post" action="{{ path('admin.categorie.delete', {id: categorie.id})}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

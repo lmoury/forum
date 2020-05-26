@@ -40,8 +40,11 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/admin/categorie/new", name="admin.categorie.new")
+     * @param ObjectManager em
      * @param Request $request
      * @param ForumCategorieRepository $repository
+     * @param new ForumCategorie()
+     * @param ForumCategorieType
      */
     public function new(Request $request, ForumCategorieRepository $repository)
     {
@@ -68,6 +71,8 @@ class ForumController extends AbstractController
     * @Route("/admin/categorie/{slug}.{id}/editer", name="admin.categorie.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"}, methods="GET|POST")
     * @param ObjectManager em
     * @param ForumCategorie $categorie
+    * @param ForumCategorieRepository $repository
+    * @param ForumCategorieType
     * @param Request $request
     * @param string $slug
     */
@@ -93,5 +98,22 @@ class ForumController extends AbstractController
             'form' => $form->createView(),
             'categorie' => $categorie
         ]);
+    }
+
+
+    /**
+    * @Route("/admin/categorie/{id}", name="admin.categorie.delete", methods="DELETE")
+    * @param ObjectManager em
+    * @param ForumCategorie $categorie
+    * @param Request $request
+    */
+    public function delete(ForumCategorie $categorie, Request $request)
+    {
+        if($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->get('_token'))) {
+            $this->em->remove($categorie);
+            $this->em->flush();
+            $this->addFlash('success', 'La catégories à été supprimer avec success');
+        }
+        return $this->redirectToRoute('admin.categories');
     }
 }
