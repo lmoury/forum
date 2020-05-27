@@ -19,13 +19,11 @@
   text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
 }
 
-.pseudoUser6
+.pseudoUser4
 {
   color: gold;
   text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
-  background: transparent url(../img/extra/7.gif) no-repeat;
   font-weight: bold;
-  padding-left: 20px;
 }
 
 .pseudoUser2
@@ -42,14 +40,14 @@
   display: inline-block;
 }
 
-.pseudoUser6
+.pseudoUser4
 {
   color: yellow;
   text-shadow: 1px 0px 2px #000000, 2px 0px 5px #000000, 1px 0px 3px #000000, 0px 1px 2px #080808, 0px 1px 4px #020202, 0px 1px 3px #040404;
   font-weight: bold;
 }
 
-.pseudoUser6::before
+.pseudoUser4::before
 {
   font-family: "FontAwesome";
   content: "";
@@ -96,13 +94,13 @@ background-color: #F88;
   background-color: orange;
 }
 
-.userBannerDiscu.b6
+.userBannerDiscu.b4
 {
   color: black;
   background-color: yellow;
   border-color: gold;
 }
-.wrappedDiscu.userBannerDiscu.b6 span.after , .wrappedDiscu.userBannerDiscu.b6 span.before {
+.wrappedDiscu.userBannerDiscu.b4 span.after , .wrappedDiscu.userBannerDiscu.b4 span.before {
   background-color: gold;
 }
 

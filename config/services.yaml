@@ -66,6 +66,7 @@ services:
         arguments:
             - "@security.token_storage"
         tags: [{ name: form.type }]
+
 xiidea_easy_audit:
     resolver: xiidea.easy_audit.default_event_resolver                             #Optional
     doctrine_event_resolver : xiidea.easy_audit.default_doctrine_event_resolver    #Optional

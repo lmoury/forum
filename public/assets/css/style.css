@@ -654,6 +654,7 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
     color: white;
     background: #2f78a0;
     box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+    background-image: url(/assets/img/arrierefond1.png);
 }
 .sidebar-body {
     padding: 9px;
@@ -1044,6 +1045,7 @@ footer a:hover {
     padding: 6px 15px;
     border-bottom: 2px solid #2f78a0;
     box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+    background-image: url(/assets/img/arrierefond1.png);
 }
 
 
@@ -1480,4 +1482,30 @@ dl.widget-conversation {
     margin-left: 20px;
     font-size: 12px;
     color: #8c8c8c;
+}
+
+
+#custom-categ18 .categTitle {
+	background-color: #f2a600;
+	color: white;
+	border-bottom: 2px solid #d49900;
+}
+.content-section#custom-categ18 {
+	border: solid #d49900;
+}
+#custom-categ18 .node-title {
+    color: gold;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
+.title-categ18, .title-categ18:hover, #custom-categ18 .nodeCol1 i, #custom-categ18 .noMessages div > span > a {
+	color: #f2a600;
+}
+#custom-categ18 .nodeLigne {
+	border-bottom: 2px solid #d49900;
+}
+#custom-categ18 .nodeLigne:last-child {
+    border-bottom: none;
+}
+#custom-categ18 .visitor-avatar img {
+	border: 1px solid #d49900;
 }

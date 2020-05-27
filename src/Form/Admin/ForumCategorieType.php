@@ -29,6 +29,7 @@ class ForumCategorieType extends AbstractType
                 'required' => false
             ])
             ->add('icon')
+            ->add('access')
             ->add('ordre')
         ;
     }

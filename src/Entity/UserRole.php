@@ -38,9 +38,15 @@ class UserRole
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ForumCategorie", mappedBy="access")
+     */
+    private $accessRole;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->accessRole = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,5 +124,36 @@ class UserRole
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection|ForumCategorie[]
+     */
+    public function getAccessRole(): Collection
+    {
+        return $this->accessRole;
+    }
+
+    public function addAccessRole(ForumCategorie $accessRole): self
+    {
+        if (!$this->accessRole->contains($accessRole)) {
+            $this->accessRole[] = $accessRole;
+            $accessRole->setAccess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessRole(ForumCategorie $accessRole): self
+    {
+        if ($this->accessRole->contains($accessRole)) {
+            $this->accessRole->removeElement($accessRole);
+            // set the owning side to null (unless already changed)
+            if ($accessRole->getAccess() === $this) {
+                $accessRole->setAccess(null);
+            }
+        }
+
+        return $this;
     }
 }

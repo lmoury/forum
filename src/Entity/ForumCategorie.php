@@ -44,6 +44,11 @@ class ForumCategorie
      */
     private $forumDiscussions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserRole", inversedBy="accessRole")
+     */
+    private $access;
+
     public function __construct()
     {
         $this->forumDiscussions = new ArrayCollection();
@@ -133,6 +138,18 @@ class ForumCategorie
                 $forumDiscussion->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAccess(): ?UserRole
+    {
+        return $this->access;
+    }
+
+    public function setAccess(?UserRole $access): self
+    {
+        $this->access = $access;
 
         return $this;
     }

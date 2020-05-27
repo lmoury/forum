@@ -30,8 +30,8 @@ class UserRoleFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($role3);
 
         $role4 = new UserRole();
-        $role4->setNom('Assistant');
-        $role4->setRole('ROLE_ASSIST');
+        $role4->setNom('Premium');
+        $role4->setRole('ROLE_PREMIUM');
         $role4->setLevel(5);
         $manager->persist($role4);
 

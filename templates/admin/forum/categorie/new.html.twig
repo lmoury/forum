@@ -24,6 +24,14 @@
             </div>
         </div>
         <div class="col-12 ">
+            <div class="form-group  field-text"><label for="forumcategorie_icon" class="form-control-label">Accès</label>
+                <div class="form-widget">
+                    {{ form_widget(form.access) }}
+                    {{ form_errors(form.access) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ">
             <div class="form-group  field-text"><label for="forumcategorie_icon" class="form-control-label">Icon</label>
                 <div class="form-widget">
                     {{ form_widget(form.icon) }}

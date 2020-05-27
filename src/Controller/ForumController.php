@@ -59,7 +59,7 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/forums/{slug}.{id}", name="forum.discussions", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('ACCESS_DISCUSSIONS', categorie)")
      * @param PaginatorInterface paginator
      * @param ForumCategorie $categorie
      * @param ForumDiscussionRepository $repository
@@ -124,7 +124,7 @@ class ForumController extends AbstractController
     /**
     * @Route("/discussion/{slug}.{id}", name="forum.discussion", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
     * @Route("/discussion/{slug}.{id}/edit/{idCom}", name="forum.commentaire.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
-    * @Security("is_granted('ROLE_USER')")
+    * @Security("is_granted('ACCESS_DISCUSSION', discussion)")
     * @param PaginatorInterface paginator
     * @param ObjectManager em
     * @param ForumDiscussion $discussion
@@ -144,7 +144,6 @@ class ForumController extends AbstractController
             $discussion->setAffichage($discussion->getAffichage()+1);
             $this->em->flush();
         }
-
 
         if($discussion->getSlug() !== $slug) {
           return $this->redirectToRoute('forum.discussion', ['id' => $discussion->getId(), 'slug' => $discussion->getSlug()], 301);
