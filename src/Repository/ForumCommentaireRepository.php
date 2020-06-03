@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\ForumCommentaire;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method ForumCommentaire|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,9 +17,12 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ForumCommentaireRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $security;
+    
+    public function __construct(RegistryInterface $registry, Security $security)
     {
         parent::__construct($registry, ForumCommentaire::class);
+        $this->security = $security;
     }
 
     /**
@@ -48,11 +53,42 @@ class ForumCommentaireRepository extends ServiceEntityRepository
      */
     public function getLastCommentaires(): array
     {
-        return $this->createQueryBuilder('f')
-            ->setMaxResults(5)
-            ->orderBy('f.date_creation', 'DESC')
-            ->getQuery()
-            ->getResult();
+
+            $query = $this->findVisibleQuery();
+            $query = $query
+                ->leftJoin('f.discussion', 'd')
+                ->addSelect('f', 'd')
+                ->leftJoin('d.categorie', 'cat')
+                ->addSelect('d', 'cat')
+                ->setMaxResults(5);
+
+            if($this->security->isGranted('ROLE_PREMIUM')) {
+                $query = $query
+                    ->orWhere('cat.access = 4');
+            }
+            if($this->security->isGranted('ROLE_USER')) {
+                $query = $query
+                    ->orWhere('cat.access = 1');
+            }
+            if($this->security->isGranted('ROLE_MODO')) {
+                $query = $query
+                    ->orWhere('cat.access = 2');
+            }
+            if($this->security->isGranted('ROLE_ADMIN')) {
+                $query = $query
+                    ->orWhere('cat.access = 3');
+            }
+
+            $query = $query
+                ->orWhere('cat.access is null')
+                ->orderBy('f.date_creation', 'DESC');
+            $query = $query->getQuery();
+            return $query->getResult();
+    }
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('f');
     }
 
     /*

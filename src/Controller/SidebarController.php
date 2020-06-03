@@ -43,8 +43,8 @@ class SidebarController extends AbstractController
      */
     public function forum(ForumDiscussionRepository $repoDiscussion, ForumCommentaireRepository $repoCommentaire)
     {
-        $lastDiscussion = $repoDiscussion->getLastDiscussions();
-        $lastCommentaire = $repoCommentaire->getLastCommentaires();
+            $lastDiscussion = $repoDiscussion->getLastDiscussions();
+            $lastCommentaire = $repoCommentaire->getLastCommentaires();
         return $this->render('inc/sidebar/sidebar_forum.html.twig', [
             'lastDiscussion' => $lastDiscussion,
             'lastCommentaire' => $lastCommentaire,
