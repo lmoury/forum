@@ -44,8 +44,8 @@
                                             </div>
                                             <div class="nodeStat">
                                                 <div class="disparforumstat strongItem">
-                                                    Discussions: <span>{{ sousCateg.forumDiscussions.count }}</span>
-                                                    Messages: {{ sousCateg.forumDiscussions.count + nbCom }}<span></span>
+                                                    <span class="nodeStatItem">Discussions:</span> <span>{{ sousCateg.forumDiscussions.count }}</span>
+                                                    <span class="nodeStatItem">Messages:</span> {{ sousCateg.forumDiscussions.count + nbCom }}<span></span>
                                                 </div>
                                             </div>
 
@@ -61,11 +61,13 @@
                                                                 <img height="36" width="36" src="{{ vich_uploader_asset( lastCom.auteur, 'imageFile') }}" alt="{{  lastCom.auteur.username }}" />
                                                             </div>
         													<div>
-        									        			<span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}#ancreCom{{ lastCom.id }}">{{ lastMessage.titre }}</a></span>
+        									        			<span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}#ancreCom{{ lastCom.id }}">
+                                                                    {{ lastMessage.titre | slice(0, 25) }}{% if lastMessage.titre|length > 25 %}...{% endif %}
+                                                                </a></span>
         									        		</div>
         													<div>
         									        			<a class="pseudoUser{{ lastCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}">{{ lastCom.auteur.username }}</a>
-                                                                , <span><i class="fa fa-clock-o"></i> {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                                                , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
         									        		</div>
         									        	</div>
                                                         {% else %}
@@ -74,17 +76,19 @@
                                                                 <img height="36" width="36" src="{{ vich_uploader_asset( lastMessage.auteur, 'imageFile') }}" alt="{{  lastMessage.auteur.username }}" />
                                                             </div>
         													<div>
-        									        			<span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}">{{ lastMessage.titre }}</a></span>
+        									        			<span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}">
+                                                                    {{ lastMessage.titre | slice(0, 20) }}{% if lastMessage.titre|length > 20 %}...{% endif %}
+                                                                </a></span>
         									        		</div>
         													<div>
         									        			<a class="pseudoUser{{ lastMessage.auteur.role.id }}" href="{{ path('membres.profil', {id: lastMessage.auteur.id, slug: lastMessage.auteur.slug})}}">{{ lastMessage.auteur.username }}</a>
-                                                                , <span><i class="fa fa-clock-o"></i> {{ date_passed(lastMessage.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                                                , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastMessage.dateCreation | date('d-m-Y H:i:s')) }}</span>
         									        		</div>
         									        	</div>
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% else %}
-                                                <span class="noMessages">(Ne contient aucun message)</span>
+                                                <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
                                                 {% endif %}
                                             </div>
                                         </td>

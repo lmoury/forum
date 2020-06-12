@@ -11,12 +11,16 @@
             {% for lastDiscu in lastDiscussion %}
                 <div class="article-list-content">
                     <span><img src="{{ vich_uploader_asset( lastDiscu.auteur, 'imageFile') }}" alt="{{  lastDiscu.auteur.username }}" width="40" height="40" /></span>
-                    <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug})}}">{{ lastDiscu.titre }}</strong></a>
+                    <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug})}}">
+                        <strong>
+                        {{ lastDiscu.titre | slice(0, 25) }}{% if lastDiscu.titre|length > 25 %}...{% endif %}
+                        </strong>
+                    </a>
                     <br/>
                     <div class="article-list-info">
                         Auteur: <a href="{{ path('membres.profil', {id: lastDiscu.auteur.id, slug: lastDiscu.auteur.slug})}}" class="pseudoUser{{ lastDiscu.auteur.role.id }}">
                             {{ lastDiscu.auteur.username }}
-                        </a>, {{ date_passed(lastDiscu.dateCreation | date('d-m-Y H:i:s')) }}
+                        </a>, <span class="nodeStatItem">{{ date_passed(lastDiscu.dateCreation | date('d-m-Y H:i:s')) }}</span>
                     </div>
                     <div class="article-list-categ">
                         <a href="{{ path('forum.discussions', {id: lastDiscu.categorie.id, slug: lastDiscu.categorie.slug})}}">
@@ -43,7 +47,7 @@
                     <div class="article-list-info">
                         <a href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}" class="pseudoUser{{ lastCom.auteur.role.id }}">
                             {{ lastCom.auteur.username }}</a>,
-                            {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s' )) }}
+                            <span class="nodeStatItem">{{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s' )) }}</span>
                     </div>
                     <a href="{{ path('forum.discussion', {id: lastCom.discussion.id, slug: lastCom.discussion.slug})}}#ancreCom{{ lastCom.id }}">
                         <strong>{{ delParser(lastCom.commentaire) | slice(0, 25) }}{% if lastCom.commentaire|length > 25 %}...{% endif %}</strong>

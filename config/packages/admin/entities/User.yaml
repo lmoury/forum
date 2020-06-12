@@ -62,7 +62,61 @@ easy_admin:
             list:
                 title: 'Utilisateur banni'
                 dql_filter: 'entity.role = 5'
-                actions: ['-new']
+                actions:
+                    - { name: '-delete'}
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                fields:
+                    - { property: 'id', label: '#' }
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'date_naissance', label: 'Naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+            edit:
+                title: 'Editer un utilisateur banni'
+            form:
+                fields:
+                    - {property: 'username'}
+                    - {property: 'email'}
+                    - {property: 'sexe', type: choice, type_options: { choices: {"Inconnu": "0","Masculin": "1", "Feminin": "2"} } }
+                    - {property: 'avatar'}
+                    - {property: 'date_naissance', type: birthday}
+                    - {property: 'role'}
+        Administrateurs:
+            class: App\Entity\User
+            list:
+                title: 'Utilisateur banni'
+                dql_filter: 'entity.role = 3'
+                actions:
+                    - { name: '-delete'}
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                fields:
+                    - { property: 'id', label: '#' }
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'date_naissance', label: 'Naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+            edit:
+                title: 'Editer un utilisateur banni'
+            form:
+                fields:
+                    - {property: 'username'}
+                    - {property: 'email'}
+                    - {property: 'sexe', type: choice, type_options: { choices: {"Inconnu": "0","Masculin": "1", "Feminin": "2"} } }
+                    - {property: 'avatar'}
+                    - {property: 'date_naissance', type: birthday}
+                    - {property: 'role'}
+        Modérateurs:
+            class: App\Entity\User
+            list:
+                title: 'Utilisateur banni'
+                dql_filter: 'entity.role = 2'
+                actions:
+                    - { name: '-delete'}
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
                 fields:
                     - { property: 'id', label: '#' }
                     - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }

@@ -102,15 +102,15 @@
                             <div class="nodeStat">
                                 <span class="disparforumstat">
                                     <a class="pseudoUser{{ d.auteur.role.id }}" href="{{ path('membres.profil', {id: d.auteur.id, slug: d.auteur.slug}) }}">{{ d.auteur.username }}</a>,
-                                    <span><i class="fa fa-clock-o"></i> {{ date_passed(d.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                    <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(d.dateCreation | date('d-m-Y H:i:s')) }}</span>
                                 </span>
                             </div>
                         </td>
                         <td class="discussionCol3 discussionRepAfiBis">
                             <div class="nodeTdCust">
                                 <div class="discussionRepAfi">
-                                    <div><span>Réponses:</span> <span style="float: right;">{{ d.forumCommentaires.count }}</span></div>
-                                    <div><span>Affichages:</span> <span style="float: right;">{{ d.affichage }}</span></div>
+                                    <div><span class="nodeStatItem">Réponses:</span> <span style="float: right;">{{ d.forumCommentaires.count }}</span></div>
+                                    <div><span class="nodeStatItem">Affichages:</span> <span style="float: right;">{{ d.affichage }}</span></div>
                                 </div>
                             </div>
                         </td>
@@ -119,7 +119,7 @@
                                 <div class="discussionRepAfi">
                                     {% if d.forumCommentaires.count > 0 %}
                                         {% set lastCom = max(d.forumCommentaires.snapshot) %}
-                                        <div>
+                                        <div class="nodeStatItem">
                                             {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}
                                         </div>
                                         <div>
@@ -128,7 +128,7 @@
                                             </span>
                                         </div>
                                     {% else %}
-                                        <div>
+                                        <div class="nodeStatItem">
                                             {{ date_passed(d.dateCreation | date('d-m-Y H:i:s')) }}
                                         </div>
                                         <div>

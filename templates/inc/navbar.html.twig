@@ -70,7 +70,7 @@
                 {% for nombre in app.user.conversationUsers if nombre.lu == false %}
                 {% set nombreMessage = loop.index %}
                 {% endfor %}
-                <li class="nav-item dropdown" id="profil-pop-messagerie">
+                <li class="nav-item dropdown " id="profil-pop-messagerie">
                     <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-envelope"></i>
                         {% if nombreMessage > 0 %}<span class="badge badge-secondary alertMessagerie">{{ nombreMessage }}</span>{% endif %}

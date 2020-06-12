@@ -34,8 +34,14 @@
 <div class="row">
     <div class="col-sm-2 text-center">
         <div class="profilPanelForum no-padding" id="content-section">
-            <div class="avatarShadow">
-                <img width="96" height="96" src="{{ vich_uploader_asset( discussion.auteur, 'imageFile') }}" alt="{{  discussion.auteur.username }}"/>
+            <div class="avatarShadow avatar-discussion">
+                {% if discussion.auteur.role.role == ('ROLE_MODERATEUR') or discussion.auteur.role.role == ('ROLE_ADMIN') %}
+                <span class="helper"></span>
+                {% endif %}
+                <img src="{{ vich_uploader_asset( discussion.auteur, 'imageFile') }}" alt="{{ discussion.auteur.username }}"/>
+                {% if discussion.auteur.dateVisite|date("m/d/Y H:i:s") > "now"|date_modify("-5 minutes")|date("m/d/Y H:i:s") %}
+                <span class="message-avatar-online" title="En ligne actuellement"></span>
+                {% endif %}
             </div>
             <div class="pseudoPanelDiscu">
                 <a class="pseudoUser{{ discussion.auteur.role.id }}" href="{{ path('membres.profil', {id: discussion.auteur.id, slug: discussion.auteur.slug})}}">{{ discussion.auteur.username }}</a>
@@ -113,8 +119,14 @@
 <div class="row">
     <div class="col-sm-2 text-center">
         <div class="profilPanelForum no-padding" id="content-section">
-            <div class="avatarShadow">
-                <img width="96" height="96" src="{{ vich_uploader_asset( com.auteur, 'imageFile') }}" alt="{{  com.auteur.username }}"/>
+            <div class="avatarShadow avatar-discussion">
+                {% if com.auteur.role.role == ('ROLE_MODERATEUR') or com.auteur.role.role == ('ROLE_ADMIN') %}
+                <span class="helper"></span>
+                {% endif %}
+                <img src="{{ vich_uploader_asset( com.auteur, 'imageFile') }}" alt="{{ com.auteur.username }}"/>
+                {% if com.auteur.dateVisite|date("m/d/Y H:i:s") > "now"|date_modify("-5 minutes")|date("m/d/Y H:i:s") %}
+                <span class="message-avatar-online" title="En ligne actuellement"></span>
+                {% endif %}
             </div>
             <div class="pseudoPanelDiscu">
                 <a class="pseudoUser{{ com.auteur.role.id }}" href="{{ path('membres.profil', {id: com.auteur.id, slug: com.auteur.slug})}}">{{ com.auteur.username }}</a>

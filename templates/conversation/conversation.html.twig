@@ -40,28 +40,32 @@
                 </tr>
             </table>
         </div>
-        <br/>
+        {% else %}
+        <div class="blockMessage-info">
+            <i class="fa fa-thumbs-up"></i> Un membre certifié de l'équipe se trouve dans cette conversation.
+        </div>
         {% endif %}
+        <br/>
         <div class="btn-group float-right">
             {% if is_granted('STAFF_CONVERSATION', conversation) == false %}
-            <div id="btn-article-add" class="mr-2"><a data-toggle="modal" href="#" data-target="#modalAddStaff" data-id="{{ conversation.id }}">Inviter un membre de l'équipe</a></div>
+            <div class="mr-2"><a data-toggle="modal" href="#" data-target="#modalAddStaff" data-id="{{ conversation.id }}">Inviter un membre de l'équipe</a></div>
             {% endif %}
-            {% for p in conversation.conversationMessage if p.participant == app.user and p.important == false %}
-            <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Définir comme important</a></div>
-            {% else %}
-            <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Définir comme plus important</a></div>
-            {% endfor %}
             {% if app.user == conversation.expediteur or is_granted('ROLE_MODERATEUR') %}
                 {% if conversation.locked %}
-                <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Réouvrir la conversation</a></div>
+                <div class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Réouvrir la conversation</a></div>
                 {% else %}
-                <div id="btn-article-add" class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Fermer la conversation</a></div>
+                <div class="mr-2"><a href="{{ path('conversation.locked', {id: conversation.id})}}">Fermer la conversation</a></div>
                 {% endif %}
             {% endif %}
-            {% if conversation.conversationMessage.count > 1 %}
-            <div id="btn-article-add"><a href="{{ path('conversation.quitter', {id: conversation.id})}}">Quitter la conversation</a></div>
+            {% for p in conversation.conversationMessage if p.participant == app.user and p.important == false %}
+            <div class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Conversation importante</a></div>
             {% else %}
-            <div id="btn-article-add"><a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" >Supprimer la conversation</a></div>
+            <div class="mr-2"><a href="{{ path('conversation.important', {id: conversation.id})}}">Rendre la conversation normale</a></div>
+            {% endfor %}
+            {% if conversation.conversationMessage.count > 1 %}
+            <div><a href="{{ path('conversation.quitter', {id: conversation.id})}}">Quitter la conversation</a></div>
+            {% else %}
+            <div><a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" >Supprimer la conversation</a></div>
             {% endif %}
         </div>
         <div class="clearfix"></div>

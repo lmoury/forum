@@ -18,8 +18,10 @@ easy_admin:
               children:
                   - {entity: 'User', icon: 'users', label: 'Liste des utilisateurs'}
                   - {entity: 'User', icon: 'user', label: 'Créer un utilisateur', params: { action: 'new' } }
+                  - {entity: 'Administrateurs', label: 'Administrateurs', icon: 'code'}
+                  - {entity: 'Modérateurs', label: 'Modérateurs', icon: 'shield'}
                   - {entity: 'Banni', label: 'Utilisateur banni', icon: 'user-times'}
-                  - {entity: 'UserRole', icon: 'shield', label: 'Roles des utilisateurs'}
+                  - {entity: 'UserRole', icon: 'graduation-cap', label: 'Roles des utilisateurs'}
             - label: 'Forums'
               icon: 'comments'
               children:

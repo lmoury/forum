@@ -32,6 +32,7 @@ class ConversationUserRepository extends ServiceEntityRepository
             ->join('c.conversation', 't')
             ->andWhere('c.participant = :val')
             ->setParameter('val', $participant)
+            ->addOrderBy('c.lu', 'ASC')
             ->addOrderBy('c.important', 'DESC')
             ->addOrderBy('t.created_at', 'DESC')
             ->getQuery()

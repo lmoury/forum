@@ -43,6 +43,11 @@ header {
     text-shadow: 1px 1px 0px black, 0px 0px 5px #87ceeb, 0px 0px 10px #87ceeb;
     line-height: 175px;
 }
+#logo a:hover {
+    opacity: 0.5;
+    transition: All 0.9s ease;
+}
+
 #form-pop-search .custom-checkbox {
     padding-top: 10px;
 }
@@ -571,6 +576,7 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
     margin-right: 5px;
     font-size: 11px;
     font-weight: 300;
+    color: #818181;
 }
 .pairsJustified dd {
     text-align: right;
@@ -667,6 +673,7 @@ dl.widget-statistique {
 .widget-statistique dt {
     float: left;
     font-weight:300;
+    color: #818181;
 }
 .widget-statistique dt > span > i {
     padding-right: 5px;
@@ -999,7 +1006,10 @@ footer a:hover {
     width: 100%;
 }
 .nodeStat {
-    font-size: 10px;
+    font-size: 11px;
+}
+.nodeStatItem {
+    color: #818181;
 }
 .nodeTitle {
     font-size: 12pt;
@@ -1017,7 +1027,7 @@ footer a:hover {
 	font-size: 11px;
 }
 .panel-body {
-	padding: 15px;
+	padding: 5px 10px 0px 10px;
 }
 
 .nodeLigne:last-child {
@@ -1082,16 +1092,15 @@ footer a:hover {
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
 }
-
-
-
-
-
 .nodeCol1 {
     width: 36px;
     height: 36px;
     text-align: center;
     margin: 10px 0 10px 4px;
+}
+.nodeCol1:hover {
+    transform: rotate(360deg);
+    transition-duration: 0.8s
 }
 .nodeCol1 i {
     font-size: 36px;
@@ -1104,9 +1113,6 @@ footer a:hover {
 .nodeCol3 {
     padding: 6px 9px;
     width: 100%;
-}
-.nodeStat {
-    font-size: 10px;
 }
 .nodeTitle {
     font-size: 12pt;
@@ -1152,21 +1158,15 @@ footer a:hover {
 }
 .nodeLigneTitle {
     background: #2f78a0;
-    border: 2px solid #2f78a0;
     color: #c8c8c8;
     text-shadow: 1px 1px 0px black;
+    background-image: url(/assets/img/arrierefond1.png);
 }
 
 td.discussionCol1 {
     padding-left: 10px;
 }
-
-
-
-
-
 .avatarShadow {
-    background-image: url("../img/avatar-shadow.png");
     background-repeat: no-repeat;
     background-position: 50% 100%;
     padding: 5px 0px 20px;
@@ -1254,9 +1254,6 @@ td.discussionCol1 {
 .ligneImportantDiscu {
 	background-color: #ddd;
 }
-.converLigne {
-	background-color: #bbb;
-}
 .alertMessagerie {
 	font-size: 10px;
 	position: absolute;
@@ -1319,6 +1316,7 @@ td.discussionCol1 {
 }
 .staffRole {
     font-size: 13px;
+    color: #818181;
 }
 .sidebar-body-staf {
     padding-right: 9px;
@@ -1379,6 +1377,15 @@ td.discussionCol1 {
     color: #c84448;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
+.blockMessage-info {
+    border-left: 3px solid #0c5460;
+    background: #d1ecf1;
+    color: #0c5460;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-align: center;
+}
 .blockMessage {
     padding: 6px 10px;
     border: 1px solid rgba(0,0,0,.1);
@@ -1399,6 +1406,7 @@ dl.widget-conversation {
 .widget-conversation dt {
     float: left;
     font-weight:300;
+    color: #818181;
 }
 
 .widget-conversation dd {
@@ -1508,4 +1516,49 @@ dl.widget-conversation {
 }
 #custom-categ18 .visitor-avatar img {
 	border: 1px solid #d49900;
+}
+.avatar-discussion img {
+    width: 130px;
+    height: 130px;
+    border: 1px solid #2f78a0;
+    box-shadow: 0px 1px 0px rgba(255,255,255,0.25), inset 0px 1px 5px black;
+    padding: 2px;
+}
+.avatar-discussion {
+    padding: 9px;
+}
+.avatar-discussion .helper {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 93px;
+    content: "";
+    background: url("/assets/img/staff1.png") no-repeat transparent;
+    height: 107px;
+    width: 107px;
+}
+.message-avatar-online {
+	position: absolute;
+	top: 9px;
+	left: 15px;
+	border: 10px solid transparent;
+	border-left-color: #7fb900;
+	border-top-color: #7fb900;
+	animation: online 2.5s ease-in-out infinite;
+}
+.ReadToggle {
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	left: -15px;
+	top: 6px;
+	background: url('/assets/img/sprite-editable-big.png') no-repeat 10000px 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-indent: 9999px;
+	background-size: 200px 80px;
+}
+.ReadToggle {
+    background-position: -5px -42px;
 }

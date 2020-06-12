@@ -23,6 +23,8 @@ use Knp\Component\Pager\PaginatorInterface;
 class ConversationController extends AbstractController
 {
 
+    private $current_url = 'conversation';
+
     /**
      * @var ObjectManager
      */
@@ -54,7 +56,9 @@ class ConversationController extends AbstractController
             10
         );
         return $this->render('conversation/index.html.twig', [
-            'conversations' => $conversations
+            'conversations' => $conversations,
+            'current_url' => $this->current_url,
+
         ]);
     }
 
@@ -73,7 +77,7 @@ class ConversationController extends AbstractController
         if($conversation->getSlug() !== $slug) {
           return $this->redirectToRoute('conversations', ['id' => $conversation->getId(), 'slug' => $conversation->getSlug()], 301);
         }
-        
+
         $lu = $repository->getConversationUser($conversation, $this->getUser());
         $lu->setLu(true);
         $this->em->flush();
@@ -85,6 +89,7 @@ class ConversationController extends AbstractController
         );
         return $this->render('conversation/conversation.html.twig', [
             'conversation' => $conversation,
+            'current_url' => $this->current_url,
             'reponses' => $reponses
         ]);
     }
@@ -127,6 +132,7 @@ class ConversationController extends AbstractController
          }
 
          return $this->render('conversation/new.html.twig', [
+             'current_url' => $this->current_url,
              'form' => $form->createView()
          ]);
      }

@@ -6,7 +6,7 @@ body {
 	width: calc(100% - 0px);
 }
 .main-sidebar {
-    height: 100%!important;
+    height: 90vh!important;
 	padding: 0px;
 	background: #2E363F;
 }
