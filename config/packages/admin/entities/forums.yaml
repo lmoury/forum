@@ -2,16 +2,16 @@ easy_admin:
     entities:
         ForumCategorie:
             list:
-                title: 'Catégories'
+                title: 'Créer un nouveau forum'
             new:
-                title: 'Nouvelle catégorie'
+                title: 'Créer un nouveau forum'
             edit:
-                title: 'Editer une catégorie'
+                title: 'Editer le forum'
             class: App\Entity\ForumCategorie
             form:
                 fields:
                     - {property: 'categorie'}
-                    - {property: 'parent'}
+                    - {property: 'access'}
                     - {property: 'icon'}
                     - {property: 'ordre'}
         Tag:

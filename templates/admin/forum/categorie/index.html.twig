@@ -9,7 +9,7 @@
     {% for categ in categories if categ.parent == null %}
     <tr>
         <td>
-            <span><i class="fa fa-list mr-4"></i><a href="{{ path('admin.categorie.editer', {id: categ.id, slug: categ.slug})}}"><strong>{{ categ.categorie }}</strong> <span class="dataList-hint">Catégorie</span></a></span>
+            <span><i class="fa fa-list mr-4"></i><a href="/admin/?entity=ForumCategorie&action=edit&menuIndex=2&submenuIndex=0&sortField=id&sortDirection=DESC&page=1&referer=%252Fadmin%252F%253Fentity%253DForumCategorie%2526action%253Dlist%2526menuIndex%253D2%2526submenuIndex%253D0%2526sortField%253Did%2526sortDirection%253DDESC%2526page%253D1&id={{ categ.id}}"><strong>{{ categ.categorie }}</strong> <span class="dataList-hint">Catégorie</span></a></span>
         </td>
     </tr>
         {% for sousCateg in categories if sousCateg.parent == categ.id %}
