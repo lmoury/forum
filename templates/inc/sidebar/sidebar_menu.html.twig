@@ -16,7 +16,7 @@
                     </a>
                     <span class="virguleDisplay">, </span>
                 {% endfor %}
-                <div class="widget_whosHas">Il y a {{ foo }} membre{% if foo > 1 %}s{% endif %} connecté{% if foo > 1 %}s{% endif %}</div>
+                <div><span class="widget_whosHas">Il y a</span> {{ foo }}<span class="widget_whosHas"> membre{% if foo > 1 %}s{% endif %} connecté{% if foo > 1 %}s{% endif %}</span></div>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
                     </a>
                     <span class="virguleDisplay">, </span>
                 {% endfor %}
-                <div class="widget_whosHas">Actuellement : {{ foo }} membre{% if foo > 1 %}s{% endif %} (Dernières 24H)</div>
+                <div><span class="widget_whosHas">Actuellement :</span> {{ foo }} <span class="widget_whosHas">membre{% if foo > 1 %}s{% endif %} (Dernières 24H)</span></div>
             </div>
         </div>
 

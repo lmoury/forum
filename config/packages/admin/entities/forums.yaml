@@ -3,6 +3,8 @@ easy_admin:
         ForumCategorie:
             list:
                 title: 'Créer un nouveau forum'
+                actions:
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
             new:
                 title: 'Créer un nouveau forum'
             edit:

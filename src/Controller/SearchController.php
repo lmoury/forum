@@ -56,7 +56,7 @@ class SearchController extends AbstractController
             $discussions =  $this->paginator->paginate(
                 $repository->getSearchDiscussion($search),
                 $request->query->getInt('page', 1),
-                10
+                20
             );
 
             return $this->render('search/index.html.twig', [
@@ -112,7 +112,7 @@ class SearchController extends AbstractController
         $discussions =  $this->paginator->paginate(
             $repository->getListDiscussionsTag($tag->getId()),
             $request->query->getInt('page', 1),
-            10
+            20
         );
 
         return $this->render('search/index.html.twig', [

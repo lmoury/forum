@@ -75,7 +75,7 @@ class ForumController extends AbstractController
          $discussions = $this->paginator->paginate(
              $repository->getListDiscussions($categorie->getId()),
              $request->query->getInt('page', 1),
-             10
+             20
          );
 
          return $this->render('forum/discussions.html.twig', [

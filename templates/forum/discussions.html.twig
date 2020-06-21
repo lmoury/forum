@@ -53,7 +53,6 @@
                   </tr>
                 </thead>
                 <tbody>
-
                 {% for d in discussions %}
                     <tr class="nodeLigne {% if d.important %}ligneImportantDiscu{% endif %}" id="">
                         <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( d.auteur, 'imageFile') }}" alt="{{  d.auteur.username }}" /></td>
@@ -168,6 +167,19 @@
                         </td>
                     </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="4">
+                        <div class="p-1 pl-2 staffRole">
+                            {% if discussions.currentPageNumber > 1 %}
+                            {% set nb1 = (20 * discussions.currentPageNumber - 20) + 1 %}
+                            {% set nb2 = (20 * discussions.currentPageNumber - 20) + discussions.count %}
+                            Afficher les discussions de {{ nb1  }} à {{ nb2  }} sur {{ discussions.getTotalItemCount }}
+                            {% else %}
+                            Afficher les discussions de 1 à {{ discussions.count }} sur {{ discussions.getTotalItemCount }}
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

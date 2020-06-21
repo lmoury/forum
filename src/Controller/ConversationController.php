@@ -53,7 +53,7 @@ class ConversationController extends AbstractController
         $conversations = $this->paginator->paginate(
             $repository->getList($this->getUser()),
             $request->query->getInt('page', 1),
-            10
+            20
         );
         return $this->render('conversation/index.html.twig', [
             'conversations' => $conversations,

@@ -16,6 +16,7 @@
         <tr>
             <td>
                 <span><i class="fa fa-comments mr-5"></i><a href="{{ path('admin.categorie.editer', {id: sousCateg.id, slug: sousCateg.slug})}}"><strong>{{ sousCateg.categorie }}</strong> <span class="dataList-hint">Forum</span></a></span>
+                <span class="float-right"><a href="/admin//?entity=ForumCategorie&action=show&menuIndex=2&submenuIndex=0&sortField=id&sortDirection=DESC&page=1&referer=%252Fadmin%252F%253Fentity%253DForumCategorie%2526action%253Dlist%2526menuIndex%253D2%2526submenuIndex%253D0%2526sortField%253Did%2526sortDirection%253DDESC%2526page%253D1&id={{ sousCateg.id}}">{{ sousCateg.forumDiscussions.count }}</a></span>
             </td>
         </tr>
         {% endfor %}
