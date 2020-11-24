@@ -100,4 +100,39 @@ class SidebarController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @param UserRepository $repository
+     */
+    public function lastUsers(UserRepository $repository)
+    {
+        $lastUsers = $repository->getLastUsers();
+        return $this->render('inc/sidebar/sidebar_membres_lastuser.html.twig', [
+            'lastUsers' => $lastUsers,
+        ]);
+    }
+
+    /**
+     * @param UserRepository $repository
+     */
+    public function birthday(UserRepository $repository)
+    {
+        $birthday = $repository->getBirthday();
+        return $this->render('inc/sidebar/sidebar_membres_birthday.html.twig', [
+            'birthday' => $birthday,
+        ]);
+    }
+
+
+    /**
+     * @param UserRepository $repository
+     */
+    public function staff(UserRepository $repository)
+    {
+        $staffUser = $repository->getStaff();
+        return $this->render('inc/sidebar/sidebar_membres_staff.html.twig', [
+            'staffUser' => $staffUser,
+        ]);
+    }
+
 }

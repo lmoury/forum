@@ -20,7 +20,6 @@
                 <thead>
                     <tr>
             			<th>#</th>
-                		<th>Avatar</th>
                 		<th>Nom</th>
                 		<th>Messages</th>
                 		<th>Date inscription</th>
@@ -31,8 +30,10 @@
                     {% for user in users %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td><img width="38" height="38" src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.username }}" /></td>
-                            <td><a class="pseudoUser{{ user.role.id }}" href="{{ path('membres.profil', {id: user.id, slug: user.slug}) }}">{{ user.username }}</a></td>
+                            <td>
+                                <img class="mr-2" width="38" height="38" src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.username }}" />
+                                <a class="pseudoUser{{ user.role.id }}" href="{{ path('membres.profil', {id: user.id, slug: user.slug}) }}">{{ user.username }}</a>
+                            </td>
                             <td>{{ user.forumCommentaires.count + user.forumDiscussions.count }}</td>
                             <td>{{ date_passed(user.dateInscription | date('d-m-Y H:i:s')) }}</td>
                             <td>{{ date_passed(user.dateVisite | date('d-m-Y H:i:s'))}}</td>

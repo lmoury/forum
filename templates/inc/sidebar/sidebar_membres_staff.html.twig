@@ -1,0 +1,20 @@
+<div class="sidebar-content">
+    <div class="sidebar-title">
+        <span class="fa fa-shield"></span>
+        <span class="">Membres de l'équipe</span>
+    </div>
+    <div class="sidebar-body center">
+        <div class="row">
+        {% for staff in staffUser %}
+            <div class="col-3 pb-2">
+                <div class="visitor-avatar">
+                    <a href="{{ path('membres.profil', {id: staff.id, slug: staff.slug})}}">
+                        <img alt="" title="{{ staff.username }}" src="{{ vich_uploader_asset( staff, 'imageFile') }}" width="38" height="38">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

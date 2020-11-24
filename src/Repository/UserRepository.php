@@ -149,6 +149,55 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
+    /**
+    * @return User Returns array user
+    */
+    public function getLastUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->orderBy('u.date_inscription', 'DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    /**
+    * @return User Returns array user
+    */
+    public function getBirthday()
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->orderBy('u.date_inscription', 'DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    /**
+    * @return User Returns array user
+    */
+    public function getStaff()
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.role', 'r')
+            ->addSelect('u', 'r')
+            ->andWhere('u.role = 3')
+            ->orWhere('u.role = 2')
+            ->orderBy('r.level', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     /*
     public function findOneBySomeField($value): ?User
     {

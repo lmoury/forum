@@ -1,19 +1,29 @@
 <div class="sidebar-container">
-	{% if app.user %}
-	{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
-	{{ render(controller("App\\Controller\\SidebarController:staffOnline")) }}
-	<br/>
-	{{ render(controller("App\\Controller\\SidebarController:menu")) }}
-	<br/>
+	{% if current_url is defined and current_url == 'membres' %}
+		{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
+		<br/>
+		{{ render(controller("App\\Controller\\SidebarController:staff")) }}
+		<br/>
+		{{ render(controller("App\\Controller\\SidebarController:lastUsers")) }}
+		<br/>
+		{{ render(controller("App\\Controller\\SidebarController:birthday")) }}
 	{% else %}
-	{{ include('inc/sidebar/sidebar_connexion.html.twig') }}
-	<br/>
+		{% if app.user %}
+		{{ include('inc/sidebar/sidebar_user_panel.html.twig') }}
+		{{ render(controller("App\\Controller\\SidebarController:staffOnline")) }}
+		<br/>
+		{{ render(controller("App\\Controller\\SidebarController:menu")) }}
+		<br/>
+		{% else %}
+		{{ include('inc/sidebar/sidebar_connexion.html.twig') }}
+		<br/>
+		{% endif %}
+		{% if is_granted('ROLE_USER') %}
+		{{ render(controller("App\\Controller\\SidebarController:forum")) }}
+		<br/>
+		{% endif %}
+		{{ render(controller("App\\Controller\\SidebarController:statistique")) }}
+		<br/>
+		{{ render(controller("App\\Controller\\SidebarController:social")) }}
 	{% endif %}
-	{% if is_granted('ROLE_USER') %}
-	{{ render(controller("App\\Controller\\SidebarController:forum")) }}
-	<br/>
-	{% endif %}
-	{{ render(controller("App\\Controller\\SidebarController:statistique")) }}
-	<br/>
-	{{ render(controller("App\\Controller\\SidebarController:social")) }}
 </div>
