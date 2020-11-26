@@ -34,6 +34,6 @@ easy_admin:
                 fields:
                     - {property: 'titre'}
                     - {property: 'message'}
-                    - {property: 'emplacement', type: choice, type_options: { choices: {"Notice en haut": "0","Notice en bas": "1"} } }
+                    - {property: 'emplacement', type: choice, type_options: { choices: {"Notice en haut": "0","Notice flottante": "1","Notice en slide": "2"} } }
                     - {property: 'actif'}
                     - {property: 'dismissed', label: 'La notice peut être rejeté'}

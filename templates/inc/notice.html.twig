@@ -6,12 +6,29 @@
         {% endif %}
         {{ notice.message|raw }}
     </div>
-    {% else %}
+    {% elseif notice.emplacement == 1 %}
     <div class="alert notice alert-dismissible notice-flotante">
         {% if notice.dismissed %}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {% endif %}
         {{ notice.message|raw }}
     </div>
+    {% else %}
+
     {% endif %}
 {% endfor %}
+
+<div id="" class="carousel slide {% for notice in notices if notice.actif and notice.emplacement == 2 %}demo {% endfor %}" data-ride="carousel">
+    <ul class="carousel-indicators">
+    {% for notice in notices if notice.actif and notice.emplacement == 2 %}
+        <li data-target=".demo" data-slide-to="{{ loop.index0 }}" class="{% if loop.index == 1 %}active{% endif %}"></li>
+    {% endfor %}
+    </ul>
+    <div class="carousel-inner">
+    {% for notice in notices if notice.actif and notice.emplacement == 2 %}
+        <div class="carousel-item notice {% if loop.index == 1 %}active{% endif %}">
+            <div>{{ notice.message|raw }}</div>
+        </div>
+    {% endfor %}
+    </div>
+</div>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Repository\ForumDiscussionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,12 +29,15 @@ class PagesController extends AbstractController
 
     /**
      * @Route("/", name="/")
+     * @param ForumDiscussionRepository $repository
      */
-    public function index()
+    public function index(ForumDiscussionRepository $repository)
     {
+        $lastDiscussions = $repository->getLastDiscussionsHome();
         //return $this->redirectToRoute('forums');
         return $this->render('pages/home.html.twig', [
             'current_url' => $this->current_url,
+            'lastDiscussions' => $lastDiscussions,
         ]);
     }
 

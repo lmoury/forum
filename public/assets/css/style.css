@@ -1554,3 +1554,57 @@ dl.widget-conversation {
 .ReadToggle {
     background-position: -5px -42px;
 }
+
+.content-message.haut-message {
+  	overflow: hidden;
+  	max-height: 30vh;
+  }
+.porta-article-date {
+  	float: left;
+  	padding: 0px 10px 0px 0px;
+  	margin-left: -45px;
+  }
+.porta-article-date .porta-date-block {
+    background: rgb(245,245,245);
+	border: 1px solid #757575;
+	width: 50px;
+	padding: 10px 0px;
+	text-align: center;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.porta-article-date .porta-date-block b {
+	display: block;
+	font-size: 1.5em;
+    font-weight: bold;
+}
+@media all and (min-width: 1024px) {
+    .block-left {
+        padding-right: 1rem !important;
+        float: left;
+        width: 50%;
+      }
+     .block-right {
+         float: right;
+         width: 50%;
+     }
+}
+.demo {
+    margin-bottom: 2rem;
+}
+.carousel-item {
+    padding: 20px;
+
+}
+.carousel-indicators .active {
+	background-color: #2f78a0;
+}
+.carousel-indicators li {
+	background-color: #141414;
+    width: 8px;
+	height: 8px;
+    border-radius: 50px;
+}
+.carousel-indicators {
+	bottom: -33px;
+}

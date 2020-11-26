@@ -12,7 +12,8 @@ class Notice
 
     const EMPLACEMENT = [
             0=> 'Notice en haut',
-            1=> 'Notice en bas'
+            1=> 'Notice flottante',
+            2=> 'Notice slider'
     ];
 
 
