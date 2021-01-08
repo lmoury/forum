@@ -32,41 +32,66 @@
     </div>
 </div>
 
-<div class="">
-{% for lastDiscu in lastDiscussions %}
-<div class="block-container porta-article-container {% if loop.index is odd %}block-left{% else %}block-right{% endif %}">
-	<h2 class="mt-3"><a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug}) }}">{{ lastDiscu.titre }}</a></h2>
+<div class="" id="tout-contenu-scroll">
+    {% for lastDiscu in lastDiscussions %}
+    <div class="contenu-scroll block-container porta-article-container {% if loop.index is odd %}block-left{% else %}block-right{% endif %}">
+    	<h2 class="mt-3"><a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug}) }}">{{ lastDiscu.titre }}</a></h2>
 
-	<div class="content-section">
+    	<div class="content-section">
 
-		<div class="message-cell porta-article-date">
-			<div class="porta-date-block">
-				{{ lastDiscu.dateCreation|localizeddate('none', 'none', null, null, 'MMM')|replace({'.': ''}) }}<b>{{ lastDiscu.dateCreation|date("d", "Europe/Paris") }}</b>
-			</div>
-		</div>
+    		<div class="message-cell porta-article-date">
+    			<div class="porta-date-block">
+    				{{ lastDiscu.dateCreation|localizeddate('none', 'none', null, null, 'MMM')|replace({'.': ''}) }}<b>{{ lastDiscu.dateCreation|date("d", "Europe/Paris") }}</b>
+    			</div>
+    		</div>
 
-		<div class="container">
-			<div class="message-attribution message-attribution--split">
-				<div class="float-left">
-					<i class="fa fa-user" aria-hidden="true"></i> <a class="pseudoUser{{ lastDiscu.auteur.role.id }}" href="{{ path('membres.profil', {id: lastDiscu.auteur.id, slug: lastDiscu.auteur.slug})}}">{{ lastDiscu.auteur.username }}</a>
-					<i class="fa fa-clock" aria-hidden="true"></i> {{ date_passed(lastDiscu.dateCreation | date('d-m-Y H:i:s')) }}
-				</div>
-				<div class="text-right">
-					<i class="fa fa-eye" aria-hidden="true"></i> {{ lastDiscu.affichage }}
-					<i class="fa fa-comments" aria-hidden="true"></i> {{ lastDiscu.forumCommentaires.count }}
-				</div>
-			</div>
-			<div class="content-message haut-message">
-                {{ parser(lastDiscu.message) | raw }}
-			</div>
-		</div>
-        <div class="actionBar-set float-right">
-            <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug}) }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Continuer...</a>
+    		<div class="container">
+    			<div class="message-attribution message-attribution--split">
+    				<div class="float-left">
+    					<i class="fa fa-user" aria-hidden="true"></i> <a class="pseudoUser{{ lastDiscu.auteur.role.id }}" href="{{ path('membres.profil', {id: lastDiscu.auteur.id, slug: lastDiscu.auteur.slug})}}">{{ lastDiscu.auteur.username }}</a>
+    					<i class="fa fa-clock" aria-hidden="true"></i> {{ date_passed(lastDiscu.dateCreation | date('d-m-Y H:i:s')) }}
+    				</div>
+    				<div class="text-right">
+    					<i class="fa fa-eye" aria-hidden="true"></i> {{ lastDiscu.affichage }}
+    					<i class="fa fa-comments" aria-hidden="true"></i> {{ lastDiscu.forumCommentaires.count }}
+    				</div>
+    			</div>
+    			<div class="content-message haut-message">
+                    {{ parser(lastDiscu.message) | raw }}
+    			</div>
+    		</div>
+            <div class="actionBar-set float-right">
+                <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug}) }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Continuer...</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
+    </div>
+    {% endfor %}
+    <div class="clearfix"></div>
+    <div id="paginationScroll">
+
+        {{ knp_pagination_render(lastDiscussions) }}
     </div>
 </div>
-{% endfor %}
-<div class="clearfix"></div>
-</div>
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="/assets/js/jquery-ias.min.js"></script>
+<script>$(".page-item .page-link").addClass("suivant");</script>
+<script>
+var ias = jQuery.ias({
+  container:  '#tout-contenu-scroll',
+  item:       '.contenu-scroll',
+  pagination: '#paginationScroll',
+  next:       '.suivant'
+});
+ias.extension(new IASSpinnerExtension());
+ias.extension(new IASNoneLeftExtension({
+    text: '<span class="">Plus de contenu à charger...</span>', // optionally
+}));
+ias.extension(new IASTriggerExtension({
+    text: '<span id="btn-article-add" style="text-shadow: 1px 1px 0px black;color:white;">Afficher plus d\'articles</span>',
+}));
+</script>
 {% endblock %}

@@ -1608,3 +1608,9 @@ dl.widget-conversation {
 .carousel-indicators {
 	bottom: -33px;
 }
+
+.dropdown-menu-editer {
+	white-space: nowrap;
+	padding: 10px;
+	width: 200px;
+}

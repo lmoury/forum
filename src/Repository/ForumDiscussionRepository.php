@@ -196,8 +196,7 @@ class ForumDiscussionRepository extends ServiceEntityRepository
         $query = $this->findVisibleQuery();
         $query = $query
             ->leftJoin('d.categorie', 'cat')
-            ->addSelect('d', 'cat')
-            ->setMaxResults(20);
+            ->addSelect('d', 'cat');
 
         if($this->security->isGranted('ROLE_PREMIUM')) {
             $query = $query
@@ -218,6 +217,43 @@ class ForumDiscussionRepository extends ServiceEntityRepository
 
         $query = $query
             ->orWhere('cat.access is null')
+            ->orderBy('d.date_creation', 'DESC');
+        $query = $query->getQuery();
+        return $query->getResult();
+    }
+
+
+    /**
+     * @return ForumDiscussion[]
+     */
+    public function getLastDiscussionsUser($value)
+    {
+        $query = $this->findVisibleQuery();
+        $query = $query
+            ->leftJoin('d.categorie', 'cat')
+            ->addSelect('d', 'cat');
+
+        if($this->security->isGranted('ROLE_PREMIUM')) {
+            $query = $query
+                ->orWhere('cat.access = 4');
+        }
+        if($this->security->isGranted('ROLE_USER')) {
+            $query = $query
+                ->orWhere('cat.access = 1');
+        }
+        if($this->security->isGranted('ROLE_MODO')) {
+            $query = $query
+                ->orWhere('cat.access = 2');
+        }
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            $query = $query
+                ->orWhere('cat.access = 3');
+        }
+
+        $query = $query
+            ->orWhere('cat.access is null')
+            ->andWhere('d.auteur = :val')
+            ->setParameter('val', $value)
             ->orderBy('d.date_creation', 'DESC');
         $query = $query->getQuery();
         return $query->getResult();

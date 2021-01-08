@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ForumDiscussion;
 use App\Entity\ForumCategorie;
+use App\Repository\ForumCategorieRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +18,10 @@ class DeplacerDiscussionType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => ForumCategorie::class,
                 'choice_label' => 'categorie',
+                'query_builder' => function (ForumCategorieRepository $qr) {
+                    return $qr->createQueryBuilder('c')
+                    ->andWhere('c.parent is not null');
+                }
             ])
         ;
     }

@@ -7,6 +7,8 @@ use App\Entity\UserBannir;
 use App\Repository\UserRepository;
 use App\Repository\UserRoleRepository;
 use App\Repository\UserBannirRepository;
+use App\Repository\ForumDiscussionRepository;
+use App\Repository\ForumCommentaireRepository;
 use App\Form\EditMembreType;
 use App\Form\EditPasswordMembreType;
 use App\Form\EditBannirMembreType;
@@ -16,6 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Security("is_granted('ROLE_USER')")
@@ -36,10 +39,11 @@ class MembresController extends AbstractController
     private $repository;
 
 
-    public function __construct(ObjectManager $em, UserRepository $repository)
+    public function __construct(ObjectManager $em, UserRepository $repository, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->repository = $repository;
+        $this->paginator = $paginator;
     }
 
 
@@ -62,16 +66,31 @@ class MembresController extends AbstractController
      * @param UserRepository $this->repository
      * @param User $user
      * @param string $slug
+     * @param PaginatorInterface paginator
+     * @param Request $request
      */
-    public function profil(User $user, string $slug)
+    public function profil(Request $request, User $user, string $slug, ForumDiscussionRepository $repository, ForumCommentaireRepository $repositoryCom )
     {
         if($user->getSlug() !== $slug) {
             return $this->redirectToRoute('membres.profil', ['id' => $user->getId(), 'slug' => $user->getSlug()], 301);
         }
         $user = $this->repository->getUser($user->getId());
+        $lastDiscussions = $this->paginator->paginate(
+            $repository->getLastDiscussionsUser($user->getId()),
+            $request->query->getInt('page', 1),
+            20
+        );
+        $lastCommentaires = $this->paginator->paginate(
+            $repositoryCom->getLastCommentairesUser($user->getId()),
+            $request->query->getInt('page', 1),
+            20
+        );
+
         return $this->render('membres/profil.html.twig', [
             'current_url' => $this->current_url,
-            'user' => $user
+            'user' => $user,
+            'lastDiscussions' => $lastDiscussions,
+            'lastCommentaires' => $lastCommentaires,
         ]);
     }
 

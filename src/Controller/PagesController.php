@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ForumDiscussionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,20 +21,33 @@ class PagesController extends AbstractController
      */
     private $em;
 
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
 
-    public function __construct(ObjectManager $em)
+
+    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
+        $this->paginator = $paginator;
     }
 
 
     /**
      * @Route("/", name="/")
      * @param ForumDiscussionRepository $repository
+     * @param PaginatorInterface paginator
+     * @param Request $request
      */
-    public function index(ForumDiscussionRepository $repository)
+    public function index(Request $request, ForumDiscussionRepository $repository)
     {
-        $lastDiscussions = $repository->getLastDiscussionsHome();
+        //$lastDiscussions = $repository->getLastDiscussionsHome();
+        $lastDiscussions = $this->paginator->paginate(
+            $repository->getLastDiscussionsHome(),
+            $request->query->getInt('page', 1),
+            20
+        );
         //return $this->redirectToRoute('forums');
         return $this->render('pages/home.html.twig', [
             'current_url' => $this->current_url,
