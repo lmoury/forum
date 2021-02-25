@@ -10,7 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\Connection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Security("is_granted('ROLE_USER')")
+ */
 class ChatboxController extends AbstractController
 {
 
@@ -70,10 +74,22 @@ class ChatboxController extends AbstractController
 
     /**
     * @Route("/chatbox/delete", name="chatbox.delete", methods="DELETE")
+    * @param ObjectManager $this->em
+    * @param Connection $connection
+    * @Security("is_granted('ROLE_MODERATEUR')")
     */
-    public function delete(Connection $connection, ChatboxRepository $repository)
+    public function delete(Connection $connection)
     {
-        $connection->fetchAll('DELETE FROM chatbox');
+        $platform   = $connection->getDatabasePlatform();
+        $connection->executeUpdate($platform->getTruncateTableSQL('chatbox', true /* whether to cascade */));
+
+        $chatbox = new Chatbox();
+        $chatbox->setPoster(new \DateTime());
+        $chatbox->setUser($this->getUser());
+        $chatbox->setMessage('a vidé la chatbox :nettoyage:');
+        $this->em->persist($chatbox);
+        $this->em->flush();
+
         return $this->redirectToRoute('chatbox');
     }
 

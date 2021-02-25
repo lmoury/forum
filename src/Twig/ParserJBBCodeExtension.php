@@ -43,7 +43,7 @@ class ParserJBBCodeExtension extends AbstractExtension
       		'~\[size=(.*?)\](.*?)\[/size\]~s',
             '~\[font=(.*?)\](.*?)\[/font\]~s',
       		'~\[color=(.*?)\](.*?)\[/color\]~s',
-      		'~\[url\]((?:ftp|https?)://.*?)\[/url\]~s',
+      		'~\[url=((?:ftp|https?)://.*?)\](.*?)\[/url\]~s',
       		'~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s',
             '~\[code\](.*?)\[/code\]~s',
             '~\[list\](.*?)\[/list\]~s',
@@ -67,6 +67,7 @@ class ParserJBBCodeExtension extends AbstractExtension
             '~\:hacker:~s',
             '~\:virusdown:~s',
             '~\:anonymous:~s',
+            '~\:nettoyage:~s',
       	);
       	// HTML tags to replace BBcode
       	$replace = array(
@@ -106,6 +107,7 @@ class ParserJBBCodeExtension extends AbstractExtension
             '<img src="/assets/img/smileys/informatique/hacker10.gif" alt=":hacker:" />',
             '<img src="/assets/img/smileys/informatique/virusdown.gif" alt=":virusdown:" />',
             '<img src="/assets/img/smileys/informatique/anonymous.png" alt=":anonymous:" />',
+            '<img src="/assets/img/smileys/nettoyage.gif" alt=":nettoyage:" />',
       	);
       	// Replacing the BBcodes with corresponding HTML tags
       	return preg_replace($find,$replace,$text);

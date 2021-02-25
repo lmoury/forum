@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-sm-9">
         {% if app.user %}
-        <iframe style="width: 100%; height: 500px; color: transparent" class="mb-3" src="chatbox"></iframe>
+        <iframe id="chatbox" class="mb-3" src="chatbox"></iframe>
         {% endif %}
         {% for categ in categories if categ.parent == null %}
             {% if categ.access.nom is not defined or is_granted(categ.access.role) %}
