@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200527100033 extends AbstractMigration
+final class Version20210111101331 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,7 @@ final class Version20200527100033 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE forum_categorie ADD access_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE forum_categorie ADD CONSTRAINT FK_773452624FEA67CF FOREIGN KEY (access_id) REFERENCES user_role (id)');
-        $this->addSql('CREATE INDEX IDX_773452624FEA67CF ON forum_categorie (access_id)');
+        $this->addSql('ALTER TABLE chatbox CHANGE message message VARCHAR(120) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +30,6 @@ final class Version20200527100033 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE forum_categorie DROP FOREIGN KEY FK_773452624FEA67CF');
-        $this->addSql('DROP INDEX IDX_773452624FEA67CF ON forum_categorie');
-        $this->addSql('ALTER TABLE forum_categorie DROP access_id');
+        $this->addSql('ALTER TABLE chatbox CHANGE message message LONGTEXT NOT NULL COLLATE utf8mb4_unicode_ci');
     }
 }

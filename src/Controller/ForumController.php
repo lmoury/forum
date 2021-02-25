@@ -106,9 +106,10 @@ class ForumController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() && $request->request->get('tMessage') != null) {
+            $message = htmlspecialchars($request->request->get('tMessage'));
             $discussion->setCategorie($categorie);
             $discussion->setAuteur($this->getUser());
-            $discussion->setMessage($request->request->get('tMessage'));
+            $discussion->setMessage($message);
             $this->em->persist($discussion);
             $this->em->flush();
             return $this->redirectToRoute('forum.discussion', ['id' => $discussion->getId(), 'slug' => $discussion->getSlug()]);
@@ -240,10 +241,11 @@ class ForumController extends AbstractController
        $commentaire = new ForumCommentaire();
 
        if('POST' === $request->getMethod() && $request->request->get('tMessage')) {
+           $message = htmlspecialchars($request->request->get('tMessage'));
            $discussion->setDateNewCom(new \DateTime());
            $commentaire->setDiscussion($discussion);
            $commentaire->setAuteur($this->getUser());
-           $commentaire->setCommentaire($request->request->get('tMessage'));
+           $commentaire->setCommentaire($message);
            $this->em->persist($commentaire);
            $this->em->persist($discussion);
            $this->em->flush();

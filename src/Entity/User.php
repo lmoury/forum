@@ -142,6 +142,12 @@ class User implements UserInterface,\Serializable
 
     private $plainPassword = null;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chatbox", mappedBy="User")
+     */
+    private $chatboxes;
+
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -160,6 +166,7 @@ class User implements UserInterface,\Serializable
         $this->expediteurs = new ArrayCollection();
         $this->conversationUsers = new ArrayCollection();
         $this->conversationRepAuteur = new ArrayCollection();
+        $this->chatboxes = new ArrayCollection();
     }
 
 
@@ -641,4 +648,36 @@ class User implements UserInterface,\Serializable
 
         return $this;
     }
+
+    /**
+     * @return Collection|Chatbox[]
+     */
+    public function getChatboxes(): Collection
+    {
+        return $this->chatboxes;
+    }
+
+    public function addChatbox(Chatbox $chatbox): self
+    {
+        if (!$this->chatboxes->contains($chatbox)) {
+            $this->chatboxes[] = $chatbox;
+            $chatbox->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatbox(Chatbox $chatbox): self
+    {
+        if ($this->chatboxes->contains($chatbox)) {
+            $this->chatboxes->removeElement($chatbox);
+            // set the owning side to null (unless already changed)
+            if ($chatbox->getUser() === $this) {
+                $chatbox->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

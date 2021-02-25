@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}| Lmoury{% endblock %}</title>
+        {% block stylesheets %}
+            <!-- css -->
+            <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+            <link rel="stylesheet" type="text/css" href="/assets/css/username.css">
+            <link rel="stylesheet" type="text/css" href="/assets/plugins/wow/css/animate.css">
+            <link rel="stylesheet" type="text/css" href="/assets/css/chatbox.css">
+            <!-- Font -->
+            <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome.css"/>
+            <link rel="stylesheet" type="text/css" href="/assets/fonts/font-mfizz-2.3.0/font-mfizz.css">
+        {% endblock %}
+    </head>
+    <body>
+    <div class="sidebar-content mb-4">
+        <div class="sidebar-title">
+            <strong><i class="fa fa-wechat mr-2"></i>Chatbox</strong>
+            <span class="cursor-pointer float-right" data-toggle="modal" data-target="#myModal"><span class="fa fa-warning"></span></span>
+            <span class="cursor-pointer float-right mr-2" data-title="Delete" data-toggle="modal" data-target="#vider" ><i class="fa fa-trash"></i></span>
+            <!-- Modal -->
+            <div class="modal" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content modalChatbox">
+                        <div class="modal-header slide">
+                            <h4 class="modal-title chatboxH4"><span class="fa fa-gavel" style="padding-right:9px;"></span>Règlement de la ChatBox</h4>
+                            <button type="button" class="close chatboxClose" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="spacer center"><div class="mask center"></div></div>
+                        <div class="modal-body slide">
+                            <p>
+                            - Interdiction de spammer (3 messages et 3 caractères d'affilés maximum).<br/>
+                            - 3 Smileys maximum a chaque message entrer dans la shoutbox.<br/>
+                            - Interdiction de mettre des liens externe sauf images et musiques.<br/>
+                            - Interdiction d'utiliser les majuscules de manière intempestive (pas plus de 5 maj).<br/>
+                            - Interdiction d'avoir un langage vulgaire.<br/>
+                            - Interdiction de divulguer des informations personnel.<br/>
+                            - Interdiction de poster plus d'un lien (liens internes seulement).<br/>
+                            - Interdiction de parler de virus, rat ou autre sur la shoutbox.<br/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bgChatMessage" id="chatboxMsg">
+        {% for chat in chatbox %}
+        <p>
+            <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
+            <a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }}
+            <span class="chatDateCust">{{ date_passed(chat.poster | date('d-m-Y H:i:s')) }}</span>
+        </p>
+        {% endfor %}
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-10">
+            {{ form_start(form) }}
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    </div>
+                    {{ form_widget(form.message, { 'attr': {'placeholder': 'Écrire un message...'} }) }}
+                    {{ form_errors(form.message) }}
+                    <div class="input-group-prepend">
+                        <button class="btn input-group-text"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
+                    </div>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-2">
+            <div class="faChatBox dropdown"><span type="button" data-toggle="dropdown"><span class="fa fa-smile-o" ></span></span>
+                <div class="dropdown-menu smileyCust">
+                    <span onclick="remplirInput('chatbox_message',';)');"><img src="../assets/img/smileys/clin.gif" alt=";)" /></span>
+                    <span onclick="remplirInput('chatbox_message','lol');"><img src="../assets/img/smileys/lol.gif" alt="lol" /></span>
+                    <span onclick="remplirInput('chatbox_message',':ninja:');"><img src="../assets/img/smileys/ninja.gif" alt=":ninja:" /></span>
+                    <span onclick="remplirInput('chatbox_message',':troll:');"><img src="../assets/img/smileys/troll/troll.png" alt=":troll:" /></span>
+                    <span onclick="remplirInput('chatbox_message',':troll1:');"><img src="../assets/img/smileys/troll/1.png" alt=":troll1:" /></span>
+                    <span onclick="remplirInput('chatbox_message',':abruti:');"><img src="../assets/img/smileys/abruti.gif" alt=":abruti:" /></span>
+                    <span onclick="remplirInput('chatbox_message',':boulet:');"><img src="../assets/img/smileys/boulet.gif" alt=":boulet:" /></span>
+                    <span onclick="remplirInput('chatbox_message',':nettoyage:');"><img src="../assets/img/smileys/nettoyage.gif" alt=":boulet:" /></span> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vider" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+                </div>
+                <div class="modal-footer">
+                <form method="post" action="{{ path('chatbox.delete')}}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger">Vider la chatbox</button>
+                </form>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% block javascripts %}
+        <!-- javascript -->
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/js/extra.js"></script>
+        <script src="/assets/plugins/wow/js/wow.min.js"></script>
+        <script>
+            new WOW().init();
+        </script>
+        <script type="text/javascript">
+            function remplirInput(id,txt) {
+              document.getElementById(id).value +=" "+ txt +" ";
+            }
+        </script>
+        <script>
+            setInterval('load_chatbox_msg()', 2000);
+            function load_chatbox_msg() {
+                $('#chatboxMsg').load('loadChatbox');
+            }
+        </script>
+   {% endblock %}
+
+    </body>
+</html>

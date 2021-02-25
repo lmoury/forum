@@ -110,9 +110,10 @@ class ConversationController extends AbstractController
          $form->handleRequest($request);
 
          if($form->isSubmitted() && $form->isValid() && $request->request->get('tMessage') != null) {
+             $message = htmlspecialchars($request->request->get('tMessage'));
              $conversation = new Conversation();
              $conversation->setTitre($formulaire->getConversation()->getTitre());
-             $conversation->setMessage($request->request->get('tMessage'));
+             $conversation->setMessage($message);
              $conversation->setExpediteur($this->getUser());
              $this->em->persist($conversation);
 
@@ -219,10 +220,11 @@ class ConversationController extends AbstractController
                  $this->em->persist($part);
              }
 
+             $message = htmlspecialchars($request->request->get('tMessage'));
              $reponse = new ConversationReponse();
              $reponse->setConversationRep($conversation);
              $reponse->setAuteur($this->getUser());
-             $reponse->setMessage($request->request->get('tMessage'));
+             $reponse->setMessage($message);
              $this->em->persist($reponse);
              $this->em->flush();
              $this->addFlash('success', 'Réponse ajoutée');

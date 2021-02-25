@@ -1,0 +1,130 @@
+.bgChatMessage {
+    background: rgb(234,233,232) url('../images/fond1.png') repeat top;
+    box-shadow: inset 0px 0px 9px black;
+    padding: 12px;
+    height: 373px;
+    overflow: auto;
+    width: 100%;
+}
+
+body {
+	background-color: transparent;
+	color: #333;
+	padding: 0px;
+	overflow: hidden;
+}
+
+html {
+    width: 100%;
+
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.titleChatbox {
+    text-align: center;
+    background: rgba(34, 49, 63, 0.9);
+    padding: 9px;
+    color: white;
+    box-shadow: 0px 3px 0px rgb(50,108,149), inset 0px 3px 5px black;
+    text-shadow: 1px 1px 0px black;
+ }
+
+.btnChat {
+    height: 34px;
+    float:right;
+}
+
+.faChatBox {
+	float: left;
+	font-size: 16pt;
+	padding-right: 9px;
+	color: black;
+	position: relative;
+	top: 5px;
+	cursor: pointer;
+}
+
+.modalChatbox {
+    background: rgb(34, 49, 63) url('../images/bg9.png');
+    color: #c8c8c8;
+    text-shadow: 1px 1px 0px black;
+}
+
+.modal-header {
+border-bottom: none;
+}
+
+.spacer .mask::after {
+    content: "";
+    display: block;
+    margin: -25px auto 0;
+    width: 100%;
+    height: 25px;
+    border-radius: 125px / 12px;
+    box-shadow: 0px 0px 8px black;
+}
+.spacer .mask {
+    overflow: hidden;
+    height: 20px;
+}
+.spacer {
+    text-align: center;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.chatboxH4 {
+    color:red;
+    text-align: center;
+}
+
+.chatboxClose:hover, .chatboxClose:focus  {
+    color:red;
+}
+
+.chatboxClose {
+    color: #757575;
+    text-shadow: 1px 1px 0px black;
+    opacity: 0.9;
+}
+
+
+.smileyCust {
+    right:0px;left: auto;
+    padding: 9px;
+    box-shadow: inset 0px 0px 0px 1px black, 0px 5px 10px rgba(0,0,0,0.4);
+    min-width: 260px;
+}
+
+.smileyCust span {
+    padding: 3px;
+}
+
+.chatDateCust {
+    float:right;
+    background: rgba(34, 49, 63, 0.9);
+    color:#C8C8C8;
+    font-size:11px;
+    padding: 0px 5px;
+    border-radius:10px;
+    box-shadow:inset 0px 0px 0px 1px black;
+}
+
+.titleDelet {
+    background: none;
+    border: none;
+    padding:9px;
+    color: #757575;
+}
+
+.titleDelet:hover {
+    color: black;
+}
+
+.col-md-11 {
+	padding-right: 0px!important;
+}

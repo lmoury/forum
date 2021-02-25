@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200514173049 extends AbstractMigration
+final class Version20210111102523 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,8 @@ final class Version20200514173049 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user_bannir ADD banni_id INT NOT NULL');
-        $this->addSql('ALTER TABLE user_bannir ADD CONSTRAINT FK_A67AECD611FF3C53 FOREIGN KEY (banni_id) REFERENCES user (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_A67AECD611FF3C53 ON user_bannir (banni_id)');
+        $this->addSql('CREATE TABLE chatbox (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, message VARCHAR(255) NOT NULL, poster DATETIME NOT NULL, INDEX IDX_7472FC2FA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE chatbox ADD CONSTRAINT FK_7472FC2FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +31,6 @@ final class Version20200514173049 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user_bannir DROP FOREIGN KEY FK_A67AECD611FF3C53');
-        $this->addSql('DROP INDEX UNIQ_A67AECD611FF3C53 ON user_bannir');
-        $this->addSql('ALTER TABLE user_bannir DROP banni_id');
+        $this->addSql('DROP TABLE chatbox');
     }
 }
