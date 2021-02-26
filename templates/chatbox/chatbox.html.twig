@@ -82,12 +82,47 @@
             </div>
 
             <div class="col-md-12">
-                <button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[u]', '[/u]');"><u>U</u></button>
-                <button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[s]', '[/s]');"><s>S</s></button>
-            	<button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[i]', '[/i]');"><i>I</i></button>
-            	<button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[b]', '[/b]');"><b>G</b></button>
-            	<button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[url=http://www.exemple.com]', 'descriptif_du_lien[/url]');"><span class="fa fa-link" ></span></button>
-            	<button type="button" class="bbcode_button" onclick="addBalises('#chatbox_message', '[img]', '[/img]');"><span class="fa fa-picture-o" ></span></button>
+                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[b]', '[/b]');"><span class="fa fa-bold"></span></div>
+            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[i]', '[/i]');"><span class="fa fa-italic"></span></div>
+                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[u]', '[/u]');"><span class="fa fa-underline"></span></div>
+                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[s]', '[/s]');"><s>S</s></div>
+            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[url=http://www.exemple.com]', 'descriptif_du_lien[/url]');"><span class="fa fa-link" ></span></div>
+            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[img]', '[/img]');"><span class="fa fa-picture-o" ></span></div>
+
+                <div class="faChatBox dropdown"><span type="button" data-toggle="dropdown"><span class="fa fa-paint-brush"></span></span>
+                    <div class="dropdown-menu wbb-list">
+                        <div class="sc" style="background:#61BD6D" title="#61BD6D" onclick="addBalises('#chatbox_message', '[color=#61BD6D]', '[/color]');"></div>
+                        <div class="sc" style="background:#1ABC9C" title="#1ABC9C" onclick="addBalises('#chatbox_message', '[color=#1ABC9C]', '[/color]');"></div>
+                        <div class="sc" style="background:#54ACD2" title="#54ACD2" onclick="addBalises('#chatbox_message', '[color=#54ACD2]', '[/color]');"></div>
+                        <div class="sc" style="background:#2C82C9" title="#2C82C9" onclick="addBalises('#chatbox_message', '[color=#2C82C9]', '[/color]');"></div>
+                        <div class="sc" style="background:#9365B8" title="#9365B8" onclick="addBalises('#chatbox_message', '[color=#9365B8]', '[/color]');"></div>
+                        <div class="sc" style="background:#475577" title="#475577" onclick="addBalises('#chatbox_message', '[color=#475577]', '[/color]');"></div>
+                        <div class="sc" style="background:#CCCCCC" title="#CCCCCC" onclick="addBalises('#chatbox_message', '[color=#CCCCCC]', '[/color]');"></div>
+                        <span class="pl"></span>
+                        <div class="sc" style="background:#41A85F" title="#41A85F" onclick="addBalises('#chatbox_message', '[color=#41A85F]', '[/color]');"></div>
+                        <div class="sc" style="background:#00A885" title="#00A885" onclick="addBalises('#chatbox_message', '[color=#00A885]', '[/color]');"></div>
+                        <div class="sc" style="background:#3D8EB9" title="#3D8EB9" onclick="addBalises('#chatbox_message', '[color=#3D8EB9]', '[/color]');"></div>
+                        <div class="sc" style="background:#2969B0" title="#2969B0" onclick="addBalises('#chatbox_message', '[color=#2969B0]', '[/color]');"></div>
+                        <div class="sc" style="background:#553982" title="#553982" onclick="addBalises('#chatbox_message', '[color=#553982]', '[/color]');"></div>
+                        <div class="sc" style="background:#28324E" title="#28324E" onclick="addBalises('#chatbox_message', '[color=#28324E]', '[/color]');"></div>
+                        <div class="sc" style="background:#000000" title="#000000" onclick="addBalises('#chatbox_message', '[color=#000000]', '[/color]');"></div>
+                        <span class="pl"></span>
+                        <div class="sc" style="background:#F7DA64" title="#F7DA64" onclick="addBalises('#chatbox_message', '[color=#F7DA64]', '[/color]');"></div>
+                        <div class="sc" style="background:#FBA026" title="#FBA026" onclick="addBalises('#chatbox_message', '[color=#FBA026]', '[/color]');"></div>
+                        <div class="sc" style="background:#EB6B56" title="#EB6B56" onclick="addBalises('#chatbox_message', '[color=#EB6B56]', '[/color]');"></div>
+                        <div class="sc" style="background:#E25041" title="#E25041" onclick="addBalises('#chatbox_message', '[color=#E25041]', '[/color]');"></div>
+                        <div class="sc" style="background:#A38F84" title="#A38F84" onclick="addBalises('#chatbox_message', '[color=#A38F84]', '[/color]');"></div>
+                        <div class="sc" style="background:#EFEFEF" title="#EFEFEF" onclick="addBalises('#chatbox_message', '[color=#EFEFEF]', '[/color]');"></div>
+                        <div class="sc" style="background:#FFFFFF" title="#FFFFFF" onclick="addBalises('#chatbox_message', '[color=#FFFFFF]', '[/color]');"></div>
+                        <span class="pl"></span>
+                        <div class="sc" style="background:#FAC51C" title="#FAC51C" onclick="addBalises('#chatbox_message', '[color=#FAC51C]', '[/color]');"></div>
+                        <div class="sc" style="background:#F37934" title="#F37934" onclick="addBalises('#chatbox_message', '[color=#F37934]', '[/color]');"></div>
+                        <div class="sc" style="background:#D14841" title="#D14841" onclick="addBalises('#chatbox_message', '[color=#D14841]', '[/color]');"></div>
+                        <div class="sc" style="background:#B8312F" title="#B8312F" onclick="addBalises('#chatbox_message', '[color=#B8312F]', '[/color]');"></div>
+                        <div class="sc" style="background:#7C706B" title="#7C706B" onclick="addBalises('#chatbox_message', '[color=#7C706B]', '[/color]');"></div>
+                        <div class="sc" style="background:#D1D5D8" title="#D1D5D8" onclick="addBalises('#chatbox_message', '[color=#D1D5D8]', '[/color]');"></div>
+                    </div>
+                </div>
 
                 <div class="faChatBox dropdown"><span type="button" data-toggle="dropdown"><span class="fa fa-smile-o" ></span></span>
                     <div class="dropdown-menu smileyCust">
@@ -102,92 +137,6 @@
                     </div>
                 </div>
 
-                <div class=" dropdown"><span type="button" data-toggle="dropdown"><span class="fa fa-search" ></span></span>
-                    <div class="dropdown-menu wbb-list">
-                        <div class="sc" style="background:#000000" title="#000000" onclick="addBalises('#chatbox_message', '[color=#000000]', '[/color]');"></div>
-                        <div class="sc" style="background:#444444" title="#444444" onclick="addBalises('#chatbox_message', '[color=#444444]', '[/color]');"></div>
-                        <div class="sc" style="background:#666666" title="#666666" onclick="addBalises('#chatbox_message', '[color=#666666]', '[/color]');"></div>
-                        <div class="sc" style="background:#999999" title="#999999" onclick="addBalises('#chatbox_message', '[color=#999999]', '[/color]');"></div>
-                        <div class="sc" style="background:#b6b6b6" title="#b6b6b6" onclick="addBalises('#chatbox_message', '[color=#b6b6b6]', '[/color]');"></div>
-                        <div class="sc" style="background:#cccccc" title="#cccccc" onclick="addBalises('#chatbox_message', '[color=#cccccc]', '[/color]');"></div>
-                        <div class="sc" style="background:#d8d8d8" title="#d8d8d8" onclick="addBalises('#chatbox_message', '[color=#d8d8d8]', '[/color]');"></div>
-                        <div class="sc" style="background:#efefef" title="#efefef" onclick="addBalises('#chatbox_message', '[color=#efefef]', '[/color]');"></div>
-                        <div class="sc" style="background:#f4f4f4" title="#f4f4f4" onclick="addBalises('#chatbox_message', '[color=#f4f4f4]', '[/color]');"></div>
-                        <div class="sc" style="background:#ffffff" title="#ffffff" onclick="addBalises('#chatbox_message', '[color=#ffffff]', '[/color]');"></div>
-                        <span class="pl"></span>
-                        <div class="sc" style="background:#ff0000" title="#ff0000" onclick="addBalises('#chatbox_message', '[color=#ff0000]', '[/color]');"></div>
-                        <div class="sc" style="background:#980000" title="#980000"></div>
-                        <div class="sc" style="background:#ff7700" title="#ff7700"></div>
-                        <div class="sc" style="background:#ffff00" title="#ffff00"></div>
-                        <div class="sc" style="background:#00ff00" title="#00ff00"></div>
-                        <div class="sc" style="background:#00ffff" title="#00ffff"></div>
-                        <div class="sc" style="background:#1e84cc" title="#1e84cc"></div>
-                        <div class="sc" style="background:#0000ff" title="#0000ff"></div>
-                        <div class="sc" style="background:#9900ff" title="#9900ff"></div>
-                        <div class="sc" style="background:#ff00ff" title="#ff00ff"></div>
-                        <span class="pl"></span>
-                        <div class="sc" style="background:#f4cccc" title="#f4cccc"></div>
-                        <div class="sc" style="background:#dbb0a7" title="#dbb0a7"></div>
-                        <div class="sc" style="background:#fce5cd" title="#fce5cd"></div>
-                        <div class="sc" style="background:#fff2cc" title="#fff2cc"></div>
-                        <div class="sc" style="background:#d9ead3" title="#d9ead3"></div>
-                        <div class="sc" style="background:#d0e0e3" title="#d0e0e3"></div>
-                        <div class="sc" style="background:#c9daf8" title="#c9daf8"></div>
-                        <div class="sc" style="background:#cfe2f3" title="#cfe2f3"></div>
-                        <div class="sc" style="background:#d9d2e9" title="#d9d2e9"></div>
-                        <div class="sc" style="background:#ead1dc" title="#ead1dc"></div>
-                        <div class="sc" style="background:#ea9999" title="#ea9999"></div>
-                        <div class="sc" style="background:#dd7e6b" title="#dd7e6b"></div>
-                        <div class="sc" style="background:#f9cb9c" title="#f9cb9c"></div>
-                        <div class="sc" style="background:#ffe599" title="#ffe599"></div>
-                        <div class="sc" style="background:#b6d7a8" title="#b6d7a8"></div>
-                        <div class="sc" style="background:#a2c4c9" title="#a2c4c9"></div>
-                        <div class="sc" style="background:#a4c2f4" title="#a4c2f4"></div>
-                        <div class="sc" style="background:#9fc5e8" title="#9fc5e8"></div>
-                        <div class="sc" style="background:#b4a7d6" title="#b4a7d6"></div>
-                        <div class="sc" style="background:#d5a6bd" title="#d5a6bd"></div>
-                        <div class="sc" style="background:#e06666" title="#e06666"></div>
-                        <div class="sc" style="background:#cc4125" title="#cc4125"></div>
-                        <div class="sc" style="background:#f6b26b" title="#f6b26b"></div>
-                        <div class="sc" style="background:#ffd966" title="#ffd966"></div>
-                        <div class="sc" style="background:#93c47d" title="#93c47d"></div>
-                        <div class="sc" style="background:#76a5af" title="#76a5af"></div>
-                        <div class="sc" style="background:#6d9eeb" title="#6d9eeb"></div>
-                        <div class="sc" style="background:#6fa8dc" title="#6fa8dc"></div>
-                        <div class="sc" style="background:#8e7cc3" title="#8e7cc3"></div>
-                        <div class="sc" style="background:#c27ba0" title="#c27ba0"></div>
-                        <div class="sc" style="background:#cc0000" title="#cc0000"></div>
-                        <div class="sc" style="background:#a61c00" title="#a61c00"></div>
-                        <div class="sc" style="background:#e69138" title="#e69138"></div>
-                        <div class="sc" style="background:#f1c232" title="#f1c232"></div>
-                        <div class="sc" style="background:#6aa84f" title="#6aa84f"></div>
-                        <div class="sc" style="background:#45818e" title="#45818e"></div>
-                        <div class="sc" style="background:#3c78d8" title="#3c78d8"></div>
-                        <div class="sc" style="background:#3d85c6" title="#3d85c6"></div>
-                        <div class="sc" style="background:#674ea7" title="#674ea7"></div>
-                        <div class="sc" style="background:#a64d79" title="#a64d79"></div>
-                        <div class="sc" style="background:#900000" title="#900000"></div>
-                        <div class="sc" style="background:#85200C" title="#85200C"></div>
-                        <div class="sc" style="background:#B45F06" title="#B45F06"></div>
-                        <div class="sc" style="background:#BF9000" title="#BF9000"></div>
-                        <div class="sc" style="background:#38761D" title="#38761D"></div>
-                        <div class="sc" style="background:#134F5C" title="#134F5C"></div>
-                        <div class="sc" style="background:#1155Cc" title="#1155Cc"></div>
-                        <div class="sc" style="background:#0B5394" title="#0B5394"></div>
-                        <div class="sc" style="background:#351C75" title="#351C75"></div>
-                        <div class="sc" style="background:#741B47" title="#741B47"></div>
-                        <div class="sc" style="background:#660000" title="#660000"></div>
-                        <div class="sc" style="background:#5B0F00" title="#5B0F00"></div>
-                        <div class="sc" style="background:#783F04" title="#783F04"></div>
-                        <div class="sc" style="background:#7F6000" title="#7F6000"></div>
-                        <div class="sc" style="background:#274E13" title="#274E13"></div>
-                        <div class="sc" style="background:#0C343D" title="#0C343D"></div>
-                        <div class="sc" style="background:#1C4587" title="#1C4587"></div>
-                        <div class="sc" style="background:#073763" title="#073763"></div>
-                        <div class="sc" style="background:#20124D" title="#20124D"></div>
-                        <div class="sc" style="background:#4C1130" title="#4C1130"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
