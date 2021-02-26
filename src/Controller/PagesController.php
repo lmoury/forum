@@ -42,6 +42,8 @@ class PagesController extends AbstractController
      */
     public function index(Request $request, ForumDiscussionRepository $repository)
     {
+        return $this->redirectToRoute('forums');
+
         //$lastDiscussions = $repository->getLastDiscussionsHome();
         $lastDiscussions = $this->paginator->paginate(
             $repository->getLastDiscussionsHome(),
