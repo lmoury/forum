@@ -1622,3 +1622,12 @@ dl.widget-conversation {
     border: none;
     background: rgb(245,245,245);
 }
+
+@media (max-width: 768px) {
+    .mobileMarge {
+        margin-top: 25px;
+    }
+    .mobileDisplay {
+        display: none;
+    }
+}
