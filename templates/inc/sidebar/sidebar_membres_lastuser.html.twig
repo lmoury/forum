@@ -4,17 +4,13 @@
         <span class="">Membres récemment inscrits</span>
     </div>
     <div class="sidebar-body center">
-        <div class="row">
         {% for lastUser in lastUsers %}
-            <div class="col-3 pb-2">
-                <div class="visitor-avatar">
-                    <a href="{{ path('membres.profil', {id: lastUser.id, slug: lastUser.slug})}}">
-                        <img alt="" title="{{ lastUser.username }}" src="{{ vich_uploader_asset( lastUser, 'imageFile') }}" width="38" height="38">
-                    </a>
-                </div>
+            <div class="visitor-avatar">
+                <a href="{{ path('membres.profil', {id: lastUser.id, slug: lastUser.slug})}}">
+                    <img alt="" title="{{ lastUser.username }}" src="{{ vich_uploader_asset( lastUser, 'imageFile') }}" width="38" height="38">
+                </a>
             </div>
         {% endfor %}
-        </div>
         <div class="clearfix"></div>
     </div>
 </div>

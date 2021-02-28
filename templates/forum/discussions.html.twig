@@ -16,26 +16,20 @@
 {% endfor %}
 
 <div class="row">
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div class="col-sm-9">
+    <div class="col-md-9">
         <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3 mobileMB">
         <div id="btn-article-add">
         	<a href="{{ path('forum.discussions.new', {id: categorie.id, slug: categorie.slug})}}">
         		<span>Poster une nouvelle discussion</span>
         	</a>
         </div>
     </div>
-    {% else %}
-    <div class="col-sm-12">
-        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
-    </div>
-    {% endif %}
 </div>
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-md-9">
         <div class="pagination">
             {{ knp_pagination_render(discussions) }}
         </div>
@@ -45,7 +39,7 @@
             {{ knp_pagination_render(discussions) }}
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
         {{ include("inc/sidebar.html.twig") }}
     </div>
 </div>

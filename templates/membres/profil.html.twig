@@ -29,7 +29,7 @@
         {% if is_granted('ROLE_MODERATEUR') and user.role.id != 3 %}
         <span class="dropdown open float-right mt-3 mr-4" id="editMembre">
             <a class="dropdown-toggle" aria-expanded="true" href="#" type="button" data-toggle="dropdown">Modération</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu p-2">
                 {% if is_granted('ROLE_ADMIN') %}
                 <li>
                     <a href="/admin/?action=edit&entity=User&primary_key_name=id&id={{ user.id }}&referer=&sortField=id&sortDirection=DESC" target="_blank"><i class="fa fa-edit"></i> Editer le membre</a>
@@ -50,7 +50,7 @@
             <div class="memberHeader-blurb">
                 <span><strong>{{ user.role.nom }}</strong></span>
             </div>
-            <div class="memberHeader-blurb">
+            <div class="memberHeader-blurb mobilePMT">
                 <dl class="pairs pairs--inline">
                     <dt>Inscription : </dt>
                     <dd>{{ date_passed(user.dateInscription | date('d-m-Y H:i:s'))  }}</dd>

@@ -4,19 +4,15 @@
         <span class="">Anniversaires du jour</span>
     </div>
     <div class="sidebar-body center">
-        <div class="row">
         {% for birthdayUser in birthday if birthdayUser.dateNaissance|date("m/d") == "now"|date("m/d") %}
-                <div class="col-3 pb-2">
-                    <div class="visitor-avatar">
-                        <a href="{{ path('membres.profil', {id: birthdayUser.id, slug: birthdayUser.slug})}}">
-                            <img alt="" title="{{ birthdayUser.username }}" src="{{ vich_uploader_asset( birthdayUser, 'imageFile') }}" width="38" height="38">
-                        </a>
-                    </div>
-                </div>
+            <div class="visitor-avatar">
+                <a href="{{ path('membres.profil', {id: birthdayUser.id, slug: birthdayUser.slug})}}">
+                    <img alt="" title="{{ birthdayUser.username }}" src="{{ vich_uploader_asset( birthdayUser, 'imageFile') }}" width="38" height="38">
+                </a>
+            </div>
             {% else %}
-            <div class="col-12">Auncun anniversaire aujourd'hui</div>
+            <div class="">Aucun anniversaire aujourd'hui</div>
         {% endfor %}
-        </div>
         <div class="clearfix"></div>
     </div>
 </div>

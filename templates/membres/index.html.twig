@@ -31,7 +31,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>
-                                <img class="mr-2" width="38" height="38" src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.username }}" />
+                                <img class="mr-2" width="38" height="38" src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.username }}" /><span class="mobileBrDisplay"><br/></span>
                                 <a class="pseudoUser{{ user.role.id }}" href="{{ path('membres.profil', {id: user.id, slug: user.slug}) }}">{{ user.username }}</a>
                             </td>
                             <td>{{ user.forumCommentaires.count + user.forumDiscussions.count }}</td>
@@ -43,7 +43,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-3 mobileMarge">
+    <div class="col-md-3 mobileMT">
         {{ include("inc/sidebar.html.twig") }}
     </div>
 </div>

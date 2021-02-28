@@ -592,10 +592,11 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
     margin-bottom: 5px;
 }
 .visitor-avatar {
-    margin-right: 5px;
-    float: left;
-    width: auto;
-    height: auto;
+	float: left;
+	width: auto;
+	height: auto;
+	padding-bottom: 9px;
+	padding-right: 9px;
 }
 .visitor-avatar img {
 	border: 1px solid #2f78a0;
@@ -1622,12 +1623,38 @@ dl.widget-conversation {
     border: none;
     background: rgb(245,245,245);
 }
+@media (min-width: 768px) {
+    .mobileBrDisplay {
+        display: none;
+    }
+}
 
 @media (max-width: 768px) {
-    .mobileMarge {
+    .mobileMT {
         margin-top: 25px;
+    }
+    .mobileMB {
+        margin-bottom: 25px;
     }
     .mobileDisplay {
         display: none;
+    }
+}
+
+@media (max-width: 576px)  {
+    h1.memberHeader-name {
+        font-size: 16px;
+    }
+    .memberHeader-avatar img {
+    	width: 59px;
+    	height: 58px;
+    	font-size: 115.2px;
+    	background: #dd8d38;
+    }
+    .avatar-update {
+        display: none;
+    }
+    .mobilePMT {
+        margin-top: 27px;
     }
 }
