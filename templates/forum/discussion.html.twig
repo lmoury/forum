@@ -49,7 +49,7 @@
             <div class="userBannerDiscu b{{ discussion.auteur.role.id }} wrappedDiscu">
                 <span class="before"></span>{{ discussion.auteur.role.nom }}<span class="after"></span>
             </div>
-            <div>
+            <div class="mobileDisplay">
                 <table style="width:100%">
                     <tr>
                         <td>
@@ -69,6 +69,7 @@
                     </tr>
                 </table>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
     <div class="col-md-10">
@@ -100,8 +101,8 @@
             {% endif %}
             {% if is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
-                <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i> Editer</a>
-                <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i> Supprimer</a>
+                <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>
+                <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i><span class="mobileDisplaySM"> Supprimer</span></a>
             </div>
             {% endif %}
             <div class="clearfix"></div>
@@ -134,7 +135,7 @@
             <div class="userBannerDiscu b{{ com.auteur.role.id }} wrappedDiscu">
                 <span class="before"></span>{{ com.auteur.role.nom }}<span class="after"></span>
             </div>
-            <div>
+            <div class="mobileDisplay">
                 <table style="width:100%">
                     <tr>
                         <td>
@@ -154,6 +155,7 @@
                     </tr>
                 </table>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
     <div class="col-md-10">
@@ -186,8 +188,8 @@
 
             {% if is_granted('DELET_EDIT_COMMENTAIRE', com) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
-                <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i> Editer</a>
-                <a href="#" data-title="Delete" data-toggle="modal" data-target="#deleteCom{{ com.id }}" ><i class="fa fa-trash"></i> Supprimer</a>
+                <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>
+                <a href="#" data-title="Delete" data-toggle="modal" data-target="#deleteCom{{ com.id }}" ><i class="fa fa-trash"></i><span class="mobileDisplaySM"> Supprimer</span></a>
             </div>
             {% endif %}
             <div class="clearfix"></div>

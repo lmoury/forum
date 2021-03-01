@@ -31,20 +31,17 @@
                 <table>
                     <thead>
                       <tr class="nodeLigneTitle">
-                        <th></th>
-                        <th>Titre de la conversation</th>
-                        <th class="discussionRepAfi">
-                            Réponses
-                        </th>
-                        <th class="discussionRepAfi" style="text-align: right;">Dernier Message ↓</th>
+                        <th class="pl-5">Titre de la conversation</th>
+                        <th class="discussionRepAfi mobileDisplay">Réponses</th>
+                        <th class="discussionRepAfi mobileDisplay" style="text-align: right;">Dernier Message ↓</th>
                       </tr>
                     </thead>
                     <tbody>
 
                     {% for u in conversations %}
                         <tr class="nodeLigne {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important %}ligneImportantDiscu{% endfor %}">
-                            <td class="discussionCol1"><img width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" /></td>
                             <td class="discussionCol2 pl-3">
+                                <img class="float-left mr-2" width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" />
                                 {% if u.conversation.locked %}
                                 <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
                                 {% endif %}
@@ -59,7 +56,7 @@
                                 </div>
                                 <span class="dropdown noMessages open float-right" id="editDiscussion">
     							    <a aria-expanded="true" href="#" type="button" data-toggle="dropdown">Editer</a>
-    						    	<ul class="dropdown-menu">
+    						    	<ul class="dropdown-menu dropdown-menu-editer">
                                         <li>
                                         {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important == false %}
                                         <a href="{{ path('conversation.important', {id: u.conversation.id})}}">Définir comme important</a>
@@ -105,14 +102,14 @@
                                 <div class="nodeStat">
                                     <span class="disparforumstat">
                                         {% for p in u.conversation.conversationMessage %}
-
                                         <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
                                         {% endfor %}
                                         <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(u.conversation.createdAt | date('d-m-Y H:i:s')) }}</span>
+                                        <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-comments"></i> {{ u.conversation.conversationReponses.count }}</span>
                                     </span>
                                 </div>
                             </td>
-                            <td class="discussionCol3 discussionRepAfiBis">
+                            <td class="discussionCol3 discussionRepAfiBis mobileDisplay">
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         <div><span class="nodeStatItem">Réponses:</span> <span style="float: right;">{{ u.conversation.conversationReponses.count }}</span></div>
@@ -120,7 +117,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="discussionCol4 discussionRepAfiBis">
+                            <td class="discussionCol4 discussionRepAfiBis mobileDisplay">
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         {% if u.conversation.conversationReponses.count > 0 %}

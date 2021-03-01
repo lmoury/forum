@@ -30,7 +30,6 @@ class ConversationUserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($this->tokenStorage->getToken()->getUser());
         $builder
             ->add('conversation', ConversationType::class)
             ->add('participant', EntityType::class, [

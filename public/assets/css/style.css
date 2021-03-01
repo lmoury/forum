@@ -1136,11 +1136,6 @@ footer a:hover {
 .discussionCol3 {
     width: 20%;
 }
-.discussionCol1 {
-    width: 36px;
-    height: 36px;
-    text-align: center;
-}
 .discussionCol2 {
     width: 59%;
     padding: 6px 9px;
@@ -1227,15 +1222,18 @@ td.discussionCol1 {
     right: -1px;
 }
 
-/*@media screen and (min-width:840px)*/
 .profilPanelForum::after {
     font-family: FontAwesome;
     content: "";
     position: absolute;
-    top: 0px;
-    right: 2px;
     font-size: 30pt;
     color: rgb(245, 245, 245);
+}
+@media (min-width: 768px) {
+    .profilPanelForum::after {
+        top: 0px;
+        right: 2px;
+    }
 }
 
 
@@ -1636,12 +1634,43 @@ dl.widget-conversation {
     .mobileMB {
         margin-bottom: 25px;
     }
-    .mobileDisplay {
+    .mobileDisplay, .avatar-discussion .helper, .profilPanelForum .userBannerDiscu span.after, .profilPanelForum .userBannerDiscu span.before {
         display: none;
     }
+    /* forum discussion */
+    .profilPanelForum {
+        margin-bottom: 20px;
+    }
+    .profilPanelForum .avatarShadow.avatar-discussion {
+        float: left;
+    }
+    .profilPanelForum .userBannerDiscu {
+        float: left;
+    }
+    .profilPanelForum .pseudoPanelDiscu {
+    	text-align: left;
+    }
+    .avatar-discussion img {
+    	width: 53px;
+    	height: 53px;
+    }
+    .message-avatar-online {
+    	left: 9px;
+    }
+    .profilPanelForum::after {
+    	font-family: FontAwesome;
+    	content: "\f0d7";
+    	bottom: -15px;
+    	right: auto;
+    	left: auto;
+    }
+
 }
 
 @media (max-width: 576px)  {
+    .mobileDisplaySM, .avatar-update {
+        display: none;
+    }
     h1.memberHeader-name {
         font-size: 16px;
     }
@@ -1650,9 +1679,6 @@ dl.widget-conversation {
     	height: 58px;
     	font-size: 115.2px;
     	background: #dd8d38;
-    }
-    .avatar-update {
-        display: none;
     }
     .mobilePMT {
         margin-top: 27px;
