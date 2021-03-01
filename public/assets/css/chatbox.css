@@ -2,7 +2,7 @@
     background: rgb(234,233,232) url('../images/fond1.png') repeat top;
     box-shadow: inset 0px 0px 9px black;
     padding: 12px;
-    height: 373px;
+    height: 325px;
     overflow: auto;
     width: 100%;
 }
@@ -107,13 +107,10 @@ border-bottom: none;
 }
 
 .chatDateCust {
-    float:right;
-    background: rgba(34, 49, 63, 0.9);
-    color:#C8C8C8;
-    font-size:11px;
-    padding: 0px 5px;
-    border-radius:10px;
-    box-shadow:inset 0px 0px 0px 1px black;
+    font-size: 11px;
+}
+.chatpseudMessag {
+    font-size: 12px;
 }
 
 .titleDelet {

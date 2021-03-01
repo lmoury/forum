@@ -1,7 +1,7 @@
 {% for chat in chatbox %}
-<p>
+<div class="p-1">
     <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
-    <a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }}
     <span class="chatDateCust">{{ date_passed(chat.poster | date('d-m-Y H:i:s')) }}</span>
-</p>
+    - <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
+</div>
 {% endfor %}
