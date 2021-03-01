@@ -30,7 +30,7 @@
                         <span class="d-none d-md-inline-block">Bonsoir {{ app.user.username }}</span>
                         {% endif %}
                     </a>
-                    <ul class="dropdown-menu" id="dropdown-content-user">
+                    <ul class="profil-pop-mobile dropdown-menu" id="dropdown-content-user">
                         <span class="menu-arrow"></span>
                         <h3 class="menu-header">Votre compte</h3>
                         <div class="float-left avatar-user">
@@ -59,7 +59,7 @@
                     <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-search"></i>
                     </a>
-                    <ul class="dropdown-menu" id="dropdown-content-user">
+                    <ul class="dropdown-menu search-pop-mobile" id="dropdown-content-user">
                         <span class="menu-arrow"></span>
                         <h3 class="menu-header">Rechercher</h3>
                         {{ render(controller("App\\Controller\\SearchController:searchNavbar")) }}
@@ -70,12 +70,12 @@
                 {% for nombre in app.user.conversationUsers if nombre.lu == false %}
                 {% set nombreMessage = loop.index %}
                 {% endfor %}
-                <li class="nav-item dropdown " id="profil-pop-messagerie">
+                <li class="nav-item dropdown {% if current_url is defined and current_url == 'conversation' %}active{% endif %}" id="profil-pop-messagerie">
                     <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-envelope"></i>
                         {% if nombreMessage > 0 %}<span class="badge badge-secondary alertMessagerie">{{ nombreMessage }}</span>{% endif %}
                     </a>
-                    <ul class="dropdown-menu" id="dropdown-content-messagerie">
+                    <ul class="dropdown-menu conv-pop-mobile" id="dropdown-content-messagerie">
                         <span class="menu-arrow"></span>
                         <h3 class="menu-header">Conversations</h3>
                         {% for us in app.user.conversationUsers if us.lu == false %}
