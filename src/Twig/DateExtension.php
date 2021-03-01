@@ -27,7 +27,7 @@ class DateExtension extends AbstractExtension
 
     public function datePasserSansHeure($date)
     {
-        setlocale(LC_ALL, 'Fr_fr');
+        setlocale(LC_TIME, 'fr_FR.utf8','fra');
         if(!ctype_digit($date)) {
     		$date = strtotime($date);
     	}
@@ -51,7 +51,7 @@ class DateExtension extends AbstractExtension
     	}
     	else {
     		$dateFR = strftime('%e ',$date);
-    	    $dateFR .= ucfirst(strftime('%B %Y',$date));
+    	    $dateFR .= ucfirst(strftime('%b %Y',$date));
     		return $dateFR;
     	}
     }
