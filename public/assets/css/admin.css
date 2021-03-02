@@ -1,5 +1,6 @@
 body {
     background-color: rgb(231, 231, 231);
+    overflow-x: hidden;
 }
 
 .wrapper {
@@ -195,4 +196,17 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
 	color: #8c8c8c;
 	font-size: 12px;
 	font-weight: 400;
+}
+@media (max-width: 768px) {
+    .easyadmin .content {
+    	width: 100%;
+    	overflow-x: auto;
+        display: block;
+    }
+}
+.easyadmin .content-header {
+	border-bottom: none;
+}
+.easyadmin .datagrid thead {
+	border-top: 2px solid #e3e7ee;
 }

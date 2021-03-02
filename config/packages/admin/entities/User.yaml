@@ -6,7 +6,7 @@ easy_admin:
             list:
                 actions:
                     - { name: '-delete'}
-                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-info' }
                 title: 'Liste des utilisateurs'
                 fields:
                     - { property: 'id', label: '#' }
@@ -64,7 +64,7 @@ easy_admin:
                 dql_filter: 'entity.role = 5'
                 actions:
                     - { name: '-delete'}
-                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-info' }
                 fields:
                     - { property: 'id', label: '#' }
                     - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
@@ -83,14 +83,26 @@ easy_admin:
                     - {property: 'avatar'}
                     - {property: 'date_naissance', type: birthday}
                     - {property: 'role'}
+            show:
+                fields:
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+                    - { property: 'date_visite', label: 'Dernière visite'}
+                    - { property: 'forumDiscussions', label: 'Discussions'}
+                    - { property: 'forumCommentaires', label: 'Commentaires'}
         Administrateurs:
             class: App\Entity\User
             list:
-                title: 'Utilisateur banni'
+                title: 'Administrateurs'
                 dql_filter: 'entity.role = 3'
                 actions:
                     - { name: '-delete'}
-                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-info' }
                 fields:
                     - { property: 'id', label: '#' }
                     - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
@@ -100,7 +112,7 @@ easy_admin:
                     - { property: 'date_naissance', label: 'Naissance'}
                     - { property: 'date_inscription', label: 'Inscription'}
             edit:
-                title: 'Editer un utilisateur banni'
+                title: 'Editer un administrateurs'
             form:
                 fields:
                     - {property: 'username'}
@@ -109,14 +121,26 @@ easy_admin:
                     - {property: 'avatar'}
                     - {property: 'date_naissance', type: birthday}
                     - {property: 'role'}
-        Modérateurs:
+            show:
+                fields:
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+                    - { property: 'date_visite', label: 'Dernière visite'}
+                    - { property: 'forumDiscussions', label: 'Discussions'}
+                    - { property: 'forumCommentaires', label: 'Commentaires'}
+        Moderateurs:
             class: App\Entity\User
             list:
-                title: 'Utilisateur banni'
+                title: 'Modérateurs'
                 dql_filter: 'entity.role = 2'
                 actions:
                     - { name: '-delete'}
-                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-primary' }
+                    - { name: 'show', icon: 'eye', label: false, css_class: 'btn btn-info' }
                 fields:
                     - { property: 'id', label: '#' }
                     - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
@@ -126,7 +150,7 @@ easy_admin:
                     - { property: 'date_naissance', label: 'Naissance'}
                     - { property: 'date_inscription', label: 'Inscription'}
             edit:
-                title: 'Editer un utilisateur banni'
+                title: 'Editer un modérateurs'
             form:
                 fields:
                     - {property: 'username'}
@@ -135,3 +159,15 @@ easy_admin:
                     - {property: 'avatar'}
                     - {property: 'date_naissance', type: birthday}
                     - {property: 'role'}
+            show:
+                fields:
+                    - { property: 'avatar', label: false, type: 'image', base_path: '/data/avatar/' }
+                    - { property: 'username', label: 'Nom' }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'role', label: 'role'}
+                    - { property: 'sexeType', label: 'sexe'}
+                    - { property: 'date_naissance', label: 'Date de naissance'}
+                    - { property: 'date_inscription', label: 'Inscription'}
+                    - { property: 'date_visite', label: 'Dernière visite'}
+                    - { property: 'forumDiscussions', label: 'Discussions'}
+                    - { property: 'forumCommentaires', label: 'Commentaires'}

@@ -18,9 +18,7 @@ class ForumCategorieType extends AbstractType
         $output = [];
         foreach ($options['parent'] as $k => $v) {
             $output[$v['categorie']] = $v['id'];
-            dump($output);
         }
-        dump($output);
         $builder
             ->add('categorie')
             ->add('parent', ChoiceType::class, [
