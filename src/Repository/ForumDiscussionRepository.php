@@ -117,26 +117,15 @@ class ForumDiscussionRepository extends ServiceEntityRepository
     public function getSearchDiscussion(ForumDiscussionSearch $search): Query
     {
         $query = $this->findVisibleQuery();
+        $query = $query
+            ->leftJoin('d.categorie', 'cat')
+            ->addSelect('d', 'cat');
 
-        if($search->getUsers()->count() > 0) {
-            foreach ($search->getUsers() as $k => $user) {
-                if($k == 0) {
-                    $query = $query
-                        ->andWhere(":user$k = d.auteur")
-                        ->setParameter("user$k", $user);
-                }
-                else {
-                    $query = $query
-                        ->orWhere(":user$k = d.auteur")
-                        ->setParameter("user$k", $user);
-                }
-            }
-        }
+
         if($search->getCategories()->count() > 0) {
             foreach ($search->getCategories() as $key => $categorie) {
 
                 if($key == 0) {
-                    dump($key);
                     $query = $query
                         ->andWhere(":categorie = d.categorie")
                         ->setParameter("categorie", $categorie);
@@ -148,6 +137,8 @@ class ForumDiscussionRepository extends ServiceEntityRepository
                 }
             }
         }
+
+
         $query = $query
             ->andWhere('d.titre like :motCle')
             ->setParameter('motCle', '%'.$search->getMotCle().'%');
@@ -160,6 +151,39 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('d.date_creation > :dateCrea')
                 ->setParameter('dateCrea', $search->getDateCreation());
+        }
+        if($search->getUsers()->count() > 0) {
+            foreach ($search->getUsers() as $k => $user) {
+                if($k == 0) {
+                    $query = $query
+                        ->andWhere(":user$k = d.auteur")
+                        ->setParameter("user$k", $user);
+                }
+                if($k > 0) {
+                    $query = $query
+                        ->orWhere(":user$k = d.auteur")
+                        ->setParameter("user$k", $user);
+                }
+            }
+        }
+
+        $query = $query
+            ->andWhere('cat.access is null');
+        if($this->security->isGranted('ROLE_USER')) {
+            $query = $query
+                ->orWhere('cat.access = 1');
+        }
+        if($this->security->isGranted('ROLE_PREMIUM')) {
+            $query = $query
+                ->orWhere('cat.access = 4');
+        }
+        if($this->security->isGranted('ROLE_MODO')) {
+            $query = $query
+                ->orWhere('cat.access = 2');
+        }
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            $query = $query
+                ->orWhere('cat.access = 3');
         }
 
         if($search->getTrier() == 'valeur3') {

@@ -8,6 +8,9 @@
     <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
     <li class="breadcrumb-item active">Forums</li>
 </ol>
+
+{{ include("inc/bannissement.html.twig") }}
+
 <div class="row">
     <div class="col-md-9">
         {% if app.user %}

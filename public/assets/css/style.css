@@ -1696,6 +1696,9 @@ dl.widget-conversation {
     .nodeCol2 {
     	width: 50%;
     }
+    .modal-custom .modal-dialog, #modalDeplaDiscu .modal-dialog {
+    	max-width: 80%;
+    }
 }
 
 @media (max-width: 576px)  {
@@ -1716,5 +1719,8 @@ dl.widget-conversation {
     }
     .nodeCol2 {
     	width: 100%;
+    }
+    .modal-custom .modal-dialog, #modalDeplaDiscu .modal-dialog {
+    	max-width: 100%;
     }
 }
