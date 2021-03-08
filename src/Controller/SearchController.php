@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ForumDiscussionSearch;
 use App\Entity\Tag;
 use App\Repository\ForumDiscussionRepository;
+use App\Repository\ForumCategorieRepository;
 use App\Form\ForumDiscussionSearchType;
 use App\Form\ForumDiscussionSearchNavbarType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,11 +46,11 @@ class SearchController extends AbstractController
      * @param Request $request
      * @param ForumDiscussionRepository $repository
      */
-    public function search(ForumDiscussionRepository $repository, Request $request)
+    public function search(ForumDiscussionRepository $repository, ForumCategorieRepository $categoryRepository, Request $request)
     {
 
         $search = new ForumDiscussionSearch();
-        $form = $this->createForm(ForumDiscussionSearchType::class, $search);
+        $form = $this->createForm(ForumDiscussionSearchType::class, $search, ['category' => $categoryRepository->getCategorieOptions()]);
         $form->handleRequest($request);
 
         if($search->getMotCle()) {

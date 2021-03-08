@@ -66,7 +66,7 @@ class ForumController extends AbstractController
      * @param Request $request
      * @param string $slug
      */
-     public function discussions(Request $request, ForumDiscussionRepository $repository, ForumCategorie $categorie, string $slug)
+     public function discussions(Request $request, ForumDiscussionRepository $repository, ForumCategorie $categorie, string $slug, ForumCategorieRepository $repositoryCateg)
      {
          if($categorie->getSlug() !== $slug) {
              return $this->redirectToRoute('forum.discussions', ['id' => $categorie->getId(), 'slug' => $categorie->getSlug()], 301);
@@ -78,10 +78,12 @@ class ForumController extends AbstractController
              20
          );
 
+         $categories = $repositoryCateg->getListCateg();
          return $this->render('forum/discussions.html.twig', [
              'current_url' => $this->current_url,
              'discussions' => $discussions,
              'categorie' => $categorie,
+             'categories' => $categories,
          ]);
      }
 

@@ -35,6 +35,11 @@ class ForumDiscussionSearch
     private $categories;
 
     /**
+     * @var ArrayCollection
+     */
+    private $tags;
+
+    /**
      * @var string|null
      */
     private $trier;
@@ -43,6 +48,7 @@ class ForumDiscussionSearch
     public function __construct() {
         $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -129,6 +135,22 @@ class ForumDiscussionSearch
     public function setCategories(ArrayCollection $categories): void
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags(): ArrayCollection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param ArrayCollection $tags
+     */
+    public function setTags(ArrayCollection $tags): void
+    {
+        $this->tags = $tags;
     }
 
     /**

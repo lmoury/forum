@@ -16,8 +16,16 @@ class ForumCategorieType extends AbstractType
     {
 
         $output = [];
-        foreach ($options['parent'] as $k => $v) {
-            $output[$v['categorie']] = $v['id'];
+        foreach ($options['categories'] as $k => $v) {
+            if($v['parent'] == null) {
+                $output[$v['categorie']] = $v['id'];
+                foreach ($options['categories'] as $k => $sub) {
+                    if($sub['parent'] == $v['id']) {
+                        $output[$sub['categorie']] = $sub['id'];
+                    }
+                }
+            }
+
         }
         $builder
             ->add('categorie')
@@ -36,7 +44,7 @@ class ForumCategorieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ForumCategorie::class,
-            'parent'=>null
+            'categories'=> []
         ]);
     }
 }

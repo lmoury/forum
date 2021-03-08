@@ -1,8 +1,14 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+html, body {
+    height: 100%;
+}
 body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     background: rgb(231, 231, 231);
     font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 button:focus {
     outline: none;
@@ -644,7 +650,7 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
 .article-list-content:last-child {
     border: none;
 }
-#accordionExample div.collapsed {
+#accordionExample div.collapsed, .nodeStatItemSousForum {
     cursor: pointer;
 }
 .sidebar-content {
@@ -879,6 +885,7 @@ footer {
     background: #2f78a0;
     padding: 15px;
     color: #edf6fd;
+    margin-top: auto;
 }
 footer a {
     color: #dd8d38;
@@ -1723,4 +1730,7 @@ dl.widget-conversation {
     .modal-custom .modal-dialog, #modalDeplaDiscu .modal-dialog {
     	max-width: 100%;
     }
+}
+.select2-results__option li li {
+    color: red;
 }

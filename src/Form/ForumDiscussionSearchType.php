@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\ForumDiscussionSearch;
 use App\Entity\ForumCategorie;
 use App\Entity\User;
+use App\Entity\Tag;
 use App\Repository\ForumCategorieRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,17 +34,21 @@ class ForumDiscussionSearchType extends AbstractType
                 ])
             ->add('categories', EntityType::class, [
                 'class' => ForumCategorie::class,
+                'choices' => $options['category'],
                 'choice_label' => 'categorie',
                 'required' => false,
                 'multiple' => true,
-                'query_builder' => function (ForumCategorieRepository $qr) {
-                    return $qr->createQueryBuilder('c')
-                    ->andWhere('c.parent is not null');
-                }
+                
             ])
             ->add('users', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'username',
+                'required' => false,
+                'multiple' => true
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'nom',
                 'required' => false,
                 'multiple' => true
             ])
@@ -65,7 +70,9 @@ class ForumDiscussionSearchType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ForumDiscussionSearch::class,
             'method' => 'get',
-            'csrf_protection' => false
+            'csrf_protection' => false,
+            'category' => []
+
         ]);
     }
 

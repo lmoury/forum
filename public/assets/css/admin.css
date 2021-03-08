@@ -210,3 +210,6 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
 .easyadmin .datagrid thead {
 	border-top: 2px solid #e3e7ee;
 }
+.mrNiveauDeux {
+    margin-right: 4.5rem !important;
+}

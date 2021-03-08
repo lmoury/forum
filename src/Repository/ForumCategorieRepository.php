@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\ForumCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method ForumCategorie|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,12 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ForumCategorieRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $security;
+
+    public function __construct(RegistryInterface $registry, Security $security)
     {
         parent::__construct($registry, ForumCategorie::class);
+        $this->security = $security;
     }
 
     /**
@@ -47,10 +51,83 @@ class ForumCategorieRepository extends ServiceEntityRepository
         return $this->findVisibleQuery()
             ->addSelect('p.id')
             ->addSelect('p.categorie')
+            ->addSelect('p.parent')
+            ->addOrderBy('p.ordre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    /**
+     * @return ForumCategorie[]
+     */
+    public function getCategorieOptions(): array
+    {
+        $result = [];
+        $categories = $this->findVisibleQuery();
+        if($this->security->isGranted('ROLE_PREMIUM')) {
+            $categories = $categories
+                ->orWhere('p.access = 4');
+        }
+        if($this->security->isGranted('ROLE_USER')) {
+            $categories = $categories
+                ->orWhere('p.access = 1');
+        }
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
+            $categories = $categories
+                ->orWhere('p.access = 2');
+        }
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            $categories = $categories
+                ->orWhere('p.access = 3');
+        }
+
+        $categories = $categories
+            ->orWhere('p.access is null')
             ->andWhere('p.parent is null')
             ->addOrderBy('p.ordre', 'ASC')
             ->getQuery()
             ->getResult();
+
+        $subCategories = $this->findVisibleQuery();
+        if($this->security->isGranted('ROLE_PREMIUM')) {
+            $subCategories = $subCategories
+                ->orWhere('p.access = 4');
+        }
+        if($this->security->isGranted('ROLE_USER')) {
+            $subCategories = $subCategories
+                ->orWhere('p.access = 1');
+        }
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
+            $subCategories = $subCategories
+                ->orWhere('p.access = 2');
+        }
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            $subCategories = $subCategories
+                ->orWhere('p.access = 3');
+        }
+
+        $subCategories = $subCategories
+            ->orWhere('p.access is null')
+            ->andWhere('p.parent != :parentId')
+            ->setParameter('parentId', 0)
+            ->addOrderBy('p.ordre', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($categories as $category) {
+            foreach ($subCategories as $subCategory) {
+                if ($subCategory->getParent() === $category->getId()) {
+                    foreach ($subCategories as $sub2Category) {
+                        $result[$category->getCategorie()][$subCategory->getId()] = $subCategory;
+                        if ($sub2Category->getParent() === $subCategory->getId()) {
+                            $result[$sub2Category->getId()] = $sub2Category;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
     private function findVisibleQuery()

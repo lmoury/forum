@@ -71,6 +71,18 @@
                 </dd>
             </dl>
 
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="tags">Tags : </label>
+                </dt>
+                <dd>
+                    <div class="input-group mb-3">
+                        {{ form_widget(form.tags) }}
+                        {{ form_errors(form.tags) }}
+                    </div>
+                </dd>
+            </dl>
+
             <dl class="formRow">
                 <dt>Trier par : </dt>
                 <dd>

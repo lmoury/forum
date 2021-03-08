@@ -49,9 +49,9 @@ class ForumController extends AbstractController
     public function new(Request $request, ForumCategorieRepository $repository)
     {
         $categorie = new ForumCategorie();
-        $parent = $repository->getCategorieParent();
+        $categories = $repository->getCategorieParent();
         $form = $this->createForm(ForumCategorieType::class, $categorie, [
-            'parent' => $parent,
+            'categories' => $categories,
         ]);
         $form->handleRequest($request);
 
@@ -83,9 +83,9 @@ class ForumController extends AbstractController
             return $this->redirectToRoute('admin.categorie.editer', ['id' => $categorie->getId(), 'slug' => $categorie->getSlug()], 301);
         }
 
-        $parent = $repository->getCategorieParent();
+        $categories = $repository->getCategorieParent();
         $form = $this->createForm(ForumCategorieType::class, $categorie, [
-            'parent' => $parent,
+            'categories' => $categories,
         ]);
         $form->handleRequest($request);
 

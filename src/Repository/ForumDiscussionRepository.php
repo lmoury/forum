@@ -94,7 +94,7 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             $query = $query
                 ->orWhere('cat.access = 1');
         }
-        if($this->security->isGranted('ROLE_MODO')) {
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
             $query = $query
                 ->orWhere('cat.access = 2');
         }
@@ -119,25 +119,18 @@ class ForumDiscussionRepository extends ServiceEntityRepository
         $query = $this->findVisibleQuery();
         $query = $query
             ->leftJoin('d.categorie', 'cat')
-            ->addSelect('d', 'cat');
-
+            ->addSelect('d', 'cat')
+            ->leftJoin('d.tags', 'tag')
+            ->addSelect('d', 'tag');
 
         if($search->getCategories()->count() > 0) {
+            $orModuleCateg = $query->expr()->orX();
             foreach ($search->getCategories() as $key => $categorie) {
-
-                if($key == 0) {
-                    $query = $query
-                        ->andWhere(":categorie = d.categorie")
-                        ->setParameter("categorie", $categorie);
-                }
-                else {
-                    $query = $query
-                        ->orWhere(":categorie$key = d.categorie")
-                        ->setParameter("categorie$key", $categorie);
-                }
+                $orModuleCateg->add($query->expr()->eq('d.categorie', $categorie->getID()));
             }
+            $query = $query
+                ->andWhere($orModuleCateg);
         }
-
 
         $query = $query
             ->andWhere('d.titre like :motCle')
@@ -153,38 +146,38 @@ class ForumDiscussionRepository extends ServiceEntityRepository
                 ->setParameter('dateCrea', $search->getDateCreation());
         }
         if($search->getUsers()->count() > 0) {
+            $orModuleUser = $query->expr()->orX();
             foreach ($search->getUsers() as $k => $user) {
-                if($k == 0) {
-                    $query = $query
-                        ->andWhere(":user$k = d.auteur")
-                        ->setParameter("user$k", $user);
-                }
-                if($k > 0) {
-                    $query = $query
-                        ->orWhere(":user$k = d.auteur")
-                        ->setParameter("user$k", $user);
-                }
+                $orModuleUser->add($query->expr()->eq('d.auteur', $user->getID()));
             }
+            $query = $query
+                ->andWhere($orModuleUser);
+        }
+        if($search->getTags()->count() > 0) {
+            $orModuleTag = $query->expr()->orX();
+            foreach ($search->getTags() as $key => $tag) {
+                $orModuleTag->add($query->expr()->eq('tag.id', $tag->getID()));
+            }
+            $query = $query
+                ->andWhere($orModuleTag);
         }
 
-        $query = $query
-            ->andWhere('cat.access is null');
+        $orModule = $query->expr()->orX();
+        $orModule->add($query->expr()->isNull('cat.access'));
         if($this->security->isGranted('ROLE_USER')) {
-            $query = $query
-                ->orWhere('cat.access = 1');
+            $orModule->add($query->expr()->eq('cat.access', '1'));
         }
         if($this->security->isGranted('ROLE_PREMIUM')) {
-            $query = $query
-                ->orWhere('cat.access = 4');
+            $orModule->add($query->expr()->eq('cat.access', '4'));
         }
-        if($this->security->isGranted('ROLE_MODO')) {
-            $query = $query
-                ->orWhere('cat.access = 2');
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
+            $orModule->add($query->expr()->eq('cat.access', '2'));
         }
         if($this->security->isGranted('ROLE_ADMIN')) {
-            $query = $query
-                ->orWhere('cat.access = 3');
+            $orModule->add($query->expr()->eq('cat.access', '3'));
         }
+        $query = $query
+            ->andWhere($orModule);
 
         if($search->getTrier() == 'valeur3') {
             $query = $query
@@ -230,7 +223,7 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             $query = $query
                 ->orWhere('cat.access = 1');
         }
-        if($this->security->isGranted('ROLE_MODO')) {
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
             $query = $query
                 ->orWhere('cat.access = 2');
         }
@@ -265,7 +258,7 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             $query = $query
                 ->orWhere('cat.access = 1');
         }
-        if($this->security->isGranted('ROLE_MODO')) {
+        if($this->security->isGranted('ROLE_MODERATEUR')) {
             $query = $query
                 ->orWhere('cat.access = 2');
         }

@@ -15,6 +15,21 @@
 </div>
 {% endfor %}
 
+{% set access = false %}
+{% for sousCateg in categories if sousCateg.parent == categorie.id and (sousCateg.access.nom is not defined or is_granted(sousCateg.access.role)) %}
+{% set access = true %}
+{% endfor %}
+{% if access %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
+    </div>
+</div>
+<div class="no-padding content-section mb-4" id="custom-categ1">
+    {{ include("forum/inc/tableau_forums.html.twig") }}
+</div>
+{% else %}
+
 <div class="row">
     <div class="col-md-9">
         <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
@@ -51,6 +66,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
