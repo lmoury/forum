@@ -1,8 +1,15 @@
+html, body {
+    width: 100;
+    padding: 0;
+    margin: 0;
+}
 body {
     background-color: rgb(231, 231, 231);
     overflow-x: hidden;
 }
-
+body:not(.easyadmin-content-width-full) .wrapper {
+	max-width: 100% !important;
+}
 .wrapper {
 	width: calc(100% - 0px);
 }
@@ -202,6 +209,12 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
     	width: 100%;
     	overflow-x: auto;
         display: block;
+    }
+    body {
+    	overflow-x: hidden;
+        height: 100%;
+        width: 100%;
+        position: sticky;
     }
 }
 .easyadmin .content-header {

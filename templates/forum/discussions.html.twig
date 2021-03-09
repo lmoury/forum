@@ -15,16 +15,16 @@
 </div>
 {% endfor %}
 
+<div class="row">
+    <div class="col-md-12  mb-4">
+        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
+    </div>
+</div>
 {% set access = false %}
 {% for sousCateg in categories if sousCateg.parent == categorie.id and (sousCateg.access.nom is not defined or is_granted(sousCateg.access.role)) %}
 {% set access = true %}
 {% endfor %}
 {% if access %}
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
-    </div>
-</div>
 <div class="no-padding content-section mb-4" id="custom-categ1">
     {{ include("forum/inc/tableau_forums.html.twig") }}
 </div>
@@ -32,22 +32,20 @@
 {% if categorie.locked == false %}
 <div class="row">
     <div class="col-md-9">
-        {% if access == false %}<h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>{% endif %}
-    </div>
-    <div class="col-md-3 mobileMB">
-        <div id="btn-article-add">
-        	<a href="{{ path('forum.discussions.new', {id: categorie.id, slug: categorie.slug})}}">
-        		<span>Poster une nouvelle discussion</span>
-        	</a>
+        <div class="row">
+        <div class="col-md-4 mobileMB">
+            <div id="btn-article-add">
+            	<a href="{{ path('forum.discussions.new', {id: categorie.id, slug: categorie.slug})}}">
+            		<span>Poster une nouvelle discussion</span>
+            	</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="pagination float-right">
+                {{ knp_pagination_render(discussions) }}
+            </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-9">
-        <div class="pagination">
-            {{ knp_pagination_render(discussions) }}
-        </div>
         {{ include("forum/inc/tableau_discussions.html.twig") }}
         <br/>
         <div class="pagination">
