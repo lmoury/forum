@@ -28,11 +28,11 @@
 <div class="no-padding content-section mb-4" id="custom-categ1">
     {{ include("forum/inc/tableau_forums.html.twig") }}
 </div>
-{% else %}
-
+{% endif %}
+{% if categorie.locked == false %}
 <div class="row">
     <div class="col-md-9">
-        <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
+        {% if access == false %}<h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>{% endif %}
     </div>
     <div class="col-md-3 mobileMB">
         <div id="btn-article-add">

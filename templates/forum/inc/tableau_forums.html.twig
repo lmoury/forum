@@ -32,8 +32,8 @@
                                     <h3 class="menu-header">Sous-forums</h3>
                                     {% for sousCateg2 in categories if sousCateg2.parent == sousCateg.id and (sousCateg2.access.nom is not defined or is_granted(sousCateg2.access.role)) %}
                                     <div class="p-1 pl-2">
-                                        <i class="{{ sousCateg.icon }}"></i>
-                                        <a class="title-categ{{ sousCateg.id }}" href="{{ path('forum.discussions', {id: sousCateg2.id, slug: sousCateg2.slug}) }}">
+                                        <i class="{{ sousCateg2.icon }}"></i>
+                                        <a class="title-categ{{ sousCateg2.id }}" href="{{ path('forum.discussions', {id: sousCateg2.id, slug: sousCateg2.slug}) }}">
                                             {{ sousCateg2.categorie }}
                                         </a>
                                     </div>

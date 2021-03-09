@@ -19,9 +19,10 @@ class ForumCategorieType extends AbstractType
         foreach ($options['categories'] as $k => $v) {
             if($v['parent'] == null) {
                 $output[$v['categorie']] = $v['id'];
-                foreach ($options['categories'] as $k => $sub) {
+                foreach ($options['categories'] as $g => $sub) {
                     if($sub['parent'] == $v['id']) {
-                        $output[$sub['categorie']] = $sub['id'];
+                        $output[$sub['id']] = $sub['id'];
+                        //$output = $sub['categorie'] + $sub['id'];
                     }
                 }
             }
@@ -37,6 +38,7 @@ class ForumCategorieType extends AbstractType
             ->add('icon')
             ->add('access')
             ->add('ordre')
+            ->add('locked')
         ;
     }
 

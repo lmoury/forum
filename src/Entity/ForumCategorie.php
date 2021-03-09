@@ -49,6 +49,11 @@ class ForumCategorie
      */
     private $access;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $locked;
+
     public function __construct()
     {
         $this->forumDiscussions = new ArrayCollection();
@@ -157,5 +162,17 @@ class ForumCategorie
     public function __toString()
     {
         return $this->categorie;
+    }
+
+    public function getLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): self
+    {
+        $this->locked = $locked;
+
+        return $this;
     }
 }
