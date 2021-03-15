@@ -22,6 +22,7 @@ class DateExtension extends AbstractExtension
     {
         return [
             new TwigFunction('date_passed', [$this, 'datePasserSansHeure']),
+            new TwigFunction('date_chatbox', [$this, 'dateChatbox']),
         ];
     }
 
@@ -49,6 +50,30 @@ class DateExtension extends AbstractExtension
     	else if(date('Ymd', $date) == date('Ymd', strtotime('- 1 DAY'))) {
     		return 'Hier à '.date('H:i', $date);
     	}
+    	else {
+    		$dateFR = strftime('%e ',$date);
+    	    $dateFR .= ucfirst(strftime('%b %Y',$date));
+    		return $dateFR;
+    	}
+    }
+
+    public function dateChatbox($date)
+    {
+        setlocale(LC_TIME, 'fr_FR.utf8','fra');
+        if(!ctype_digit($date)) {
+    		$date = strtotime($date);
+    	}
+    	if(date('Ymd', $date) == date('Ymd')) {
+    		return 'Aujourd\'hui à '.date('H:i', $date);
+    	}
+    	else if(date('Ymd', $date) == date('Ymd', strtotime('- 1 DAY'))) {
+    		return 'Hier à '.date('H:i', $date);
+    	}
+        else if(date('Ymd', $date) > date('Ymd', strtotime('- 7 DAY'))) {
+            $dateFR = ucfirst(strftime('%A',$date));
+            $dateFR .= ' à '.date('H:i', $date);
+            return $dateFR;
+        }
     	else {
     		$dateFR = strftime('%e ',$date);
     	    $dateFR .= ucfirst(strftime('%b %Y',$date));

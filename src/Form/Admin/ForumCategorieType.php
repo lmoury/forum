@@ -21,8 +21,7 @@ class ForumCategorieType extends AbstractType
                 $output[$v['categorie']] = $v['id'];
                 foreach ($options['categories'] as $g => $sub) {
                     if($sub['parent'] == $v['id']) {
-                        $output[$sub['id']] = $sub['id'];
-                        //$output = $sub['categorie'] + $sub['id'];
+                        $output[$sub['categorie'].' - ('.$sub['id'].')'] = $sub['id'];
                     }
                 }
             }

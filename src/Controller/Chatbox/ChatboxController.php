@@ -8,9 +8,12 @@ use App\Repository\ChatboxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\Connection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+Use App\Twig\DateExtension;
+Use App\Twig\ParserJBBCodeExtension;
 
 /**
  * @Security("is_granted('ROLE_USER')")
@@ -37,23 +40,8 @@ class ChatboxController extends AbstractController
      */
     public function chatbox(Request $request, ChatboxRepository $repository)
     {
-
         $chatbox = $repository->findAll();
-        $chatboxForm = new Chatbox();
-        $form = $this->createForm(ChatboxType::class, $chatboxForm);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $chatboxForm->setPoster(new \DateTime());
-            $chatboxForm->setUser($this->getUser());
-            $chatboxForm->setMessage(htmlspecialchars($chatboxForm->getMessage()));
-            $this->em->persist($chatboxForm);
-            $this->em->flush();
-            return $this->redirectToRoute('chatbox');
-        }
-
         return $this->render('chatbox/chatbox.html.twig', [
-            'form' => $form->createView(),
             'chatbox' => $chatbox
         ]);
     }
@@ -92,6 +80,59 @@ class ChatboxController extends AbstractController
 
         return $this->redirectToRoute('chatbox');
     }
+
+    /**
+     * @Route("/enregistrement", name="enregistrement")
+     * @param ObjectManager $this->em
+     * @param Request $request
+     */
+    public function enregistrement(Request $request)
+    {
+        $chatboxForm = new Chatbox();
+        if($request->request->get('message') != null) {
+            $chatboxForm->setPoster(new \DateTime());
+            $chatboxForm->setUser($this->getUser());
+            $chatboxForm->setMessage(htmlspecialchars($request->request->get('message')));
+            $this->em->persist($chatboxForm);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('chatbox');
+    }
+
+    /**
+     * @Route("/charger", name="charger", methods="GET")
+     * @param Request $request
+     * @param DateExtension $dateChat
+     * @param ParserJBBCodeExtension $parser
+     * @param ChatboxRepository $repository
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function charger(Request $request, ChatboxRepository $repository, DateExtension $dateChat, ParserJBBCodeExtension $parser)
+    {
+        if($request->query->get('id') > 0) {
+            $message = null;
+            $tag = null;
+            $messages = $repository->getNewMessagesChatbox($request->query->get('id'));
+            if($messages != []) {
+                foreach ($messages as $k => $v) {
+                    if($v->getUser()->getUsername() != $this->getUser()){
+                        $tag = '<span onclick="tagUser(\'message\',\''.$v->getUser()->getUsername().'\')" class="tagUser fa fa-tag"></span>';
+                    }
+                    $message .= '<div class="p-1" id='.$v->getId().'>
+                        <img width="20" height="20"src="/data/avatar/'.$v->getUser()->getAvatar().'" alt="'.$v->getUser()->getUsername().'" />
+                        <span class="chatDateCust">'.$dateChat->dateChatbox($v->getPoster()->format('Ymd H:i:s')).'</span>
+                        - '.$tag.' <span class="chatpseudMessag"><a href="membres/'.$v->getUser()->getSlug().'.'.$v->getUser()->getId().'" class="pseudoUser'.$v->getUser()->getRole()->getId().'" > '.$v->getUser()->getUsername().' </a> : '.$parser->parserJBBCode($v->getMessage()).' </span>
+                    </div>';
+                }
+                return new Response($message);
+            }
+        }
+        else {
+            return $this->redirectToRoute('/');
+        }
+    }
+
+
 
 
 

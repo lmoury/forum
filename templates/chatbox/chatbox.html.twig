@@ -55,85 +55,84 @@
     <div class="p-2">
         <div class="bgChatMessage" id="chatboxMsg">
             {% for chat in chatbox %}
-            <div class="p-1">
+            <div class="p-1" id='{{ chat.id }}'>
                 <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
-                <span class="chatDateCust">{{ date_passed(chat.poster | date('d-m-Y H:i:s')) }}</span>
-                - <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
+                <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
+                - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
+                <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
             </div>
             {% endfor %}
         </div>
         <div class="row mt-3">
             <div class="col-md-12">
-                {{ form_start(form) }}
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                        </div>
-                        {{ form_widget(form.message, { 'attr': {'placeholder': 'Écrire un message...'} }) }}
-                        {{ form_errors(form.message) }}
-                        <div class="input-group-prepend">
-                            <button class="btn input-group-text"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
+                <form method="POST" action="{{ path('enregistrement') }}">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <input type="text" id="message" name="message" required="required" maxlength="255" placeholder="Écrire un message..." class="form-control">
+                            <div class="input-group-prepend">
+                                <button class="btn input-group-text" type="submit" name="submit" value="Envoyez votre message !" id="envoi"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {{ form_rest(form) }}
-                {{ form_end(form) }}
+                </form>
             </div>
 
             <div class="col-md-12">
-                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[b]', '[/b]');"><span class="fa fa-bold"></span></div>
-            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[i]', '[/i]');"><span class="fa fa-italic"></span></div>
-                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[u]', '[/u]');"><span class="fa fa-underline"></span></div>
-                <div class="faChatBox" onclick="addBalises('#chatbox_message', '[s]', '[/s]');"><s>S</s></div>
-            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[url=http://www.exemple.com]', 'descriptif_du_lien[/url]');"><span class="fa fa-link" ></span></div>
-            	<div class="faChatBox" onclick="addBalises('#chatbox_message', '[img]', '[/img]');"><span class="fa fa-picture-o" ></span></div>
+                <div class="faChatBox" onclick="addBalises('#message', '[b]', '[/b]');"><span class="fa fa-bold"></span></div>
+            	<div class="faChatBox" onclick="addBalises('#message', '[i]', '[/i]');"><span class="fa fa-italic"></span></div>
+                <div class="faChatBox" onclick="addBalises('#message', '[u]', '[/u]');"><span class="fa fa-underline"></span></div>
+                <div class="faChatBox" onclick="addBalises('#message', '[s]', '[/s]');"><s>S</s></div>
+            	<div class="faChatBox" onclick="addBalises('#message', '[url=http://www.exemple.com]', 'descriptif_du_lien[/url]');"><span class="fa fa-link" ></span></div>
+            	<div class="faChatBox" onclick="addBalises('#message', '[img]', '[/img]');"><span class="fa fa-picture-o" ></span></div>
 
                 <div class="faChatBox dropdown"><span data-toggle="dropdown"><span class="fa fa-paint-brush"></span></span>
                     <div class="dropdown-menu wbb-list">
-                        <div class="sc" style="background:#61BD6D" title="#61BD6D" onclick="addBalises('#chatbox_message', '[color=#61BD6D]', '[/color]');"></div>
-                        <div class="sc" style="background:#1ABC9C" title="#1ABC9C" onclick="addBalises('#chatbox_message', '[color=#1ABC9C]', '[/color]');"></div>
-                        <div class="sc" style="background:#54ACD2" title="#54ACD2" onclick="addBalises('#chatbox_message', '[color=#54ACD2]', '[/color]');"></div>
-                        <div class="sc" style="background:#2C82C9" title="#2C82C9" onclick="addBalises('#chatbox_message', '[color=#2C82C9]', '[/color]');"></div>
-                        <div class="sc" style="background:#9365B8" title="#9365B8" onclick="addBalises('#chatbox_message', '[color=#9365B8]', '[/color]');"></div>
-                        <div class="sc" style="background:#475577" title="#475577" onclick="addBalises('#chatbox_message', '[color=#475577]', '[/color]');"></div>
-                        <div class="sc" style="background:#CCCCCC" title="#CCCCCC" onclick="addBalises('#chatbox_message', '[color=#CCCCCC]', '[/color]');"></div>
+                        <div class="sc" style="background:#61BD6D" title="#61BD6D" onclick="addBalises('#message', '[color=#61BD6D]', '[/color]');"></div>
+                        <div class="sc" style="background:#1ABC9C" title="#1ABC9C" onclick="addBalises('#message', '[color=#1ABC9C]', '[/color]');"></div>
+                        <div class="sc" style="background:#54ACD2" title="#54ACD2" onclick="addBalises('#message', '[color=#54ACD2]', '[/color]');"></div>
+                        <div class="sc" style="background:#2C82C9" title="#2C82C9" onclick="addBalises('#message', '[color=#2C82C9]', '[/color]');"></div>
+                        <div class="sc" style="background:#9365B8" title="#9365B8" onclick="addBalises('#message', '[color=#9365B8]', '[/color]');"></div>
+                        <div class="sc" style="background:#475577" title="#475577" onclick="addBalises('#message', '[color=#475577]', '[/color]');"></div>
+                        <div class="sc" style="background:#CCCCCC" title="#CCCCCC" onclick="addBalises('#message', '[color=#CCCCCC]', '[/color]');"></div>
                         <span class="pl"></span>
-                        <div class="sc" style="background:#41A85F" title="#41A85F" onclick="addBalises('#chatbox_message', '[color=#41A85F]', '[/color]');"></div>
-                        <div class="sc" style="background:#00A885" title="#00A885" onclick="addBalises('#chatbox_message', '[color=#00A885]', '[/color]');"></div>
-                        <div class="sc" style="background:#3D8EB9" title="#3D8EB9" onclick="addBalises('#chatbox_message', '[color=#3D8EB9]', '[/color]');"></div>
-                        <div class="sc" style="background:#2969B0" title="#2969B0" onclick="addBalises('#chatbox_message', '[color=#2969B0]', '[/color]');"></div>
-                        <div class="sc" style="background:#553982" title="#553982" onclick="addBalises('#chatbox_message', '[color=#553982]', '[/color]');"></div>
-                        <div class="sc" style="background:#28324E" title="#28324E" onclick="addBalises('#chatbox_message', '[color=#28324E]', '[/color]');"></div>
-                        <div class="sc" style="background:#000000" title="#000000" onclick="addBalises('#chatbox_message', '[color=#000000]', '[/color]');"></div>
+                        <div class="sc" style="background:#41A85F" title="#41A85F" onclick="addBalises('#message', '[color=#41A85F]', '[/color]');"></div>
+                        <div class="sc" style="background:#00A885" title="#00A885" onclick="addBalises('#message', '[color=#00A885]', '[/color]');"></div>
+                        <div class="sc" style="background:#3D8EB9" title="#3D8EB9" onclick="addBalises('#message', '[color=#3D8EB9]', '[/color]');"></div>
+                        <div class="sc" style="background:#2969B0" title="#2969B0" onclick="addBalises('#message', '[color=#2969B0]', '[/color]');"></div>
+                        <div class="sc" style="background:#553982" title="#553982" onclick="addBalises('#message', '[color=#553982]', '[/color]');"></div>
+                        <div class="sc" style="background:#28324E" title="#28324E" onclick="addBalises('#message', '[color=#28324E]', '[/color]');"></div>
+                        <div class="sc" style="background:#000000" title="#000000" onclick="addBalises('#message', '[color=#000000]', '[/color]');"></div>
                         <span class="pl"></span>
-                        <div class="sc" style="background:#F7DA64" title="#F7DA64" onclick="addBalises('#chatbox_message', '[color=#F7DA64]', '[/color]');"></div>
-                        <div class="sc" style="background:#FBA026" title="#FBA026" onclick="addBalises('#chatbox_message', '[color=#FBA026]', '[/color]');"></div>
-                        <div class="sc" style="background:#EB6B56" title="#EB6B56" onclick="addBalises('#chatbox_message', '[color=#EB6B56]', '[/color]');"></div>
-                        <div class="sc" style="background:#E25041" title="#E25041" onclick="addBalises('#chatbox_message', '[color=#E25041]', '[/color]');"></div>
-                        <div class="sc" style="background:#A38F84" title="#A38F84" onclick="addBalises('#chatbox_message', '[color=#A38F84]', '[/color]');"></div>
-                        <div class="sc" style="background:#EFEFEF" title="#EFEFEF" onclick="addBalises('#chatbox_message', '[color=#EFEFEF]', '[/color]');"></div>
-                        <div class="sc" style="background:#FFFFFF" title="#FFFFFF" onclick="addBalises('#chatbox_message', '[color=#FFFFFF]', '[/color]');"></div>
+                        <div class="sc" style="background:#F7DA64" title="#F7DA64" onclick="addBalises('#message', '[color=#F7DA64]', '[/color]');"></div>
+                        <div class="sc" style="background:#FBA026" title="#FBA026" onclick="addBalises('#message', '[color=#FBA026]', '[/color]');"></div>
+                        <div class="sc" style="background:#EB6B56" title="#EB6B56" onclick="addBalises('#message', '[color=#EB6B56]', '[/color]');"></div>
+                        <div class="sc" style="background:#E25041" title="#E25041" onclick="addBalises('#message', '[color=#E25041]', '[/color]');"></div>
+                        <div class="sc" style="background:#A38F84" title="#A38F84" onclick="addBalises('#message', '[color=#A38F84]', '[/color]');"></div>
+                        <div class="sc" style="background:#EFEFEF" title="#EFEFEF" onclick="addBalises('#message', '[color=#EFEFEF]', '[/color]');"></div>
+                        <div class="sc" style="background:#FFFFFF" title="#FFFFFF" onclick="addBalises('#message', '[color=#FFFFFF]', '[/color]');"></div>
                         <span class="pl"></span>
-                        <div class="sc" style="background:#FAC51C" title="#FAC51C" onclick="addBalises('#chatbox_message', '[color=#FAC51C]', '[/color]');"></div>
-                        <div class="sc" style="background:#F37934" title="#F37934" onclick="addBalises('#chatbox_message', '[color=#F37934]', '[/color]');"></div>
-                        <div class="sc" style="background:#D14841" title="#D14841" onclick="addBalises('#chatbox_message', '[color=#D14841]', '[/color]');"></div>
-                        <div class="sc" style="background:#B8312F" title="#B8312F" onclick="addBalises('#chatbox_message', '[color=#B8312F]', '[/color]');"></div>
-                        <div class="sc" style="background:#7C706B" title="#7C706B" onclick="addBalises('#chatbox_message', '[color=#7C706B]', '[/color]');"></div>
-                        <div class="sc" style="background:#D1D5D8" title="#D1D5D8" onclick="addBalises('#chatbox_message', '[color=#D1D5D8]', '[/color]');"></div>
+                        <div class="sc" style="background:#FAC51C" title="#FAC51C" onclick="addBalises('#message', '[color=#FAC51C]', '[/color]');"></div>
+                        <div class="sc" style="background:#F37934" title="#F37934" onclick="addBalises('#message', '[color=#F37934]', '[/color]');"></div>
+                        <div class="sc" style="background:#D14841" title="#D14841" onclick="addBalises('#message', '[color=#D14841]', '[/color]');"></div>
+                        <div class="sc" style="background:#B8312F" title="#B8312F" onclick="addBalises('#message', '[color=#B8312F]', '[/color]');"></div>
+                        <div class="sc" style="background:#7C706B" title="#7C706B" onclick="addBalises('#message', '[color=#7C706B]', '[/color]');"></div>
+                        <div class="sc" style="background:#D1D5D8" title="#D1D5D8" onclick="addBalises('#message', '[color=#D1D5D8]', '[/color]');"></div>
                     </div>
                 </div>
 
                 <div class="faChatBox dropdown"><span data-toggle="dropdown"><span class="fa fa-smile-o" ></span></span>
                     <div class="dropdown-menu smileyCust">
-                        <span onclick="remplirInput('chatbox_message',';)');"><img src="../assets/img/smileys/clin.gif" alt=";)" /></span>
-                        <span onclick="remplirInput('chatbox_message','lol');"><img src="../assets/img/smileys/lol.gif" alt="lol" /></span>
-                        <span onclick="remplirInput('chatbox_message',':ninja:');"><img src="../assets/img/smileys/ninja.gif" alt=":ninja:" /></span>
-                        <span onclick="remplirInput('chatbox_message',':troll:');"><img src="../assets/img/smileys/troll/troll.png" alt=":troll:" /></span>
-                        <span onclick="remplirInput('chatbox_message',':troll1:');"><img src="../assets/img/smileys/troll/1.png" alt=":troll1:" /></span>
-                        <span onclick="remplirInput('chatbox_message',':abruti:');"><img src="../assets/img/smileys/abruti.gif" alt=":abruti:" /></span>
-                        <span onclick="remplirInput('chatbox_message',':boulet:');"><img src="../assets/img/smileys/boulet.gif" alt=":boulet:" /></span>
-                        <span onclick="remplirInput('chatbox_message',':nettoyage:');"><img src="../assets/img/smileys/nettoyage.gif" alt=":boulet:" /></span> 
+                        <span onclick="remplirInput('message',';)');"><img src="../assets/img/smileys/clin.gif" alt=";)" /></span>
+                        <span onclick="remplirInput('message','lol');"><img src="../assets/img/smileys/lol.gif" alt="lol" /></span>
+                        <span onclick="remplirInput('message',':ninja:');"><img src="../assets/img/smileys/ninja.gif" alt=":ninja:" /></span>
+                        <span onclick="remplirInput('message',':troll:');"><img src="../assets/img/smileys/troll/troll.png" alt=":troll:" /></span>
+                        <span onclick="remplirInput('message',':troll1:');"><img src="../assets/img/smileys/troll/1.png" alt=":troll1:" /></span>
+                        <span onclick="remplirInput('message',':abruti:');"><img src="../assets/img/smileys/abruti.gif" alt=":abruti:" /></span>
+                        <span onclick="remplirInput('message',':boulet:');"><img src="../assets/img/smileys/boulet.gif" alt=":boulet:" /></span>
+                        <span onclick="remplirInput('message',':nettoyage:');"><img src="../assets/img/smileys/nettoyage.gif" alt=":boulet:" /></span> 
                     </div>
                 </div>
 
@@ -175,12 +174,44 @@
             function remplirInput(id,txt) {
               document.getElementById(id).value +=" "+ txt +" ";
             }
-        </script>
-        <script>
-            setInterval('load_chatbox_msg()', 2000);
-            function load_chatbox_msg() {
-                $('#chatboxMsg').load('loadChatbox');
+            function tagUser(id,txt) {
+              document.getElementById(id).value +="@"+ txt +", ";
             }
+        </script>
+
+        <script>
+        $('#envoi').click(function(e){
+            e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
+            var message = $('#message').val();
+            if(message != ""){ // on vérifie que les variables ne sont pas vides
+                document.getElementById('message').value="";
+                $.ajax({
+                    url : "{{ path('enregistrement') }}", // on donne l'URL du fichier de traitement
+                    type : "POST", // la requête est de type POST
+                    data : "message=" + message // et on envoie nos données
+                });
+            }
+
+        });
+
+        </script>
+
+        <script>
+        function charger(){
+            setTimeout( function(){
+                var premierID = $('#chatboxMsg div:last').attr('id'); // on récupère l'id le plus récent
+                $.ajax({
+                    url : "charger?id=" + premierID, // on passe l'id le plus récent au fichier de chargement
+                    //type : GET,
+                    success : function(html){
+                        $('#chatboxMsg').append(html);
+                        document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
+                    }
+                });
+                charger();
+            }, 2000);
+        }
+        charger();
         </script>
         <script>
             document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;

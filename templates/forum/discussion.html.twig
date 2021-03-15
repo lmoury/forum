@@ -101,6 +101,7 @@
             {% endif %}
             {% if is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
+                <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
                 <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>
                 <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i><span class="mobileDisplaySM"> Supprimer</span></a>
             </div>
@@ -188,6 +189,7 @@
 
             {% if is_granted('DELET_EDIT_COMMENTAIRE', com) or is_granted('ROLE_MODERATEUR') %}
             <div class="actionBar-set">
+                <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
                 <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>
                 <a href="#" data-title="Delete" data-toggle="modal" data-target="#deleteCom{{ com.id }}" ><i class="fa fa-trash"></i><span class="mobileDisplaySM"> Supprimer</span></a>
             </div>

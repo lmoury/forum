@@ -19,22 +19,19 @@ class ChatboxRepository extends ServiceEntityRepository
         parent::__construct($registry, Chatbox::class);
     }
 
-    // /**
-    //  * @return Chatbox[] Returns an array of Chatbox objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Chatbox[] Returns an array of Chatbox objects
+     */
+    public function getNewMessagesChatbox($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.id > :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Chatbox

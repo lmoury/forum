@@ -652,7 +652,7 @@ nav > div a.nav-item.nav-link:hover, nav > div a.nav-item.nav-link:focus, nav > 
 .article-list-content:last-child {
     border: none;
 }
-#accordionExample div.collapsed, .nodeStatItemSousForum {
+#accordionExample div.collapsed, .nodeStatItemSousForum, .tagUser {
     cursor: pointer;
 }
 .sidebar-content {
@@ -1735,7 +1735,7 @@ dl.widget-conversation {
 }
 
 li.select2-results__option   {
-    
+
 }
 .dropdown-sousForum {
 	margin-top: 20px;
