@@ -46,20 +46,6 @@ class ChatboxController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/loadChatbox", name="loadChatbox")
-     * @param ChatboxRepository $repository
-     */
-    public function loadChatbox(ChatboxRepository $repository)
-    {
-
-        $chatbox = $repository->findAll();
-        return $this->render('chatbox/load_chatbox.html.twig', [
-            'chatbox' => $chatbox
-        ]);
-    }
-
     /**
     * @Route("/chatbox/delete", name="chatbox.delete", methods="DELETE")
     * @param ObjectManager $this->em
@@ -89,7 +75,7 @@ class ChatboxController extends AbstractController
     public function enregistrement(Request $request)
     {
         $chatboxForm = new Chatbox();
-        if($request->request->get('message') != null) {
+        if('POST' === $request->getMethod() && $request->request->get('message') != null) {
             $chatboxForm->setPoster(new \DateTime());
             $chatboxForm->setUser($this->getUser());
             $chatboxForm->setMessage(htmlspecialchars($request->request->get('message')));
@@ -127,9 +113,7 @@ class ChatboxController extends AbstractController
                 return new Response($message);
             }
         }
-        else {
-            return $this->redirectToRoute('/');
-        }
+        
     }
 
 

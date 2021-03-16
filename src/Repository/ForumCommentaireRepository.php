@@ -70,7 +70,7 @@ class ForumCommentaireRepository extends ServiceEntityRepository
                 $query = $query
                     ->orWhere('cat.access = 1');
             }
-            if($this->security->isGranted('ROLE_MODO')) {
+            if($this->security->isGranted('ROLE_MODERATEUR')) {
                 $query = $query
                     ->orWhere('cat.access = 2');
             }
@@ -114,7 +114,7 @@ class ForumCommentaireRepository extends ServiceEntityRepository
                 $query = $query
                     ->orWhere('cat.access = 1');
             }
-            if($this->security->isGranted('ROLE_MODO')) {
+            if($this->security->isGranted('ROLE_MODERATEUR')) {
                 $query = $query
                     ->orWhere('cat.access = 2');
             }
@@ -132,15 +132,14 @@ class ForumCommentaireRepository extends ServiceEntityRepository
             return $query->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?ForumCommentaire
+
+    public function getCommentaire($value): ?ForumCommentaire
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+            ->andWhere('f.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

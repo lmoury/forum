@@ -147,6 +147,11 @@ class User implements UserInterface,\Serializable
      */
     private $chatboxes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Signalement", mappedBy="user")
+     */
+    private $signaleur;
+
 
 
     public function __construct() {
@@ -167,6 +172,7 @@ class User implements UserInterface,\Serializable
         $this->conversationUsers = new ArrayCollection();
         $this->conversationRepAuteur = new ArrayCollection();
         $this->chatboxes = new ArrayCollection();
+        $this->signaleur = new ArrayCollection();
     }
 
 
@@ -674,6 +680,37 @@ class User implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($chatbox->getUser() === $this) {
                 $chatbox->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Signalement[]
+     */
+    public function getSignaleur(): Collection
+    {
+        return $this->signaleur;
+    }
+
+    public function addSignaleur(Signalement $signaleur): self
+    {
+        if (!$this->signaleur->contains($signaleur)) {
+            $this->signaleur[] = $signaleur;
+            $signaleur->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignaleur(Signalement $signaleur): self
+    {
+        if ($this->signaleur->contains($signaleur)) {
+            $this->signaleur->removeElement($signaleur);
+            // set the owning side to null (unless already changed)
+            if ($signaleur->getUser() === $this) {
+                $signaleur->setUser(null);
             }
         }
 

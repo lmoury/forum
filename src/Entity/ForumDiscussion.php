@@ -95,6 +95,11 @@ class ForumDiscussion
      */
     private $tags;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Signalement", mappedBy="discussion")
+     */
+    private $signalDiscussion;
+
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
@@ -104,6 +109,7 @@ class ForumDiscussion
         $this->likes = new ArrayCollection();
         $this->forumDiscussionViews = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->signalDiscussion = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -354,6 +360,37 @@ class ForumDiscussion
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Signalement[]
+     */
+    public function getSignalDiscussion(): Collection
+    {
+        return $this->signalDiscussion;
+    }
+
+    public function addSignalDiscussion(Signalement $signalDiscussion): self
+    {
+        if (!$this->signalDiscussion->contains($signalDiscussion)) {
+            $this->signalDiscussion[] = $signalDiscussion;
+            $signalDiscussion->setDiscussion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalDiscussion(Signalement $signalDiscussion): self
+    {
+        if ($this->signalDiscussion->contains($signalDiscussion)) {
+            $this->signalDiscussion->removeElement($signalDiscussion);
+            // set the owning side to null (unless already changed)
+            if ($signalDiscussion->getDiscussion() === $this) {
+                $signalDiscussion->setDiscussion(null);
+            }
         }
 
         return $this;

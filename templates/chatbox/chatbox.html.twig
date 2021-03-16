@@ -61,6 +61,13 @@
                 - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
                 <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
             </div>
+            <div>
+                <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
+                <!-- modal signalement -->
+                <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                    {{ include("inc/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.commentaire'}) }}
+                </div>
+            </div>
             {% endfor %}
         </div>
         <div class="row mt-3">
@@ -156,9 +163,6 @@
             </div>
         </div>
     </div>
-
-
-
     {% block javascripts %}
         <!-- javascript -->
         <script src="/assets/js/jquery.min.js"></script>
@@ -178,7 +182,6 @@
               document.getElementById(id).value +="@"+ txt +", ";
             }
         </script>
-
         <script>
         $('#envoi').click(function(e){
             e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
@@ -193,9 +196,7 @@
             }
 
         });
-
         </script>
-
         <script>
         function charger(){
             setTimeout( function(){
@@ -217,6 +218,5 @@
             document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
         </script>
    {% endblock %}
-
     </body>
 </html>
