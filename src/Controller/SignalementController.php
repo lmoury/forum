@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Signalement;
 use App\Entity\ForumDiscussion;
 use App\Entity\ForumCommentaire;
+use App\Entity\Chatbox;
 use App\Repository\SignalementRepository;
 use App\Repository\ForumCommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,7 @@ class SignalementController extends AbstractController
      * @Route("/signalement/commentaire.{id}", name="signalement.commentaire")
      * @param ObjectManager $this->em
      * @param ForumDiscussion $discussion
+     * @param ForumCommentaireRepository $repository
      * @param Request $request
      */
     public function signalement(Request $request, ForumDiscussion $discussion, ForumCommentaireRepository $repository)
@@ -61,6 +63,28 @@ class SignalementController extends AbstractController
             return $this->redirectToRoute('forum.discussion', ['id' => $discussion->getId(), 'slug' => $discussion->getSlug()]);
         }
         return $this->redirectToRoute('/');
+    }
+
+
+    /**
+     * @Route("/signalement/chatbox.{id}", name="signalement.chatbox")
+     * @param ObjectManager $this->em
+     * @param Chatbox $chatbox
+     * @param Request $request
+     */
+    public function chatbox(Request $request, Chatbox $chatbox)
+    {
+        $signalForm = new Signalement();
+        if('POST' === $request->getMethod() && $request->request->get('signalement')) {
+            $signalForm->setRaison(htmlspecialchars($request->request->get('signalement')));
+            $signalForm->setDateSignal(new \DateTime());
+            $signalForm->setUser($this->getUser());
+            $signalForm->setChatbox($chatbox);
+            $this->em->persist($signalForm);
+            $this->em->flush();
+            $this->addFlash('success', 'Merci d’avoir signalé ce contenu');
+        }
+        return $this->redirectToRoute('chatbox');
     }
 
 

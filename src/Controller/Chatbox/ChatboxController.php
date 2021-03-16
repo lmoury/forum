@@ -113,7 +113,21 @@ class ChatboxController extends AbstractController
                 return new Response($message);
             }
         }
-        
+
+    }
+
+    /**
+    * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer")
+    * @param ObjectManager $this->em
+    * @param Chatbox $chatbox
+    * @Security("is_granted('ROLE_MODERATEUR')")
+    */
+    public function deleteMessage(Chatbox $chatbox)
+    {
+        $this->em->remove($chatbox);
+        $this->em->flush();
+        $this->addFlash('success', 'Commentaire de la chatbox supprimé');
+        return $this->redirectToRoute('chatbox');
     }
 
 

@@ -52,21 +52,29 @@
             </div>
         </div>
     </div>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+    </div>
+    {% endfor %}
     <div class="p-2">
         <div class="bgChatMessage" id="chatboxMsg">
             {% for chat in chatbox %}
             <div class="p-1" id='{{ chat.id }}'>
+                {% if chat.user != app.user %}
+                    <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-exclamation-triangle"></i></a>
+                    <!-- modal signalement -->
+                    <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                        {{ include("inc/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.chatbox'}) }}
+                    </div>
+                {% endif %}
+                {% if is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('chatbox.supprimer', {id: chat.id}) }}" ><i class="fa fa-trash"></i></a>
+                {% endif %}
                 <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
                 <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
                 - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
                 <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
-            </div>
-            <div>
-                <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
-                <!-- modal signalement -->
-                <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                    {{ include("inc/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.commentaire'}) }}
-                </div>
             </div>
             {% endfor %}
         </div>
@@ -200,7 +208,7 @@
         <script>
         function charger(){
             setTimeout( function(){
-                var premierID = $('#chatboxMsg div:last').attr('id'); // on récupère l'id le plus récent
+                var premierID = $('#chatboxMsg div.p-1:last').attr('id'); // on récupère l'id le plus récent
                 $.ajax({
                     url : "charger?id=" + premierID, // on passe l'id le plus récent au fichier de chargement
                     //type : GET,
