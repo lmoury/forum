@@ -103,7 +103,7 @@
                 <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
                 <!-- modal signalement discussion -->
                 <div class="modal fade modal-custom" id="signaler" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                    {{ include("inc/signalement_modal.html.twig", {signal : discussion.id, route : 'signalement.discussion'}) }}
+                    {{ include("signalement/signalement_modal.html.twig", {signal : discussion.id, route : 'signalement.discussion'}) }}
                 </div>
                 {% if is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR') %}
                 <a href="{{ path('forum.discussion.editer', {id: discussion.id, slug: discussion.slug})}}"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>
@@ -194,7 +194,7 @@
                 <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ com.id }}" ><i class="fa fa-flag"></i><span class="mobileDisplaySM"> Signaler</span></a>
                 <!-- modal signalement -->
                 <div class="modal fade modal-custom" id="signaler{{ com.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                    {{ include("inc/signalement_modal.html.twig", {signal : com.id, route : 'signalement.commentaire'}) }}
+                    {{ include("signalement/signalement_modal.html.twig", {signal : com.id, route : 'signalement.commentaire'}) }}
                 </div>
                 {% if is_granted('DELET_EDIT_COMMENTAIRE', com) or is_granted('ROLE_MODERATEUR') %}
                 <a href="{{ path('forum.commentaire.editer', {id: discussion.id, slug: discussion.slug, idCom: com.id})}}#formAncre"><i class="fa fa-edit"></i><span class="mobileDisplaySM"> Editer</span></a>

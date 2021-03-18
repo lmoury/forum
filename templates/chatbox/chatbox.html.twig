@@ -62,14 +62,18 @@
             {% for chat in chatbox %}
             <div class="p-1" id='{{ chat.id }}'>
                 {% if chat.user != app.user %}
-                    <a href="#" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-exclamation-triangle"></i></a>
+                    <a href="#" class="float-right" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-exclamation-triangle"></i></a>
                     <!-- modal signalement -->
                     <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                        {{ include("inc/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.chatbox'}) }}
+                        {{ include("signalement/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.chatbox'}) }}
                     </div>
                 {% endif %}
                 {% if is_granted('ROLE_MODERATEUR') %}
-                    <a href="{{ path('chatbox.supprimer', {id: chat.id}) }}" ><i class="fa fa-trash"></i></a>
+                    <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete{{ chat.id }}" ><i class="fa fa-trash"></i></a>
+                    <!-- modal delete -->
+                    <div class="modal fade" id="delete{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                        {{ include("inc/modal/modal_delete.html.twig", {signal : chat.id, route : 'chatbox.supprimer'}) }}
+                    </div>
                 {% endif %}
                 <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
                 <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
@@ -95,6 +99,7 @@
                 </form>
             </div>
 
+            {% if is_granted('ROLE_PREMIUM') %}
             <div class="col-md-12">
                 <div class="faChatBox" onclick="addBalises('#message', '[b]', '[/b]');"><span class="fa fa-bold"></span></div>
             	<div class="faChatBox" onclick="addBalises('#message', '[i]', '[/i]');"><span class="fa fa-italic"></span></div>
@@ -150,8 +155,8 @@
                         <span onclick="remplirInput('message',':nettoyage:');"><img src="../assets/img/smileys/nettoyage.gif" alt=":boulet:" /></span> 
                     </div>
                 </div>
-
             </div>
+            {% endif %}
         </div>
     </div>
 

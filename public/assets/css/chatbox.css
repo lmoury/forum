@@ -2,7 +2,7 @@
     background: rgb(234,233,232) url('../images/fond1.png') repeat top;
     box-shadow: inset 0px 0px 9px black;
     padding: 12px;
-    height: 325px;
+    height: 400px;
     overflow: auto;
     width: 100%;
 }

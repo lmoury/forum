@@ -96,15 +96,27 @@ class ChatboxController extends AbstractController
     public function charger(Request $request, ChatboxRepository $repository, DateExtension $dateChat, ParserJBBCodeExtension $parser)
     {
         if($request->query->get('id') > 0) {
-            $message = null;
-            $tag = null;
+            $message = null; $signalement = null; $tag = null; $delete = null;
             $messages = $repository->getNewMessagesChatbox($request->query->get('id'));
+
             if($messages != []) {
                 foreach ($messages as $k => $v) {
                     if($v->getUser()->getUsername() != $this->getUser()){
                         $tag = '<span onclick="tagUser(\'message\',\''.$v->getUser()->getUsername().'\')" class="tagUser fa fa-tag"></span>';
+                        $signalement = '<a href="#" class="float-right" data-title="Signaler" data-toggle="modal" data-target="#signaler'.$v->getId().'" ><i class="fa fa-exclamation-triangle"></i></a>
+                        <div class="modal fade modal-custom" id="signaler'.$v->getId().'" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                            '.$this->render('signalement/signalement_modal.html.twig', ['route' => 'signalement.chatbox', 'signal' => $v->getId()]).'
+                        </div>';
+                    }
+                    if($this->getUser()->getRole()->getId() == 3 or $this->getUser()->getRole()->getId() == 2) {
+                        $delete = '<a href="#" data-title="Delete" data-toggle="modal" data-target="#delete'.$v->getId().'" ><i class="fa fa-trash"></i></a>
+                        <div class="modal fade" id="delete'.$v->getId().'" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                            '.$this->render('inc/modal/modal_delete.html.twig', ['route' => 'chatbox.supprimer', 'signal' => $v->getId()]).'
+                        </div>';
                     }
                     $message .= '<div class="p-1" id='.$v->getId().'>
+                        '.$signalement.'
+                        '.$delete.'
                         <img width="20" height="20"src="/data/avatar/'.$v->getUser()->getAvatar().'" alt="'.$v->getUser()->getUsername().'" />
                         <span class="chatDateCust">'.$dateChat->dateChatbox($v->getPoster()->format('Ymd H:i:s')).'</span>
                         - '.$tag.' <span class="chatpseudMessag"><a href="membres/'.$v->getUser()->getSlug().'.'.$v->getUser()->getId().'" class="pseudoUser'.$v->getUser()->getRole()->getId().'" > '.$v->getUser()->getUsername().' </a> : '.$parser->parserJBBCode($v->getMessage()).' </span>
@@ -117,16 +129,19 @@ class ChatboxController extends AbstractController
     }
 
     /**
-    * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer")
+    * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer", methods="DELETE")
     * @param ObjectManager $this->em
     * @param Chatbox $chatbox
+    * @param Request $request
     * @Security("is_granted('ROLE_MODERATEUR')")
     */
-    public function deleteMessage(Chatbox $chatbox)
+    public function deleteMessage(Chatbox $chatbox, Request $request)
     {
-        $this->em->remove($chatbox);
-        $this->em->flush();
-        $this->addFlash('success', 'Commentaire de la chatbox supprimé');
+        if($this->isCsrfTokenValid('delete' . $chatbox->getId(), $request->get('_token'))) {
+            $this->em->remove($chatbox);
+            $this->em->flush();
+            $this->addFlash('success', 'Commentaire de la chatbox supprimé');
+        }
         return $this->redirectToRoute('chatbox');
     }
 
