@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}| Lmoury{% endblock %}</title>
+        <title>{% block title %} Chatbox {% endblock %}</title>
         {% block stylesheets %}
             <!-- css -->
             <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -53,8 +53,8 @@
         </div>
     </div>
     {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
+    <div class="alert alert-success alert-custom">
+        <i class="fa fa-check"></i> {{ message }}
     </div>
     {% endfor %}
     <div class="p-2">
@@ -78,7 +78,10 @@
                 <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
                 <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
                 - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
-                <span class="chatpseudMessag"><a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> : {{ parser(chat.message) | raw }} </span>
+                <span class="chatpseudMessag">
+                    <a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> :
+                    {% if chat.user.role.id == 1 or chat.user.role.id == 5 %}{{ chat.message }}{% else %}{{ parser(chat.message) | raw }}{% endif %}
+                </span>
             </div>
             {% endfor %}
         </div>
@@ -229,6 +232,11 @@
         </script>
         <script>
             document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
+        </script>
+        <script>
+        jQuery(document).ready(function(){
+            $('.alert-custom').show(0).delay(5000).hide(200);
+        });
         </script>
    {% endblock %}
     </body>

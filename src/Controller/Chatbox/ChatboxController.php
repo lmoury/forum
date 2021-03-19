@@ -34,13 +34,11 @@ class ChatboxController extends AbstractController
 
     /**
      * @Route("/chatbox", name="chatbox")
-     * @param ObjectManager $this->em
      * @param ChatboxRepository $repository
-     * @param Request $request
      */
-    public function chatbox(Request $request, ChatboxRepository $repository)
+    public function chatbox(ChatboxRepository $repository)
     {
-        $chatbox = $repository->findAll();
+        $chatbox = $repository->getChatbox();
         return $this->render('chatbox/chatbox.html.twig', [
             'chatbox' => $chatbox
         ]);
@@ -96,7 +94,7 @@ class ChatboxController extends AbstractController
     public function charger(Request $request, ChatboxRepository $repository, DateExtension $dateChat, ParserJBBCodeExtension $parser)
     {
         if($request->query->get('id') > 0) {
-            $message = null; $signalement = null; $tag = null; $delete = null;
+            $message = null; $signalement = null; $tag = null; $delete = null; $texte = null;
             $messages = $repository->getNewMessagesChatbox($request->query->get('id'));
 
             if($messages != []) {
@@ -114,12 +112,18 @@ class ChatboxController extends AbstractController
                             '.$this->render('inc/modal/modal_delete.html.twig', ['route' => 'chatbox.supprimer', 'signal' => $v->getId()]).'
                         </div>';
                     }
+                    if ($v->getUser()->getRole()->getId() == 1 or $v->getUser()->getRole()->getId() == 5) {
+                        $texte = $v->getMessage();
+                    }
+                    else {
+                        $texte = $parser->parserJBBCode($v->getMessage());
+                    }
                     $message .= '<div class="p-1" id='.$v->getId().'>
                         '.$signalement.'
                         '.$delete.'
                         <img width="20" height="20"src="/data/avatar/'.$v->getUser()->getAvatar().'" alt="'.$v->getUser()->getUsername().'" />
                         <span class="chatDateCust">'.$dateChat->dateChatbox($v->getPoster()->format('Ymd H:i:s')).'</span>
-                        - '.$tag.' <span class="chatpseudMessag"><a href="membres/'.$v->getUser()->getSlug().'.'.$v->getUser()->getId().'" class="pseudoUser'.$v->getUser()->getRole()->getId().'" > '.$v->getUser()->getUsername().' </a> : '.$parser->parserJBBCode($v->getMessage()).' </span>
+                        - '.$tag.' <span class="chatpseudMessag"><a href="membres/'.$v->getUser()->getSlug().'.'.$v->getUser()->getId().'" class="pseudoUser'.$v->getUser()->getRole()->getId().'" > '.$v->getUser()->getUsername().' </a> : '.$texte.' </span>
                     </div>';
                 }
                 return new Response($message);
@@ -144,9 +148,4 @@ class ChatboxController extends AbstractController
         }
         return $this->redirectToRoute('chatbox');
     }
-
-
-
-
-
 }

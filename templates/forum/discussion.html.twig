@@ -21,12 +21,6 @@
     {% endif %}
 </p>
 
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
-</div>
-{% endfor %}
-
 <div class="pagination">
     {{ knp_pagination_render(commentaires) }}
 </div>

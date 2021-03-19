@@ -19,12 +19,33 @@ class ChatboxRepository extends ServiceEntityRepository
         parent::__construct($registry, Chatbox::class);
     }
 
+
+    /**
+     * @return Chatbox[] Returns an array of Chatbox objects
+     */
+    public function getChatbox()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c', 'u')
+            ->leftJoin('c.User', 'u')
+            ->addSelect('u', 'r')
+            ->leftJoin('u.role', 'r')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /**
      * @return Chatbox[] Returns an array of Chatbox objects
      */
     public function getNewMessagesChatbox($value)
     {
         return $this->createQueryBuilder('c')
+            ->select('c', 'u')
+            ->leftJoin('c.User', 'u')
+            ->addSelect('u', 'r')
+            ->leftJoin('u.role', 'r')
             ->andWhere('c.id > :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')

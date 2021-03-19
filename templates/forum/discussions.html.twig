@@ -9,12 +9,6 @@
     <li class="breadcrumb-item active">{{ categorie.categorie }}</li>
 </ol>
 
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
-</div>
-{% endfor %}
-
 <div class="row">
     <div class="col-md-12  mb-4">
         <h1 class="p-title-value text-center">{{ categorie.categorie }}</h1>
@@ -33,7 +27,7 @@
 <div class="row">
     <div class="col-md-9">
         <div class="row">
-        <div class="col-md-4 mobileMB">
+        <div class="col-md-4 mb-3">
             <div id="btn-article-add">
             	<a href="{{ path('forum.discussions.new', {id: categorie.id, slug: categorie.slug})}}">
             		<span>Poster une nouvelle discussion</span>

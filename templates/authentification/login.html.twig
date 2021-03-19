@@ -10,11 +10,6 @@
     <i class="fa fa-warning"></i> <strong> Erreur !!!</strong> {{ error.messagekey | trans(error.messagedata, 'security') }}
 </div>
 {% endif %}
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
-</div>
-{% endfor %}
 
 <div id="content-section" class="page-connexion">
     <form action="{{ path('login') }}" method="post">

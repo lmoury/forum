@@ -20,8 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class SignalementController extends AbstractController
 {
 
-    private $current_url = 'conversation';
-
     /**
      * @var ObjectManager
      */
@@ -33,6 +31,18 @@ class SignalementController extends AbstractController
         $this->em = $em;
     }
 
+
+    /**
+     * @Route("/signalement", name="signalement")
+     * @param SignalementRepository $repository
+     */
+     public function index(SignalementRepository $repository)
+     {
+         $signalements = $repository->findAll();
+         return $this->render('signalement/index.html.twig', [
+             'signalements' => $signalements,
+         ]);
+     }
 
     /**
      * @Route("/signalement/discussion.{id}", name="signalement.discussion")
@@ -64,7 +74,6 @@ class SignalementController extends AbstractController
         }
         return $this->redirectToRoute('/');
     }
-
 
     /**
      * @Route("/signalement/chatbox.{id}", name="signalement.chatbox")

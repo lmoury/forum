@@ -9,12 +9,6 @@
     <li class="breadcrumb-item active">{{ conversation.titre }}</li>
 </ol>
 
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
-</div>
-{% endfor %}
-
 <h1 class="p-title-value text-center">{{ conversation.titre }}</h1>
 <p class="text-center pDescription">
     {% set blockMessageAutor = false %}

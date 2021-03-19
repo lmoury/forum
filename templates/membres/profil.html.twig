@@ -9,12 +9,6 @@
     <li class="breadcrumb-item active" aria-current="page">Profil de <strong>{{ user.username }}</strong></li>
 </ol>
 
-{% for message in app.flashes('success') %}
-<div class="alert alert-success">
-    <i class="fa fa-check"></i> <strong> Success !!!</strong> {{ message }}
-</div>
-{% endfor %}
-
 <div class="content-section no-padding">
 <div class="memberHeader">
     <div class="memberHeader-main">

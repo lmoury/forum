@@ -21,7 +21,11 @@
         {% endblock %}
     </head>
     <body>
-
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-custom">
+            <i class="fa fa-check"></i> {{ message }}
+        </div>
+        {% endfor %}
         {{ include("inc/header.html.twig") }}
         {{ include("inc/navbar.html.twig") }}
 
@@ -40,6 +44,11 @@
             <script src="/assets/plugins/wow/js/wow.min.js"></script>
             <script>
                 new WOW().init();
+            </script>
+            <script>
+            jQuery(document).ready(function(){
+                $('.alert-custom').show(0).delay(5000).hide(200);
+            });
             </script>
        {% endblock %}
 
