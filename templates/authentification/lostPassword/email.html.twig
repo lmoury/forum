@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Mot de passe perdu{{ parent() }}{% endblock %}
+
+{% block body %}
+<h1 class="p-title-value text-center">Mot de passe perdu</h1>
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    <i class="fa fa-warning"></i> <strong> Erreur !!!</strong> {{ message }}
+</div>
+{% endfor %}
+
+<div id="content-section" class="page-connexion">
+    <div class="formInfoRow">Si vous avez oublié votre mot de passe, vous pouvez utiliser ce formulaire pour réinitialiser votre mot de passe. Vous recevrez un e-mail avec des instructions.</div>
+    <form action="{{ path('lost.password') }}" method="post">
+        <div class="block-container">
+            <dl class="formRow formRow-input">
+                <dt>
+                    <label for="username">Votre adresse email : </label>
+                </dt>
+                <dd>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" name="email" id="email"  placeholder="Entrer votre email" required autofocus />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                        </div>
+                        <div><dfn class="inputChoices-explain">L’adresse e-mail avec qui vous êtes inscrit est nécessaire pour réinitialiser votre mot de passe.</dfn></div>
+                    </div>
+                </dd>
+            </dl>
+            <div class="text-center btn-container">
+                <button class="btn" type="submit"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i> Réinitialiser</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

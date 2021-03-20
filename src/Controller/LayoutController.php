@@ -31,7 +31,7 @@ class LayoutController extends AbstractController
      */
     public function notice(NoticeRepository $repository, UserRoleRepository $repoRole, UserBannirRepository $repoBannir)
     {
-        if ($this->getUser() !== null) {
+        if ($this->getUser() != null) {
             $this->getUser()->setDateVisite(new \DateTime());
             $this->em->flush();
             if($this->getUser()->getRole()->getId() == 5 and $this->getUser()->getUserBannir()->getFin()) {

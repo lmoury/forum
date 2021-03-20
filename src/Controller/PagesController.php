@@ -42,6 +42,12 @@ class PagesController extends AbstractController
      */
     public function index(Request $request, ForumDiscussionRepository $repository)
     {
+        if($this->getUser()) {
+            if($this->getUser()->getLostPasswordKey() != "") {
+                $this->getUser()->setLostPasswordKey("");
+                $this->em->flush();
+            }
+        }
         return $this->redirectToRoute('forums');
 
         //$lastDiscussions = $repository->getLastDiscussionsHome();

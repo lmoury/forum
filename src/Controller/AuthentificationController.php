@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\InscriptionType;
+use App\Form\LostPasswordType;
 use App\Repository\UserRoleRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +47,7 @@ class AuthentificationController extends AbstractController
 
     /**
      * @Route("/inscription", name="inscription")
+     * @param ObjectManager $this->em
      * @param UserRoleRepository $repoRole
      * @param UserPasswordEncoderInterface $encoder
      * @param Request $request
@@ -74,6 +77,61 @@ class AuthentificationController extends AbstractController
             'current_url' => 'inscription',
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/lost-password", name="lost.password")
+     * @param ObjectManager $this->em
+     * @param Request $request
+     * @param UserRepository $repository
+     */
+    public function getEmail(UserRepository $repository, Request $request)
+    {
+        if('POST' === $request->getMethod() && $request->request->get('email')) {
+            $user = $repository->getEmailUser(htmlspecialchars($request->request->get('email')));
+            if($user){
+                $longueurKey = 16; $key = "";
+                for($i=1;$i<$longueurKey;$i++) {
+                    $key .= rand(0,9);
+                }
+                $user->setLostPasswordKey($key);
+                $this->em->flush();
+                
+                $this->addFlash('success', 'email envoyé');
+                return $this->redirectToRoute('login');
+            }
+            $this->addFlash('error', 'Aucun compte ne correspond à cet email');
+            return $this->redirectToRoute('lost.password');
+        }
+        return $this->render('authentification/lostPassword/email.html.twig');
+    }
+
+    /**
+     * @Route("/lost-password/new", name="lost.password.new")
+     * @param ObjectManager $this->em
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param UserRepository $repository
+     */
+    public function lostPassword(UserRepository $repository, Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        if($request->query->get('membre') > 0 and $request->query->get('key') > 1) {
+            $user = $repository->getLostPassword($request->query->get('membre'), $request->query->get('key'));
+            if($user) {
+                $form = $this->createForm(LostPasswordType::class, $user);
+                $form->handleRequest($request);
+                if($form->isSubmitted() && $form->isValid()) {
+                    $user->setPassword($encoder->encodePassword($user, $request->request->get('lost_password')['password']['first']));
+                    $this->em->flush();
+                    $this->addFlash('success', 'Vos mots de passe on bien été modifié');
+                    return $this->redirectToRoute('login');
+                }
+                return $this->render('authentification/lostPassword/password.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+        }
+        return $this->redirectToRoute('/');
     }
 
 }

@@ -152,6 +152,10 @@ class User implements UserInterface,\Serializable
      */
     private $signaleur;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lostPasswordKey;
 
 
     public function __construct() {
@@ -713,6 +717,18 @@ class User implements UserInterface,\Serializable
                 $signaleur->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLostPasswordKey(): ?string
+    {
+        return $this->lostPasswordKey;
+    }
+
+    public function setLostPasswordKey(?string $lostPasswordKey): self
+    {
+        $this->lostPasswordKey = $lostPasswordKey;
 
         return $this;
     }

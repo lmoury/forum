@@ -197,16 +197,28 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?User
+    /**
+    * @return User Returns User objects
+    */
+    public function getEmailUser($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.email = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function getLostPassword($id, $key)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('u.lostPasswordKey = :key')
+            ->setParameter('key', $key)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
