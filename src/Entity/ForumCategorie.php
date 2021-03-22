@@ -54,9 +54,15 @@ class ForumCategorie
      */
     private $locked;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Prefixe", mappedBy="categories")
+     */
+    private $prefixes;
+
     public function __construct()
     {
         $this->forumDiscussions = new ArrayCollection();
+        $this->prefixes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +178,34 @@ class ForumCategorie
     public function setLocked(bool $locked): self
     {
         $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prefixe[]
+     */
+    public function getPrefixes(): Collection
+    {
+        return $this->prefixes;
+    }
+
+    public function addPrefix(Prefixe $prefix): self
+    {
+        if (!$this->prefixes->contains($prefix)) {
+            $this->prefixes[] = $prefix;
+            $prefix->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrefix(Prefixe $prefix): self
+    {
+        if ($this->prefixes->contains($prefix)) {
+            $this->prefixes->removeElement($prefix);
+            $prefix->removeCategory($this);
+        }
 
         return $this;
     }

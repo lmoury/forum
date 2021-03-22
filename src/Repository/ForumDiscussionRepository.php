@@ -49,6 +49,31 @@ class ForumDiscussionRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    /**
+     * @return Query
+    */
+    public function getListDiscussionsPrefix($cat,  $prefix): Query
+    {
+        return $this->createQueryBuilder('d')
+            ->addSelect('d', 'c')
+            ->leftJoin('d.forumCommentaires', 'c')
+            ->leftJoin('c.auteur', 'ca')
+            ->addSelect('c', 'ca')
+            ->leftJoin('d.auteur', 'a')
+            ->addSelect('d', 'a')
+            ->addSelect('a', 'r')
+            ->leftJoin('a.role', 'r')
+            ->leftJoin('d.categorie', 'cat')
+            ->addSelect('d', 'cat')
+            ->andWhere('d.categorie = :cat')
+            ->setParameter('cat', $cat)
+            ->andWhere('d.prefixe = :prefix')
+            ->setParameter('prefix', $prefix)
+            ->addOrderBy('d.important', 'DESC')
+            ->addOrderBy('d.date_new_com', 'DESC')
+            ->getQuery();
+    }
+
 
     /**
      * @return Query

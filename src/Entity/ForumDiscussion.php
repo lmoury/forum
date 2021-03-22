@@ -100,6 +100,11 @@ class ForumDiscussion
      */
     private $signalDiscussion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Prefixe", inversedBy="prefixDiscu")
+     */
+    private $prefixe;
+
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
@@ -392,6 +397,18 @@ class ForumDiscussion
                 $signalDiscussion->setDiscussion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrefixe(): ?Prefixe
+    {
+        return $this->prefixe;
+    }
+
+    public function setPrefixe(?Prefixe $prefixe): self
+    {
+        $this->prefixe = $prefixe;
 
         return $this;
     }

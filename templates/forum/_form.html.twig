@@ -5,9 +5,15 @@
         <i class="fa fa-warning"></i> <strong> Erreur !!!</strong> {{ message }}
     </div>
     {% endfor %}
-    <div class="input-group mt-3 mb-3">
-        {{ form_widget(form.titre, { 'attr': {'placeholder': 'Ajouter un titre'} }) }}
-        {{ form_errors(form.titre) }}
+    <div class="row  mt-3 mb-3" >
+        <div class="input-group col-md-2">
+            {{ form_widget(form.prefixe) }}
+            {{ form_errors(form.prefixe) }}
+        </div>
+        <div class="input-group col-md-10">
+            {{ form_widget(form.titre, { 'attr': {'placeholder': 'Ajouter un titre'} }) }}
+            {{ form_errors(form.titre) }}
+        </div>
     </div>
     <textarea class="editor form-control" name="tMessage" rows="5" id="tMessage">{% if discussion.message is defined %}{{ discussion.message}}{% endif %}</textarea>
 </div>

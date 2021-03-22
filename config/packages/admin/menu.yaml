@@ -29,6 +29,7 @@ easy_admin:
                   - {entity: 'ForumCategorie', icon: 'inbox', label: 'Créer une catégorie', params: { action: 'new' } }
                   - {label: 'Créer un nouveau forum', icon: 'inbox', route: 'admin.categorie.new' }
                   - {entity: 'Tag', icon: 'tags', label: 'Tags'}
+                  - {entity: 'Prefixe', icon: 'list-ol', label: 'Prefixe'}
             - {label: 'Templates', icon: 'file', route: 'admin.templates' }
             - {label: 'Logs', icon: 'link', route: 'admin.auditlog' }
             - {entity: 'Contact', icon: 'envelope', label: 'Contact'}

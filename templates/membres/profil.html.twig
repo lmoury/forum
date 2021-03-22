@@ -109,6 +109,9 @@
                             <td>
                                 <div class="tab-content-arctile-titre">
                                     <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">
+                                        {% if d.prefixe %}
+                                            <span class="prefix {{ d.prefixe.couleurType }}"><i class="{{ d.prefixe.icon }}"></i> {{ d.prefixe.prefix }} </span>
+                                        {% endif %}
                                         {{ d.titre }}
                                     </a>
                                 </div>
@@ -150,6 +153,9 @@
                                     <span class="pseudoUser{{ user.role.id }}">{{ user.username }}</span>
                                     a répondu à la discussion
                                     <a href="{{ path('forum.discussion', {id: com.discussion.id, slug: com.discussion.slug}) }}">
+                                        {% if com.discussion.prefixe %}
+                                            <span class="prefix {{ com.discussion.prefixe.couleurType }}"><i class="{{ com.discussion.prefixe.icon }}"></i> {{ com.discussion.prefixe.prefix }} </span>
+                                        {% endif %}
                                         {{ com.discussion.titre }}
                                     </a>
                                 </div>

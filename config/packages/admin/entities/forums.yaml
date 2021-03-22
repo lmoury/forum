@@ -27,3 +27,22 @@ easy_admin:
             form:
                 fields:
                     - {property: 'nom'}
+        Prefixe:
+            class: App\Entity\Prefixe
+            list:
+                title: 'Prefixe'
+                fields:
+                    - {property: 'prefix'}
+                    - {property: 'couleur'}
+                    - {property: 'icon'}
+                    - {property: 'categories'}
+            new:
+                title: 'Nouveau prefixe'
+            edit:
+                title: 'Editer le prefixe'
+            form:
+                fields:
+                    - {property: 'prefix'}
+                    - {property: 'couleur'}
+                    - {property: 'icon'}
+                    - {property: 'categories'}

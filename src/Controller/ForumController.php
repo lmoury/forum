@@ -11,6 +11,7 @@ use App\Repository\ForumDiscussionRepository;
 use App\Repository\ForumDiscussionViewRepository;
 use App\Repository\ForumCommentaireRepository;
 use App\Repository\UserRepository;
+use App\Repository\PrefixeRepository;
 use App\Form\DiscussionType;
 use App\Form\DeplacerDiscussionType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -66,24 +67,37 @@ class ForumController extends AbstractController
      * @param Request $request
      * @param string $slug
      */
-     public function discussions(Request $request, ForumDiscussionRepository $repository, ForumCategorie $categorie, string $slug, ForumCategorieRepository $repositoryCateg)
+     public function discussions(Request $request, ForumDiscussionRepository $repository, PrefixeRepository $repoPrefix, ForumCategorie $categorie, string $slug, ForumCategorieRepository $repositoryCateg)
      {
          if($categorie->getSlug() !== $slug) {
              return $this->redirectToRoute('forum.discussions', ['id' => $categorie->getId(), 'slug' => $categorie->getSlug()], 301);
          }
 
-         $discussions = $this->paginator->paginate(
-             $repository->getListDiscussions($categorie->getId()),
-             $request->query->getInt('page', 1),
-             20
-         );
+         if($request->query->get('prefix') > 0) {
+             $discussions = $this->paginator->paginate(
+                 $repository->getListDiscussionsPrefix($categorie->getId(), $request->query->get('prefix')),
+                 $request->query->getInt('page', 1),
+                 20
+             );
+         }
+         else {
+             $discussions = $this->paginator->paginate(
+                 $repository->getListDiscussions($categorie->getId()),
+                 $request->query->getInt('page', 1),
+                 20
+             );
+         }
 
+
+
+         $prefixes = $repoPrefix->getPrefixCat($categorie->getId());
          $categories = $repositoryCateg->getListCateg();
          return $this->render('forum/discussions.html.twig', [
              'current_url' => $this->current_url,
              'discussions' => $discussions,
              'categorie' => $categorie,
              'categories' => $categories,
+             'prefixes' => $prefixes,
          ]);
      }
 
@@ -93,18 +107,18 @@ class ForumController extends AbstractController
     * @Security("is_granted('ROLE_USER')", message="You have to be logged in")
     * @param ObjectManager em
     * @param ForumCategorie $categorie
+    * @param PrefixeRepository $repository
     * @param Request $request
     * @param string $slug
     */
-    public function new(Request $request, ForumCategorie $categorie, string $slug)
+    public function new(Request $request, ForumCategorie $categorie, string $slug, PrefixeRepository $repository)
     {
 
         if($categorie->getSlug() !== $slug) {
             return $this->redirectToRoute('forum.discussions.new', ['id' => $categorie->getId(), 'slug' => $categorie->getSlug()], 301);
         }
-
         $discussion = new ForumDiscussion();
-        $form = $this->createForm(DiscussionType::class, $discussion);
+        $form = $this->createForm(DiscussionType::class, $discussion, ['prefixe' => $repository->getPrefixCat($categorie->getId())]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() && $request->request->get('tMessage') != null) {
@@ -186,14 +200,14 @@ class ForumController extends AbstractController
     * @param Request $request
     * @param string $slug
     */
-    public function editer(ForumDiscussion $discussion, Request $request, string $slug)
+    public function editer(ForumDiscussion $discussion, Request $request, string $slug, PrefixeRepository $repository)
     {
 
         if($discussion->getSlug() !== $slug) {
             return $this->redirectToRoute('forum.discussion.editer', ['id' => $discussion->getId(), 'slug' => $discussion->getSlug()], 301);
         }
 
-        $form = $this->createForm(DiscussionType::class, $discussion);
+        $form = $this->createForm(DiscussionType::class, $discussion, ['prefixe' => $repository->getPrefixCat($discussion->getCategorie()->getId())]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() && $request->request->get('tMessage') != null) {

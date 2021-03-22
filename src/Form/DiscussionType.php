@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ForumDiscussion;
 use App\Entity\Tag;
+use App\Entity\Prefixe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -31,6 +32,12 @@ class DiscussionType extends AbstractType
                 'multiple' => true,
                 'required' => false
             ])
+            ->add('prefixe', EntityType::class, [
+                'class' => Prefixe::class,
+                'choice_label' => 'prefix',
+                'choices' => $options['prefixe'],
+                'required' => false
+            ])
             ;
     }
 
@@ -38,6 +45,7 @@ class DiscussionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ForumDiscussion::class,
+            'prefixe' => []
         ]);
     }
 }

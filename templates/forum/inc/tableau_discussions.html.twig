@@ -22,7 +22,14 @@
                     <span style="float:right; color:#f79e12;"><i class="fa fa-thumb-tack"></i></span>
                     {% endif %}
                     <div class="nodeTitle">
-                    <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">{{ d.titre }}</a>
+                        {% if d.prefixe %}
+                        <a href="{{ path('forum.discussions', {id: d.categorie.id, slug: d.categorie.slug, prefix: d.prefixe.id }) }}">
+                            <span class="prefix {{ d.prefixe.couleurType }}"><i class="{{ d.prefixe.icon }}"></i> {{ d.prefixe.prefix }} </span>
+                        </a>
+                        {% endif %}
+                    <a href="{{ path('forum.discussion', {id: d.id, slug: d.slug}) }}">
+                        {{ d.titre }}
+                    </a>
                     </div>
                     {% if is_granted('DELET_EDIT_DISCISSION', d) or is_granted('ROLE_MODERATEUR') %}
                     <span class="dropdown noMessages open float-right" id="editDiscussion">

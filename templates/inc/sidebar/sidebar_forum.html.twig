@@ -12,6 +12,9 @@
                 <div class="article-list-content">
                     <span><img src="{{ vich_uploader_asset( lastDiscu.auteur, 'imageFile') }}" alt="{{  lastDiscu.auteur.username }}" width="40" height="40" /></span>
                     <a href="{{ path('forum.discussion', {id: lastDiscu.id, slug: lastDiscu.slug})}}">
+                        {% if lastDiscu.prefixe %}
+                            <span class="prefix {{ lastDiscu.prefixe.couleurType }}"><i class="{{ lastDiscu.prefixe.icon }}"></i> {{ lastDiscu.prefixe.prefix }} </span>
+                        {% endif %}
                         <strong>
                         {{ lastDiscu.titre | slice(0, 25) }}{% if lastDiscu.titre|length > 25 %}...{% endif %}
                         </strong>

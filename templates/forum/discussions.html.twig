@@ -39,6 +39,21 @@
                 {{ knp_pagination_render(discussions) }}
             </div>
         </div>
+        {% if prefixes %}
+            <div class="col-md-12">
+                <div class="block-container-prefix">
+                    Filtre préfixe :
+                    <a href="{{ path('forum.discussions', {id: categorie.id, slug: categorie.slug}) }}">
+                        <span class="prefix style1">All Prefix</span>
+                    </a>
+                    {% for prefix in prefixes %}
+                    <a href="{{ path('forum.discussions', {id: categorie.id, slug: categorie.slug, prefix: prefix.id }) }}">
+                        <span class="prefix {{ prefix.couleurType }}"><i class="{{ prefix.icon }}"></i> {{ prefix.prefix }} </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
         {{ include("forum/inc/tableau_discussions.html.twig") }}
         <br/>
