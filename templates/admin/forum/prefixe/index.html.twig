@@ -29,14 +29,34 @@
                             <td><i class="{{ prefixe.icon }}"></i></td>
                             <td><span class="prefix {{ prefixe.couleurType }}"> {{ prefixe.couleurType }} </span></td>
                             <td>
-                                {% for categ in prefixe.categories %}
-                                    -"{{ categ.categorie }}"
-                                {% else %}
-                                Aucune
-                                {% endfor %}
+                                <a class="btn btn-info" href="#" data-toggle="modal" data-target="#prefixe{{ prefixe.id }}" >Afficher</a>
+                                <div class="modal fade" id="prefixe{{ prefixe.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ prefixe.prefix }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                {% for categ in prefixe.categories %}
+                                                <div>-{{ categ.categorie }}</div>
+                                                {% else %}
+                                                Aucune
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td>
-                                <a class="btn btn-primary action-edit" title="" href="{{ path('admin.prefixes.editer', {id: prefixe.id})}}"><i class="fa fa-fw fa-edit"></i> </a>
+                                <a class="btn btn-primary" title="" href="{{ path('admin.prefixes.editer', {id: prefixe.id})}}"><i class="fa fa-fw fa-edit"></i> </a>
+                                <a class="btn btn-danger" href="#" data-title="Delete" data-toggle="modal" data-target="#delete{{ prefixe.id }}" ><i class="fa fa-trash"></i></a>
+                                <!-- modal delete -->
+                                <div class="modal fade" id="delete{{ prefixe.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                    {{ include("inc/modal/modal_delete.html.twig", {signal : prefixe.id, route : 'admin.prefixes.delete'}) }}
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

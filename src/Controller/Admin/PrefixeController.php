@@ -95,4 +95,21 @@ class PrefixeController extends AbstractController
         ]);
     }
 
+
+    /**
+    * @Route("/admin/prefixes/delete.{id}", name="admin.prefixes.delete", methods="DELETE")
+    * @param ObjectManager $this->em
+    * @param Prefixe $prefixe
+    * @param Request $request
+    */
+    public function delete(Prefixe $prefixe, Request $request)
+    {
+        if($this->isCsrfTokenValid('delete' . $prefixe->getId(), $request->get('_token'))) {
+            $this->em->remove($prefixe);
+            $this->em->flush();
+            $this->addFlash('success', 'Le prefixe à été supprimé');
+        }
+        return $this->redirectToRoute('admin.prefixes');
+    }
+
 }

@@ -9,24 +9,15 @@
     {% endblock %}
     {% block content_footer %}
     <div class="text-center btn-container float-right">
-        <a href="{{ path('admin.prefixes') }}" class="btn mr-2">Retour à la liste</a>
+        <a href="{{ path('admin.prefixes') }}" class="btn mr-2"><i class="fa fa-fw fa-sign-out"></i></a>
         <span class="mr-2"><a class="btn btn-danger" href="#" data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash"></i></a></span>
         <button class="btn btn-primary">{{ button|default('Sauvegarder les modifications')}}</button>
     </div>
     <div class="clearfix"></div>
     {{ form_end(form) }}
 </div>
+<!-- modal delete -->
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
-            </div>
-            <div class="modal-footer">
-
-            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
-            </div>
-        </div>
-    </div>
+    {{ include("inc/modal/modal_delete.html.twig", {signal : prefixe.id, route : 'admin.prefixes.delete'}) }}
 </div>
 {% endblock %}
