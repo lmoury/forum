@@ -36,7 +36,9 @@ class DiscussionType extends AbstractType
                 'class' => Prefixe::class,
                 'choice_label' => 'prefix',
                 'choices' => $options['prefixe'],
-                'required' => false
+                'required' => false,
+                 'placeholder' => '(Aucun préfixe)',
+
             ])
             ;
     }
