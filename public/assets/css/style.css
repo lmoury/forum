@@ -1643,6 +1643,9 @@ dl.widget-conversation {
 }
 
 @media (max-width: 768px) {
+    .prefixeMobileMB {
+        margin-bottom: 6px;
+    }
     .mobileMT {
         margin-top: 25px;
     }
@@ -1756,37 +1759,4 @@ li.select2-results__option   {
 	padding: 15px 10px;
 	background: white;
 	border-bottom: 1px solid #dfdfdf;
-}
-/* prefixe */
-.prefix {
-	background: transparent none;
-	padding: 0px 6px;
-	margin: -1px 0;
-	border: 1px solid transparent !important;
-	display: inline-block;
-	box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
-	font-size: 80%;
-	position: relative;
-	bottom: 2px;
-}
-
-.prefix.style3 {
-	text-shadow: 1px 1px 0px black;
-	color: white;
-	background-color: red;
-}
-.prefix.style1 {
-	text-shadow: 1px 1px 0px black;
-	color: white;
-	background-color: #22a7f0;
-}
-
-
-.block-container-prefix {
-	color: #818181;
-	background: rgb(245,245,245);
-	border-radius: 0px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
-	margin-bottom: 10px;
-	padding: 9px 9px 6px 9px;
 }

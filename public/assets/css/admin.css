@@ -226,3 +226,17 @@ body.easyadmin-sidebar-width-compact .main-sidebar {
 .mrNiveauDeux {
     margin-right: 4.5rem !important;
 }
+
+.adminTableJsCustom #tableUsers_length, .adminTableJsCustom #tableUsers_info {
+    padding: 10px 0px 10px 20px;
+}
+.adminTableJsCustom #tableUsers_filter, .adminTableJsCustom #tableUsers_paginate{
+    padding: 10px 20px 10px 0px;
+    float: right;
+}
+@media (max-width: 768px) {
+    .adminTableJsCustom #tableUsers_filter, .adminTableJsCustom #tableUsers_paginate{
+        padding: 0px 0px 10px 20px;
+        float: none;
+    }
+}

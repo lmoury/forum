@@ -18,7 +18,11 @@ class Prefixe
             2=> 'style2',
             3=> 'style3',
             4=> 'style4',
-            5=> 'style5'
+            5=> 'style5',
+            6=> 'style6',
+            7=> 'style7',
+            8=> 'style8',
+            9=> 'style9'
     ];
 
 

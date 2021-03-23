@@ -1,0 +1,36 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-12 ">
+        <div class="form-group  field-text"><label for="forumcategorie_categorie" class="form-control-label required">Prefixe</label>
+            <div class="form-widget">
+                {{ form_widget(form.prefix) }}
+                {{ form_errors(form.prefix) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 ">
+        <div class="form-group  field-integer"><label for="forumcategorie_parent" class="form-control-label">Style</label>
+            <div class="form-widget">
+                {{ form_widget(form.couleur) }}
+                {{ form_errors(form.couleur) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 ">
+        <div class="form-group  field-text"><label for="forumcategorie_icon" class="form-control-label">Icon</label>
+            <div class="form-widget">
+                {{ form_widget(form.icon) }}
+                {{ form_errors(form.icon) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 ">
+        <div class="form-group  field-text"><label for="forumcategorie_icon" class="form-control-label">Catégories</label>
+            <div class="form-widget">
+                {{ form_widget(form.categories) }}
+                {{ form_errors(form.categories) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_rest(form) }}

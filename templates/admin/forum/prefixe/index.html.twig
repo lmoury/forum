@@ -1,0 +1,58 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    Liste des prefixes
+    <div class="button-action float-right">
+        <a class="btn btn-primary" href="{{ path('admin.prefixes.new') }}">Créer prefixe</a>
+    </div>
+{% endblock %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div id="content-section" class="adminTableJsCustom">
+            <table class="table table-responsive" id="tableUsers">
+                <thead>
+                    <tr>
+            			<th>#</th>
+                		<th>Prefixe</th>
+                		<th>Icon</th>
+                		<th>Style</th>
+                		<th>Catégories</th>
+                        <th>Action</th>
+            	   </tr>
+            	</thead>
+                <tbody>
+                    {% for prefixe in prefixes %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ prefixe.prefix }}</td>
+                            <td><i class="{{ prefixe.icon }}"></i></td>
+                            <td><span class="prefix {{ prefixe.couleurType }}"> {{ prefixe.couleurType }} </span></td>
+                            <td>
+                                {% for categ in prefixe.categories %}
+                                    -"{{ categ.categorie }}"
+                                {% else %}
+                                Aucune
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="btn btn-primary action-edit" title="" href="{{ path('admin.prefixes.editer', {id: prefixe.id})}}"><i class="fa fa-fw fa-edit"></i> </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block  body_javascript %}
+{{ parent() }}
+<script src="/assets/plugins/dataTable/js/jquery.dataTables.min.js"></script>
+<script src="/assets/plugins/dataTable/js/dataTables.bootstrap4.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#tableUsers').DataTable();
+} );
+</script>
+{% endblock %}
