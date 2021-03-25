@@ -35,7 +35,7 @@
                     {% for u in conversations %}
                         <tr class="nodeLigne {% for p in u.conversation.conversationMessage if p.participant == app.user and p.important %}ligneImportantDiscu{% endfor %}">
                             <td class="discussionCol2 pl-3">
-                                <img class="float-left mr-2" width="36" height="36" src="{{ vich_uploader_asset( app.user, 'imageFile') }}" alt="{{  app.user.username }}" />
+                                <img class="float-left mr-2" width="36" height="36" src="{{ vich_uploader_asset( u.conversation.expediteur, 'imageFile') }}" alt="{{  u.conversation.expediteur.username }}" />
                                 {% if u.conversation.locked %}
                                 <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
                                 {% endif %}

@@ -1,0 +1,105 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ signalement.titre }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('signalement') }}">Signalement</a></li>
+    <li class="breadcrumb-item active">{{ signalement.titre }}</li>
+</ol>
+
+<h1 class="p-title-value text-center">Postez dans le fil '{{ signalement.titre }}'</h1>
+
+<div class="mb-2">
+    <a class="btn search-btn btn-rech btn-report-delete float-right" href="#" data-title="Delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Supprimer</a>
+    <!-- modal delete -->
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        {{ include("inc/modal/modal_delete.html.twig", {signal : signalement.id, route : 'signalement.delete'}) }}
+    </div>
+    {% if signalement.statut == 1 %}
+    <a class="btn search-btn btn-rech btn-report-check float-right mr-2" href="{{ path('signalement.resolu', {id: signalement.id})}}"><i class="fa fa-check"></i> Résolu</a>
+    {% endif %}
+    <div class="clearfix"></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="content-section" class="no-padding">
+            <section>
+                <div class="conversation-padding">
+                    <div class="visitor-avatar mr-3 mb-2">
+                        <img width="70" height="70" src="{{ vich_uploader_asset( signalement.user, 'imageFile') }}" alt="{{  signalement.user.username }}" />
+                    </div>
+                    <div class="conversation-expediteur">
+                        <a class="pseudoUser{{ signalement.user.role.id }}" href="{{ path('membres.profil', {id: signalement.user.id, slug: signalement.user.slug}) }}">{{ signalement.user.username }}</a>
+                        <div class="staffRole userBannerDiscuV2 b{{ signalement.user.role.id }}">{{ signalement.user.role.nom }}</div>
+                    </div>
+                    <div class="btnReport"><a class="btn search-btn btn-rech" href="{{ path('forum.discussion', {id: signalement.idSignal, slug: 'titre'}) }}"><i class="fa fa-sign-out" aria-hidden="true"></i>  Aller au contenu</a></div>
+                    <div class="clearfix"></div>
+                </div>
+            </section>
+            <div class="conversation-padding message-attribution-bg">
+                <span class="message-userArrow userArrow-report"></span>
+                <span><i class="fa fa-clock-o"></i> {{ date_passed(signalement.dateMessage | date('d-m-Y H:i:s')) }}</span>
+                <span class="float-right">Forum: test</span>
+            </div>
+            <div class="conversation-padding">
+                {{ parser(signalement.message) | raw }}
+            </div>
+        </div>
+
+        <div class="blockMessage-report content-section">
+            <div class="pairJustifier">
+                <dl class="pairs pairs--rows">
+                    <dt>Créé</dt>
+                    <dd>{{ date_passed(signalement.createdAt | date('d-m-Y H:i:s')) }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows">
+                    <dt>Rapports</dt>
+                    <dd>{{ signalement.signalementRaisons.count }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows">
+                    <dt>Statut</dt>
+                    <dd>{{ signalement.statutType }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows">
+                    <dt>Type</dt>
+                    <dd>{{ signalement.typeType }}</dd>
+                </dl>
+                <dl class="pairs pairs--rows">
+                    <dt>Actualisé</dt>
+                    <dd>{% set lastReport = max(signalement.signalementRaisons.snapshot) %}{{ date_passed(lastReport.dateSignalement | date('d-m-Y H:i:s')) }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div id="content-section" class="no-padding content-report">
+            <div class="categTitle">
+                <span class="node-title"><i class="fa fa-exclamation-triangle"></i> Signalements</span>
+            </div>
+            {% for raison in raisons %}
+            <div class="message-inner">
+                <div class="message-cell message-cell-user">
+                    <div class="visitor-avatar-report text-center">
+                        <img width="50" height="50" src="{{ vich_uploader_asset( raison.signaleur, 'imageFile') }}" alt="{{  raison.signaleur.username }}" />
+                    </div>
+                    <span class="message-userArrow-report"></span>
+                </div>
+                <div class="message-cell message-cell-report">
+                    <a class="pseudoUser{{ raison.signaleur.role.id }}" href="{{ path('membres.profil', {id: raison.signaleur.id, slug: raison.signaleur.slug}) }}">{{ raison.signaleur.username }}</a>
+                    <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(raison.dateSignalement | date('d-m-Y H:i:s')) }}</span>
+                    <span class="label label-report">Report</span>
+                    <div class="conversation-padding">
+                        {{ raison.raison }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

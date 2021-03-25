@@ -19,32 +19,51 @@ class SignalementRepository extends ServiceEntityRepository
         parent::__construct($registry, Signalement::class);
     }
 
-    // /**
-    //  * @return Signalement[] Returns an array of Signalement objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Signalement[] Returns an array of Signalement objects
+    */
+    public function getSignalement($value)
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
             ->setParameter('val', $value)
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Signalement
+
+    public function getSignalChatbox($value): ?Signalement
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->andWhere('s.idSignal = :val')
             ->setParameter('val', $value)
+            ->andWhere('s.type = 3')
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function getSignalDiscu($value): ?Signalement
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.idSignal = :val')
+            ->setParameter('val', $value)
+            ->andWhere('s.type = 1')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function getSignalCom($value): ?Signalement
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.idSignal = :val')
+            ->setParameter('val', $value)
+            ->andWhere('s.type = 2')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

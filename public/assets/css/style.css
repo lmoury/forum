@@ -1760,3 +1760,77 @@ li.select2-results__option   {
 	background: white;
 	border-bottom: 1px solid #dfdfdf;
 }
+
+
+
+.label.label-report {
+	color: #aa6709;
+	background: #fff4e5;
+	border-color: #f9c479;
+	display: inline-block;
+	padding: 1px .35em;
+	border: 1px solid;
+	border-radius: 4px;
+	font-size: 80%;
+	line-height: 1.26;
+	text-decoration: none;
+}
+.message-cell {
+	padding: 10px;
+}
+.message-cell-report {
+    font-size: 15px;
+}
+.message-inner {
+	display: flex;
+    border-bottom: 1px solid #d8d8d8;
+}
+.message-cell.message-cell-user {
+	position: relative;
+	background: #f5f5f5;
+	border-right: 1px solid #d8d8d8;
+	min-width: 0;
+    flex: 0 0 82px;
+}
+.message-userArrow-report::after {
+	position: absolute;
+	top: -9px;
+	right: -10px;
+	content: "";
+	border: 9px solid transparent;
+	border-left-width: 0;
+	border-right-color: white;
+}
+.message-userArrow-report {
+	position: absolute;
+	top: 20px;
+	right: -1px;
+	border: 10px solid transparent;
+	border-left-width: 0;
+	border-right-color: #d8d8d8;
+}
+.userArrow-report {
+	left: 35px;
+}
+.visitor-avatar-report img {
+	border: 1px solid #2f78a0;
+	box-shadow: 0px 1px 0px rgba(255,255,255,0.25), inset 0px 1px 5px black;
+}
+.content-report {
+    background-color: white!important;
+}
+.blockMessage-report {
+	margin: 20px 0px 20px 0px;
+	padding: 6px 10px;
+}
+.btnReport {
+	position: absolute;
+	right: 25px;
+	top: 15px;
+}
+.btn-report-check {
+	background: #61BD6D;
+}
+.btn-report-delete {
+	background: #E25041;
+}

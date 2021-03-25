@@ -52,16 +52,10 @@ class ForumCommentaire
      */
     private $likes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Signalement", mappedBy="commentaire")
-     */
-    private $signalCommentaire;
-
     public function __construct() {
         $this->date_creation = new \DateTime();
         $this->date_edition = new \DateTime();
         $this->likes = new ArrayCollection();
-        $this->signalCommentaire = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,36 +157,5 @@ class ForumCommentaire
     public function __toString()
     {
         return $this->commentaire;
-    }
-
-    /**
-     * @return Collection|Signalement[]
-     */
-    public function getSignalCommentaire(): Collection
-    {
-        return $this->signalCommentaire;
-    }
-
-    public function addSignalCommentaire(Signalement $signalCommentaire): self
-    {
-        if (!$this->signalCommentaire->contains($signalCommentaire)) {
-            $this->signalCommentaire[] = $signalCommentaire;
-            $signalCommentaire->setCommentaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSignalCommentaire(Signalement $signalCommentaire): self
-    {
-        if ($this->signalCommentaire->contains($signalCommentaire)) {
-            $this->signalCommentaire->removeElement($signalCommentaire);
-            // set the owning side to null (unless already changed)
-            if ($signalCommentaire->getCommentaire() === $this) {
-                $signalCommentaire->setCommentaire(null);
-            }
-        }
-
-        return $this;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +11,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Signalement
 {
+
+    const TYPE = [
+            1=> 'Discussion',
+            2=> 'Commentaire',
+            3=> 'chatbox'
+    ];
+
+    const STATUT = [
+            1=> 'Ouvert',
+            2=> 'Résolu'
+    ];
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,12 +40,17 @@ class Signalement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $raison;
+    private $titre;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $message;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_signal;
+    private $dateMessage;
 
     /**
      * @ORM\Column(type="boolean", options={"default" : false})
@@ -38,19 +58,35 @@ class Signalement
     private $lu = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ForumDiscussion", inversedBy="signalDiscussion")
+     * @ORM\OneToMany(targetEntity="App\Entity\SignalementRaison", mappedBy="signalement", cascade={"remove"})
      */
-    private $discussion;
+    private $signalementRaisons;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ForumCommentaire", inversedBy="signalCommentaire")
+     * @ORM\Column(type="integer")
      */
-    private $commentaire;
+    private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Chatbox", inversedBy="signalChatbox")
+     * @ORM\Column(type="integer")
      */
-    private $chatbox;
+    private $idSignal;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     */
+    private $statut  = 1;
+
+    public function __construct()
+    {
+        $this->signalementRaisons = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -69,26 +105,38 @@ class Signalement
         return $this;
     }
 
-    public function getRaison(): ?string
+    public function getTitre(): ?string
     {
-        return $this->raison;
+        return $this->titre;
     }
 
-    public function setRaison(string $raison): self
+    public function setTitre(string $titre): self
     {
-        $this->raison = $raison;
+        $this->titre = $titre;
 
         return $this;
     }
 
-    public function getDateSignal(): ?\DateTimeInterface
+    public function getMessage(): ?string
     {
-        return $this->date_signal;
+        return $this->message;
     }
 
-    public function setDateSignal(\DateTimeInterface $date_signal): self
+    public function setMessage(string $message): self
     {
-        $this->date_signal = $date_signal;
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function getDateMessage(): ?\DateTimeInterface
+    {
+        return $this->dateMessage;
+    }
+
+    public function setDateMessage(\DateTimeInterface $dateMessage): self
+    {
+        $this->dateMessage = $dateMessage;
 
         return $this;
     }
@@ -105,39 +153,91 @@ class Signalement
         return $this;
     }
 
-    public function getDiscussion(): ?ForumDiscussion
+    /**
+     * @return Collection|SignalementRaison[]
+     */
+    public function getSignalementRaisons(): Collection
     {
-        return $this->discussion;
+        return $this->signalementRaisons;
     }
 
-    public function setDiscussion(?ForumDiscussion $discussion): self
+    public function addSignalementRaison(SignalementRaison $signalementRaison): self
     {
-        $this->discussion = $discussion;
+        if (!$this->signalementRaisons->contains($signalementRaison)) {
+            $this->signalementRaisons[] = $signalementRaison;
+            $signalementRaison->setSignalement($this);
+        }
 
         return $this;
     }
 
-    public function getCommentaire(): ?ForumCommentaire
+    public function removeSignalementRaison(SignalementRaison $signalementRaison): self
     {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire(?ForumCommentaire $commentaire): self
-    {
-        $this->commentaire = $commentaire;
+        if ($this->signalementRaisons->contains($signalementRaison)) {
+            $this->signalementRaisons->removeElement($signalementRaison);
+            // set the owning side to null (unless already changed)
+            if ($signalementRaison->getSignalement() === $this) {
+                $signalementRaison->setSignalement(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getChatbox(): ?Chatbox
+    public function getType(): ?int
     {
-        return $this->chatbox;
+        return $this->type;
     }
 
-    public function setChatbox(?Chatbox $chatbox): self
+    public function setType(int $type): self
     {
-        $this->chatbox = $chatbox;
+        $this->type = $type;
 
         return $this;
     }
+
+    public function getTypeType() {
+        return self::TYPE[$this->type];
+    }
+
+    public function getIdSignal(): ?int
+    {
+        return $this->idSignal;
+    }
+
+    public function setIdSignal(int $idSignal): self
+    {
+        $this->idSignal = $idSignal;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getStatut(): ?int
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(int $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getStatutType() {
+        return self::STATUT[$this->statut];
+    }
+
 }

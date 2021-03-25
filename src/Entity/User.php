@@ -157,6 +157,11 @@ class User implements UserInterface,\Serializable
      */
     private $lostPasswordKey;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SignalementRaison", mappedBy="signaleur")
+     */
+    private $signalementRaisons;
+
 
     public function __construct() {
         $this->date_inscription = new \DateTime();
@@ -177,6 +182,7 @@ class User implements UserInterface,\Serializable
         $this->conversationRepAuteur = new ArrayCollection();
         $this->chatboxes = new ArrayCollection();
         $this->signaleur = new ArrayCollection();
+        $this->signalementRaisons = new ArrayCollection();
     }
 
 
@@ -729,6 +735,37 @@ class User implements UserInterface,\Serializable
     public function setLostPasswordKey(?string $lostPasswordKey): self
     {
         $this->lostPasswordKey = $lostPasswordKey;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SignalementRaison[]
+     */
+    public function getSignalementRaisons(): Collection
+    {
+        return $this->signalementRaisons;
+    }
+
+    public function addSignalementRaison(SignalementRaison $signalementRaison): self
+    {
+        if (!$this->signalementRaisons->contains($signalementRaison)) {
+            $this->signalementRaisons[] = $signalementRaison;
+            $signalementRaison->setSignaleur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementRaison(SignalementRaison $signalementRaison): self
+    {
+        if ($this->signalementRaisons->contains($signalementRaison)) {
+            $this->signalementRaisons->removeElement($signalementRaison);
+            // set the owning side to null (unless already changed)
+            if ($signalementRaison->getSignaleur() === $this) {
+                $signalementRaison->setSignaleur(null);
+            }
+        }
 
         return $this;
     }

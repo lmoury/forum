@@ -10,7 +10,85 @@
 
 <h1 class="p-title-value text-center">Signalement</h1>
 
-<div class="content-section no-padding">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="pagination">
 
+        </div>
+        <div class="discussionRepAfi no-padding" id="content-section">
+            <table>
+                <thead>
+                  <tr class="nodeLigneTitle">
+                    <th class="pl-5">Signalements</th>
+                    <th class="discussionRepAfi mobileDisplay">Rapports</th>
+                    <th class="discussionRepAfi mobileDisplay" style="text-align: right;">Dernier Rapport ↓</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                {% for s in signalements %}
+                    <tr class="nodeLigne">
+                        <td class="discussionCol2 pl-3">
+                            <img class="float-left mr-2" width="36" height="36" src="{{ vich_uploader_asset( s.user, 'imageFile') }}" alt="{{  s.user.username }}" />
+                            {% if s.lu == false %}
+                            <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
+                            {% endif %}
+                            <div class="nodeTitle" style="position:relative">
+                            <a href="{{ path('signalement.signal', {id: s.id})}}">{{ s.titre }}</a>
+                            {% if s.lu == false %}
+                            <a title="Message non lu" class="ReadToggle" href="{{ path('signalement.signal', {id: s.id})}}"></a>
+                            {% endif %}
+                            </div>
+                            <div class="nodeStat">
+                                <span class="disparforumstat">
+                                    <a class="pseudoUser{{ s.user.role.id }}" href="{{ path('membres.profil', {id: s.user.id, slug: s.user.slug}) }}">{{ s.user.username }}</a>,
+                                    <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(s.createdAt | date('d-m-Y H:i:s')) }}</span>
+                                    <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-flag"></i> {{ s.signalementRaisons.count }} dans {{ s.typeType }}</span>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="discussionCol3 discussionRepAfiBis mobileDisplay">
+                            <div class="nodeTdCust">
+                                <div class="discussionRepAfi">
+                                    <div><span class="nodeStatItem">Rapports:</span> <span style="float: right;">{{ s.signalementRaisons.count }}</span></div>
+                                    <div><span class="nodeStatItem">Type:</span> <span style="float: right;">{{ s.typeType }}</span></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="discussionCol4 discussionRepAfiBis mobileDisplay">
+                            <div class="nodeTdCust">
+                                <div class="discussionRepAfi">
+                                    {% if s.signalementRaisons.count > 0 %}
+                                    {% set lastRep = max(s.signalementRaisons.snapshot) %}
+                                    <div class="nodeStatItem">
+                                        <i class="fa fa-clock-o"></i> {{ date_passed(lastRep.dateSignalement | date('d-m-Y H:i:s')) }}
+                                    </div>
+                                    <div>
+                                        <span class="noMessages"><i class="fa fa-user-o"></i>
+                                            <a class="pseudoUser{{ lastRep.signaleur.role.id }}" href="{{ path('membres.profil', {id: lastRep.signaleur.id, slug: lastRep.signaleur.slug}) }}">{{ lastRep.signaleur.username }}</a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert alert-info mt-3">
+                                <strong>Vous n'avez aucun signalement !</strong>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div class="pagination">
+
+        </div>
+    </div>
 </div>
 {% endblock %}
