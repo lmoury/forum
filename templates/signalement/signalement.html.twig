@@ -34,14 +34,13 @@
                         <a class="pseudoUser{{ signalement.user.role.id }}" href="{{ path('membres.profil', {id: signalement.user.id, slug: signalement.user.slug}) }}">{{ signalement.user.username }}</a>
                         <div class="staffRole userBannerDiscuV2 b{{ signalement.user.role.id }}">{{ signalement.user.role.nom }}</div>
                     </div>
-                    <div class="btnReport"><a class="btn search-btn btn-rech" href="{{ path('forum.discussion', {id: signalement.idSignal, slug: 'titre'}) }}"><i class="fa fa-sign-out" aria-hidden="true"></i>  Aller au contenu</a></div>
+                    <div class="btnReport"><a class="btn search-btn btn-rech" href="{{ path('forum.discussion', {id: signalement.idSignal, slug: 'titre'}) }}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="mobileDisplay">  Aller au contenu</span></a></div>
                     <div class="clearfix"></div>
                 </div>
             </section>
             <div class="conversation-padding message-attribution-bg">
                 <span class="message-userArrow userArrow-report"></span>
                 <span><i class="fa fa-clock-o"></i> {{ date_passed(signalement.dateMessage | date('d-m-Y H:i:s')) }}</span>
-                <span class="float-right">Forum: test</span>
             </div>
             <div class="conversation-padding">
                 {{ parser(signalement.message) | raw }}
@@ -88,7 +87,7 @@
                 <div class="message-cell message-cell-report">
                     <a class="pseudoUser{{ raison.signaleur.role.id }}" href="{{ path('membres.profil', {id: raison.signaleur.id, slug: raison.signaleur.slug}) }}">{{ raison.signaleur.username }}</a>
                     <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(raison.dateSignalement | date('d-m-Y H:i:s')) }}</span>
-                    <span class="label label-report">Report</span>
+                    {% if raison.raison != 'Signalement mis en résolu' %}<span class="label label-report">Report</span>{% endif %}
                     <div class="conversation-padding">
                         {{ raison.raison }}
                     </div>
@@ -96,8 +95,9 @@
             </div>
             {% endfor %}
         </div>
+        <br/>
         <div class="pagination">
-
+            {{ knp_pagination_render(raisons) }}
         </div>
     </div>
 </div>

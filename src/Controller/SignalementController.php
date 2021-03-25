@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -26,21 +27,32 @@ class SignalementController extends AbstractController
      */
     private $em;
 
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
 
-    public function __construct(ObjectManager $em)
+
+    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
+        $this->paginator = $paginator;
     }
 
 
     /**
      * @Route("/signalement", name="signalement")
      * @param SignalementRepository $repository
+     * @param Request $request
      * @Security("is_granted('ROLE_MODERATEUR')")
      */
-     public function index(SignalementRepository $repository)
+     public function index(SignalementRepository $repository, Request $request)
      {
-         $signalements = $repository->findAll();
+         $signalements = $this->paginator->paginate(
+             $repository->getSignalement(),
+             $request->query->getInt('page', 1),
+             20
+         );
          return $this->render('signalement/index.html.twig', [
              'signalements' => $signalements,
          ]);
@@ -51,11 +63,16 @@ class SignalementController extends AbstractController
       * @param Signalement $signalement
       * @param SignalementRepository $repository
       * @param ObjectManager $this->em
+      * @param Request $request
       * @Security("is_granted('ROLE_MODERATEUR')")
       */
-      public function signalement(SignalementRaisonRepository $repository, Signalement $signalement)
+      public function signalement(SignalementRaisonRepository $repository, Signalement $signalement, Request $request)
       {
-          $raisons = $repository->getSignalement($signalement->getId());
+          $raisons = $this->paginator->paginate(
+              $repository->getSignalementRaison($signalement->getId()),
+              $request->query->getInt('page', 1),
+              10
+          );
           $signalement->setLu(true);
           $this->em->flush();
           return $this->render('signalement/signalement.html.twig', [
@@ -73,6 +90,12 @@ class SignalementController extends AbstractController
        public function signalementResolu(Signalement $signalement)
        {
            $signalement->setStatut(2);
+           $signalForm = new SignalementRaison();
+           $signalForm->setRaison('Signalement mis en résolu');
+           $signalForm->setDateSignalement(new \DateTime());
+           $signalForm->setSignaleur($this->getUser());
+           $signalForm->setSignalement($signalement);
+           $this->em->persist($signalForm);
            $this->em->flush();
            return $this->redirectToRoute('signalement.signal', ['id' => $signalement->getId()]);
        }
@@ -92,20 +115,18 @@ class SignalementController extends AbstractController
             if($signal == "") {
                 $signal = new Signalement();
                 $signal->setCreatedAt(new \DateTime());
-                $signal->setTitre($discussion->getTitre());
-                $signal->setMessage($discussion->getMessage());
                 $signal->setUser($discussion->getAuteur());
                 $signal->setType(1);
                 $signal->setDateMessage($discussion->getDateCreation());
                 $signal->setIdSignal($discussion->getId());
-                $this->em->persist($signal);
             }
-            else {
-                $signal->setTitre($discussion->getTitre());
-                $signal->setMessage($discussion->getMessage());
-                $signal->setLu(false);
-                $signal->setStatut(1);
-            }
+            $signal->setTitre($discussion->getTitre());
+            $signal->setMessage($discussion->getMessage());
+            $signal->setLu(false);
+            $signal->setStatut(1);
+            $signal->setDateNewRaison(new \DateTime());
+            $this->em->persist($signal);
+
             $signalForm = new SignalementRaison();
             $signalForm->setRaison(htmlspecialchars($request->request->get('signalement')));
             $signalForm->setDateSignalement(new \DateTime());
@@ -134,20 +155,18 @@ class SignalementController extends AbstractController
             if($signal == "") {
                 $signal = new Signalement();
                 $signal->setCreatedAt(new \DateTime());
-                $signal->setTitre($commentaire->getdiscussion()->getTitre());
-                $signal->setMessage($commentaire->getCommentaire());
                 $signal->setUser($commentaire->getAuteur());
                 $signal->setType(2);
                 $signal->setDateMessage($commentaire->getDateCreation());
                 $signal->setIdSignal($commentaire->getId());
-                $this->em->persist($signal);
             }
-            else {
-                $signal->setTitre($commentaire->getdiscussion()->getTitre());
-                $signal->setMessage($commentaire->getCommentaire());
-                $signal->setLu(false);
-                $signal->setStatut(1);
-            }
+            $signal->setTitre($commentaire->getdiscussion()->getTitre());
+            $signal->setMessage($commentaire->getCommentaire());
+            $signal->setLu(false);
+            $signal->setStatut(1);
+            $signal->setDateNewRaison(new \DateTime());
+            $this->em->persist($signal);
+
             $signalForm = new SignalementRaison();
             $signalForm->setRaison(htmlspecialchars($request->request->get('signalement')));
             $signalForm->setDateSignalement(new \DateTime());
@@ -182,8 +201,13 @@ class SignalementController extends AbstractController
                 $signal->setType(3);
                 $signal->setDateMessage($chatbox->getPoster());
                 $signal->setIdSignal($chatbox->getId());
-                $this->em->persist($signal);
             }
+            $signal->setMessage($chatbox->getMessage());
+            $signal->setLu(false);
+            $signal->setStatut(1);
+            $signal->setDateNewRaison(new \DateTime());
+            $this->em->persist($signal);
+
             $signalForm = new SignalementRaison();
             $signalForm->setRaison(htmlspecialchars($request->request->get('signalement')));
             $signalForm->setDateSignalement(new \DateTime());
@@ -214,5 +238,16 @@ class SignalementController extends AbstractController
         return $this->redirectToRoute('signalement');
     }
 
+
+    /**
+     * @param SignalementRepository $repository
+     */
+    public function alerteSignal(SignalementRepository $repository)
+    {
+        $signalAlerte = $repository->findAll();
+        return $this->render('signalement/navbar_signalement.html.twig', [
+            'signalAlerte' => $signalAlerte,
+        ]);
+    }
 
 }

@@ -29,6 +29,7 @@
                         <i class="fa fa-moon-o"></i>
                         <span class="d-none d-md-inline-block">Bonsoir {{ app.user.username }}</span>
                         {% endif %}
+                        {{ render(controller("App\\Controller\\SignalementController:alerteSignal")) }}
                     </a>
                     <ul class="profil-pop-mobile dropdown-menu" id="dropdown-content-user">
                         <span class="menu-arrow"></span>
@@ -47,8 +48,13 @@
                         <div>
                             <a href="{{ path('conversations') }}"> <i class="fa fa-envelope-o"></i> Message privé</a>
                         </div>
+                        {% if is_granted('ROLE_MODERATEUR')  %}
+                        <div class="navbar-signal-alerte">
+                            <a href="{{ path('signalement') }}"><i class="fa fa-flag"></i> Signalement {{ render(controller("App\\Controller\\SignalementController:alerteSignal")) }}</a>
+                        </div>
+                        {% endif %}
                         {% if is_granted('ROLE_ADMIN')  %}
-                        <div>
+                        <div class="mt-2 text-center">
                             <a href="/admin" target="_blank"><i class="fa fa-sign-in"></i> Panneaux d'administration</a>
                         </div>
                         {% endif %}

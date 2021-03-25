@@ -113,8 +113,15 @@ background-color: #F88;
 .wrappedDiscu.userBannerDiscu.b2 span.after , .wrappedDiscu.userBannerDiscu.b2 span.before {
   background-color: #81A9E1;
 }
-
 /* prefixe */
+.block-container-prefix {
+	color: #818181;
+	background: rgb(245,245,245);
+	border-radius: 0px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+	margin-bottom: 10px;
+	padding: 9px 9px 6px 9px;
+}
 .prefix {
 	background: transparent none;
 	padding: 0px 6px;
@@ -126,8 +133,7 @@ background-color: #F88;
 	position: relative;
 	bottom: 2px;
 }
-
-.prefix.style3 {
+.prefix.style0 {
 	text-shadow: 1px 1px 0px black;
 	color: white;
 	background-color: red;
@@ -137,13 +143,43 @@ background-color: #F88;
 	color: white;
 	background-color: #22a7f0;
 }
-
-
-.block-container-prefix {
-	color: #818181;
-	background: rgb(245,245,245);
-	border-radius: 0px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
-	margin-bottom: 10px;
-	padding: 9px 9px 6px 9px;
+.prefix.style2 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #54ACD2;
+}
+.prefix.style3 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #2969B0;
+}
+.prefix.style4 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #475577;
+}
+.prefix.style5 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #7C706B;
+}
+.prefix.style6 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #E25041;
+}
+.prefix.style7 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #41A85F;
+}
+.prefix.style8 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #F37934;
+}
+.prefix.style9 {
+	text-shadow: 1px 1px 0px black;
+	color: white;
+	background-color: #FAC51C;
 }

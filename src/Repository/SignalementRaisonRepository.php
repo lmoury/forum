@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\SignalementRaison;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -20,9 +22,9 @@ class SignalementRaisonRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return SignalementRaison[] Returns an array of SignalementRaison objects
+    * @return Query
     */
-    public function getSignalement($value)
+    public function getSignalementRaison($value): Query
     {
         return $this->createQueryBuilder('s')
             ->leftJoin('s.signaleur', 'u')
@@ -33,10 +35,13 @@ class SignalementRaisonRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('s.dateSignalement', 'DESC')
             ->getQuery()
-            ->getResult()
         ;
     }
 
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('s');
+    }
     /*
     public function findOneBySomeField($value): ?SignalementRaison
     {

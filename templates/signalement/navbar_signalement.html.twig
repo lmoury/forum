@@ -1,0 +1,9 @@
+{% set nombreStatut = 0 %}
+{% set nombreLu = 0 %}
+{% for signal in signalAlerte if signal.statut == 1 %}
+{% set nombreStatut = loop.index %}
+{% if signal.lu == false %}
+{% set nombreLu = loop.index %}
+{% endif %}
+{% endfor %}
+{% if nombreStatut > 0 %}<span class="badge {% if nombreLu > 0 %}badge-danger{% else %}badge-secondary{% endif %} alertMessagerie">{{ nombreStatut }}</span>{% endif %}

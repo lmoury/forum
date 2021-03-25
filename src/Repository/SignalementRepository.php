@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Signalement;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -20,16 +22,19 @@ class SignalementRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Signalement[] Returns an array of Signalement objects
+    * @return Query
     */
-    public function getSignalement($value)
+    public function getSignalement(): Query
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->addSelect('s', 'u')
+            ->leftJoin('s.user', 'u')
+            ->addSelect('u', 'r')
+            ->leftJoin('u.role', 'r')
+            ->addOrderBy('s.lu', 'ASC')
+            ->addOrderBy('s.statut', 'ASC')
+            ->addOrderBy('s.date_new_raison', 'DESC')
             ->getQuery()
-            ->getResult()
         ;
     }
 
@@ -65,5 +70,10 @@ class SignalementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('s');
     }
 }

@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="pagination">
-
+            {{ knp_pagination_render(signalements) }}
         </div>
         <div class="discussionRepAfi no-padding" id="content-section">
             <table>
@@ -27,11 +27,11 @@
                 <tbody>
 
                 {% for s in signalements %}
-                    <tr class="nodeLigne">
+                    <tr class="nodeLigne" style="{% if s.statut == 2 %}background: rgba(0,0,0,0.2);{% endif %}">
                         <td class="discussionCol2 pl-3">
                             <img class="float-left mr-2" width="36" height="36" src="{{ vich_uploader_asset( s.user, 'imageFile') }}" alt="{{  s.user.username }}" />
-                            {% if s.lu == false %}
-                            <span class="float-right pl-2" style="color:red;"><i class="fa fa-lock"></i></span>
+                            {% if s.statut == 2 %}
+                            <span class="float-right" style="color:red;"><i class="fa fa-lock"></i></span>
                             {% endif %}
                             <div class="nodeTitle" style="position:relative">
                             <a href="{{ path('signalement.signal', {id: s.id})}}">{{ s.titre }}</a>
@@ -43,7 +43,8 @@
                                 <span class="disparforumstat">
                                     <a class="pseudoUser{{ s.user.role.id }}" href="{{ path('membres.profil', {id: s.user.id, slug: s.user.slug}) }}">{{ s.user.username }}</a>,
                                     <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(s.createdAt | date('d-m-Y H:i:s')) }}</span>
-                                    <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-flag"></i> {{ s.signalementRaisons.count }} dans {{ s.typeType }}</span>
+                                    <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-flag"></i> {{ s.signalementRaisons.count }}</span>
+                                    <span class="nodeStatItem float-right">{{ s.statutType }}</span>
                                 </span>
                             </div>
                         </td>
@@ -87,7 +88,7 @@
         </div>
         <br/>
         <div class="pagination">
-
+            {{ knp_pagination_render(signalements) }}
         </div>
     </div>
 </div>

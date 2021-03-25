@@ -1834,3 +1834,7 @@ li.select2-results__option   {
 .btn-report-delete {
 	background: #E25041;
 }
+.navbar-signal-alerte .alertMessagerie {
+    top: auto;
+    margin-left: 3px;
+}

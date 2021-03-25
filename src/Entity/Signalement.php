@@ -82,6 +82,11 @@ class Signalement
      */
     private $statut  = 1;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_new_raison;
+
     public function __construct()
     {
         $this->signalementRaisons = new ArrayCollection();
@@ -238,6 +243,18 @@ class Signalement
 
     public function getStatutType() {
         return self::STATUT[$this->statut];
+    }
+
+    public function getDateNewRaison(): ?\DateTimeInterface
+    {
+        return $this->date_new_raison;
+    }
+
+    public function setDateNewRaison(\DateTimeInterface $date_new_raison): self
+    {
+        $this->date_new_raison = $date_new_raison;
+
+        return $this;
     }
 
 }
