@@ -318,15 +318,30 @@ class ForumDiscussionRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?ForumDiscussion
+
+    public function getLastMessageForum($value): ?ForumDiscussion
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+            ->andWhere('f.categorie = :val')
             ->setParameter('val', $value)
+            ->addOrderBy('f.date_new_com', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function getLastMessageSousForum($value): ?ForumDiscussion
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.categorie', 'cat')
+            ->addSelect('f', 'cat')
+            ->andWhere('cat.parent = :val')
+            ->setParameter('val', $value)
+            ->addOrderBy('f.date_new_com', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

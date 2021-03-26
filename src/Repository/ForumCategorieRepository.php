@@ -119,9 +119,9 @@ class ForumCategorieRepository extends ServiceEntityRepository
             foreach ($subCategories as $subCategory) {
                 if ($subCategory->getParent() === $category->getId()) {
                     foreach ($subCategories as $sub2Category) {
-                        $result[$category->getCategorie()][$subCategory->getId()] = $subCategory;
+                        $result['---------'.$category->getCategorie().'---------'][$subCategory->getId()] = $subCategory;
                         if ($sub2Category->getParent() === $subCategory->getId()) {
-                            $result[$sub2Category->getId()] = $sub2Category;
+                            $result[$subCategory->getCategorie()][$sub2Category->getId()] = $sub2Category;
                         }
                     }
                 }

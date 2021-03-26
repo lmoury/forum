@@ -42,68 +42,7 @@
                                 {% endif %}
                             </div>
                         </div>
-
-                        <div class="nodeLastPost mobileBrDisplaySM">
-                            {% if sousCateg.forumDiscussions.count > 0 %}
-                                {% for lastMessage in sousCateg.forumDiscussions.snapshot | slice(0, 1) %}
-                                <div class="noMessages">
-                                    {% if lastMessage.forumCommentaires.count > 0 %}
-                                    {% set lastCom = max(lastMessage.forumCommentaires.snapshot) %}
-                                        <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}#ancreCom{{ lastCom.id }}">{{ lastMessage.titre | slice(0, 25) }}{% if lastMessage.titre|length > 25 %}...{% endif %}</a>
-                                        <span class="nodeStatItem">{{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
-                                        - <a class="pseudoUser{{ lastCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}">{{ lastCom.auteur.username }}</a>
-                                    {% else %}
-                                        <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}">{{ lastMessage.titre | slice(0, 20) }}{% if lastMessage.titre|length > 20 %}...{% endif %}</a>
-                                        <span class="nodeStatItem">{{ date_passed(lastMessage.dateCreation | date('d-m-Y H:i:s')) }}</span>
-                                        - <a class="pseudoUser{{ lastMessage.auteur.role.id }}" href="{{ path('membres.profil', {id: lastMessage.auteur.id, slug: lastMessage.auteur.slug})}}">{{ lastMessage.auteur.username }}</a>
-                                    {% endif %}
-                                </div>
-                                {% endfor %}
-                            {% else %}
-                            <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
-                            {% endif %}
-                        </div>
-
-                    </td>
-                    <td class="nodeCol3 mobileDisplaySM">
-                        <div class="nodeLastPost">
-                            {% if sousCateg.forumDiscussions.count > 0 %}
-                                {% for lastMessage in sousCateg.forumDiscussions.snapshot | slice(0, 1) %}
-                                <div class="noMessages">
-                                    {% if lastMessage.forumCommentaires.count > 0 %}
-                                    {% set lastCom = max(lastMessage.forumCommentaires.snapshot) %}
-                                    <div class="node-extra-icon visitor-avatar">
-                                        <img height="36" width="36" src="{{ vich_uploader_asset( lastCom.auteur, 'imageFile') }}" alt="{{  lastCom.auteur.username }}" />
-                                    </div>
-                                    <div>
-                                        <span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}#ancreCom{{ lastCom.id }}">
-                                            {{ lastMessage.titre | slice(0, 25) }}{% if lastMessage.titre|length > 25 %}...{% endif %}
-                                        </a></span>
-                                    </div>
-                                    <div>
-                                        <a class="pseudoUser{{ lastCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}">{{ lastCom.auteur.username }}</a>
-                                        , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
-                                    </div>
-                                    {% else %}
-                                    <div class="node-extra-icon visitor-avatar">
-                                        <img height="36" width="36" src="{{ vich_uploader_asset( lastMessage.auteur, 'imageFile') }}" alt="{{  lastMessage.auteur.username }}" />
-                                    </div>
-                                    <div>
-                                        <span>Dernier: <a href="{{ path('forum.discussion', {id: lastMessage.id, slug: lastMessage.slug}) }}">
-                                            {{ lastMessage.titre | slice(0, 20) }}{% if lastMessage.titre|length > 20 %}...{% endif %}
-                                        </a></span>
-                                    </div>
-                                    <div>
-                                        <a class="pseudoUser{{ lastMessage.auteur.role.id }}" href="{{ path('membres.profil', {id: lastMessage.auteur.id, slug: lastMessage.auteur.slug})}}">{{ lastMessage.auteur.username }}</a>
-                                        , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastMessage.dateCreation | date('d-m-Y H:i:s')) }}</span>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                                {% endfor %}
-                            {% else %}
-                            <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
-                            {% endif %}
-                        </div>
+                        {{ render(controller("App\\Controller\\ForumController:lastMessage", {id: sousCateg.id, route: "ordi"})) }}
                     </td>
                 </tr>
                 {% endif %}
