@@ -29,7 +29,9 @@
                         <i class="fa fa-moon-o"></i>
                         <span class="d-none d-md-inline-block">Bonsoir {{ app.user.username }}</span>
                         {% endif %}
+                        {% if is_granted('ROLE_MODERATEUR')  %}
                         {{ render(controller("App\\Controller\\SignalementController:alerteSignal")) }}
+                        {% endif %}
                     </a>
                     <ul class="profil-pop-mobile dropdown-menu" id="dropdown-content-user">
                         <span class="menu-arrow"></span>

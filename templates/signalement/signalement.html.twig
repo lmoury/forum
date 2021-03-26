@@ -34,7 +34,9 @@
                         <a class="pseudoUser{{ signalement.user.role.id }}" href="{{ path('membres.profil', {id: signalement.user.id, slug: signalement.user.slug}) }}">{{ signalement.user.username }}</a>
                         <div class="staffRole userBannerDiscuV2 b{{ signalement.user.role.id }}">{{ signalement.user.role.nom }}</div>
                     </div>
+                    {% if signalement.type == 1 %}
                     <div class="btnReport"><a class="btn search-btn btn-rech" href="{{ path('forum.discussion', {id: signalement.idSignal, slug: 'titre'}) }}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="mobileDisplay">  Aller au contenu</span></a></div>
+                    {% endif %}
                     <div class="clearfix"></div>
                 </div>
             </section>

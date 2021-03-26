@@ -165,4 +165,9 @@ class Prefixe
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->prefix;
+    }
 }
