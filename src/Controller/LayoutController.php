@@ -7,6 +7,7 @@ use App\Repository\UserBannirRepository;
 use App\Repository\UserRoleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LayoutController extends AbstractController
@@ -50,4 +51,16 @@ class LayoutController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/cookie/accept", name="cookie.accept")
+     */
+    public function cookieAccept(Request $request)
+    {
+        setcookie('accept_cookie', true, time() + 3600, '/', null, false, true);
+        if($_SERVER['HTTP_REFERER']) {
+            return $this->redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            return $this->redirectToRoute('forums');
+        }
+    }
 }

@@ -1,0 +1,11 @@
+body {
+    background: radial-gradient(#185886 50%, #0f3652);
+    color: #d4dcff;
+}
+#content-section, .content-section {
+	background-color: #193142;
+	color: #d4dcff;
+}
+.sidebar-content, .breadcrumb, .notice, .block-container-prefix {
+	background-color: #193142;
+}

@@ -8,6 +8,20 @@
 		<span class="mr-1 footer-regle"><a href="{{ path('rules') }}">Conditions et règles</a></span>
 		<span class="mr-1 footer-regle"><a href="{{ path('cookies') }}">Utilisation des cookies</a></span>
 	</div>
+	<div class="toolbarCustA text-center">
+	    <a href="#" onclick="setActiveStyleSheet('clair'); return false;" id="clair">default</a>
+	    <a href="#" onclick="setActiveStyleSheet('sombre'); return false;" id="sombre">sombre</a>
+	</div>
 	<div class="clearfix"></div>
 </footer>
 <a id="lm_btn-Retour"><i class="fa fa-chevron-up"></i></a>
+{% if app.request.cookies.get('accept_cookie') != 1 %}
+<div id="cookie_box" class="cookie-alert notice-cookie-content text-center">
+	<p>
+		Ce site utilise des cookies pour personnaliser le contenu, adapter votre expérience et vous garder connecté si vous vous inscrivez.<br/>
+		En continuant à utiliser ce site, vous consentez à notre utilisation de cookies.
+	</p>
+	<a href="{{ path('cookie.accept') }}"><i class="fa fa-check"></i>Acceptez</a>
+	<a href="{{ path('cookies') }}">En savoir plus...</a>
+</div>
+{% endif %}

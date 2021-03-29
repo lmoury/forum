@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Premium {{ parent() }}{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Premium</li>
+</ol>
+<div id="content-section" class="page-color">
+	<h3>Pourquoi devenir un membre Premium ?</h3>
+	<p>
+	Avoir un compte Premium permet de soutenir le développement du site tout en accédant en contrepartie à différentes fonctionnalités réservées de celui-ci en souscrivant à des offres aux prix très abordables et sans engagement. Voici les fonctionnalités réservées du site auxquelles un membre Premium aura accès (celles-ci évolueront également avec le temps) :
+	</p>
+	<br>
+	<ul>
+	<li>Télécharger des ressources et créations sans limite</li>
+	<li>Faire disparaître toutes les publicités du site</li>
+	<li>Possibilité d'ajouter une vidéo à son profil</li>
+	<li>Modifier la couleur de votre pseudo</li>
+	<li>Afficher « Membre Premium » dans les espaces publics du site</li>
+	</ul>
+	<br>
+</div>
+{% endblock %}

@@ -944,6 +944,7 @@ footer a:hover {
     border-bottom-color: #cbcbcb;
     border-left-color: #d8d8d8;
     padding: 10px;
+    border-top: solid #2f78a0;
 }
 .notice-cookie-content p {
     color: #141414;

@@ -355,32 +355,4 @@ class ForumController extends AbstractController
         ]);
     }
 
-
-
-    /**
-      * @Route("/forums/last-message/{id}", name="forum.last.message")
-      * @param ForumDiscussionRepository $repository
-      * @param ForumCategorie $categorie
-      * @param Request $request
-      */
-     public function lastMessage(ForumDiscussionRepository $repository, ForumCategorie $categorie, Request $request)
-     {
-         $forum = $repository->getLastMessageForum($categorie->getId());
-         $sousforum = $repository->getLastMessageSousForum($categorie->getId());
-         if($forum and $sousforum) {
-             if($forum->getDateNewCom() > $sousforum->getDateNewCom()) {
-                 $lastDiscuCom = $forum;
-             }else {
-                 $lastDiscuCom = $sousforum;
-             }
-         }elseif ($forum) {
-             $lastDiscuCom = $forum;
-         }else {
-             $lastDiscuCom = $sousforum;
-         }
-         return $this->render('forum/inc/lastMessage.html.twig', [
-             'lastDiscuCom' => $lastDiscuCom
-         ]);
-     }
-
 }

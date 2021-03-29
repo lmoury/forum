@@ -3,10 +3,31 @@
         <table>
             {% for sousCateg in categories if sousCateg.parent == categorie.id %}
                 {% if sousCateg.access.nom is not defined or is_granted(sousCateg.access.role) %}
-                    {% set nbCom = 0 %}
-                    {% for result in sousCateg.forumDiscussions.snapshot %}
-                        {% set nbCom = nbCom + result.forumCommentaires.count %}
+                {% set nbCom, sousforum, forum, lastCom = 0, null, null, null %}
+                {% set forum = sousCateg.forumDiscussions | slice(0, 1) %}
+                {% for result in sousCateg.forumDiscussions.snapshot %}
+                    {% set nbCom = nbCom + result.forumCommentaires.count %}
+                {% endfor %}
+                {% set nbComSousForum = 0 %}
+                {% set nbDiscuSousForum = 0 %}
+                {% for sousCateg2 in categories if sousCateg2.parent == sousCateg.id %}
+                    {% set nbDiscuSousForum = nbDiscuSousForum + sousCateg2.forumDiscussions.count %}
+                    {% set sousforum = sousCateg2.forumDiscussions | slice(0, 1) %}
+                    {% for resultSousForum in sousCateg2.forumDiscussions.snapshot %}
+                        {% set nbComSousForum = nbComSousForum + resultSousForum.forumCommentaires.count %}
                     {% endfor %}
+                {% endfor %}
+                {% if forum and sousforum %}
+                    {% if forum.dateNewCom > sousforum.dateNewCom %}
+                        {% set lastDiscuCom = forum | first %}
+                    {% else %}
+                        {% set lastDiscuCom = sousforum | first %}
+                    {% endif %}
+                {% elseif forum %}
+                    {% set lastDiscuCom = forum | first %}
+                {% else %}
+                    {% set lastDiscuCom = sousforum | first %}
+                {% endif %}
                 <tr class="nodeLigne">
                     <td class="nodeCol1">
                         <i class="{{ sousCateg.icon }}"></i>
@@ -19,8 +40,8 @@
                         </div>
                         <div class="nodeStat">
                             <div class="disparforumstat strongItem">
-                                <span class="nodeStatItem">Discussions:</span> <span>{{ sousCateg.forumDiscussions.count }}</span>
-                                <span class="nodeStatItem">Messages:</span> <span>{{ sousCateg.forumDiscussions.count + nbCom }}<span>
+                                <span class="nodeStatItem">Discussions:</span> <span>{{ sousCateg.forumDiscussions.count + nbDiscuSousForum }}</span>
+                                <span class="nodeStatItem">Messages:</span> <span>{{ sousCateg.forumDiscussions.count + nbDiscuSousForum + nbCom + nbComSousForum }}<span>
                                 {% set access = false %}
                                 {% for sousCateg2 in categories if sousCateg2.parent == sousCateg.id and (sousCateg2.access.nom is not defined or is_granted(sousCateg2.access.role)) %}
                                 {% set access = true %}
@@ -42,7 +63,64 @@
                                 {% endif %}
                             </div>
                         </div>
-                        {{ render(controller("App\\Controller\\ForumController:lastMessage", {id: sousCateg.id, route: "ordi"})) }}
+                        <div class="nodeLastPost mobileBrDisplaySM">
+                            {% if lastDiscuCom %}
+                                <div class="noMessages">
+                                    {% if lastDiscuCom.forumCommentaires.count > 0 %}
+                                    {% set lastCom = max(lastDiscuCom.forumCommentaires.snapshot) %}
+                                        <a href="{{ path('forum.discussion', {id: lastDiscuCom.id, slug: lastDiscuCom.slug}) }}#ancreCom{{ lastCom.id }}">{{ lastDiscuCom.titre | slice(0, 25) }}{% if lastDiscuCom.titre|length > 25 %}...{% endif %}</a>
+                                        <span class="nodeStatItem">{{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                        - <a class="pseudoUser{{ lastCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}">{{ lastCom.auteur.username }}</a>
+                                    {% else %}
+                                        <a href="{{ path('forum.discussion', {id: lastDiscuCom.id, slug: lastDiscuCom.slug}) }}">{{ lastDiscuCom.titre | slice(0, 20) }}{% if lastDiscuCom.titre|length > 20 %}...{% endif %}</a>
+                                        <span class="nodeStatItem">{{ date_passed(lastDiscuCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                        - <a class="pseudoUser{{ lastDiscuCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastDiscuCom.auteur.id, slug: lastDiscuCom.auteur.slug})}}">{{ lastDiscuCom.auteur.username }}</a>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                            <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
+                            {% endif %}
+
+                        </div>
+
+                        </td>
+                        <td class="nodeCol3 mobileDisplaySM">
+                        <div class="nodeLastPost">
+                            {% if lastDiscuCom %}
+                                <div class="noMessages">
+                                    {% if lastDiscuCom.forumCommentaires.count > 0 %}
+                                    {% set lastCom = max(lastDiscuCom.forumCommentaires.snapshot) %}
+                                    <div class="node-extra-icon visitor-avatar">
+                                        <img height="36" width="36" src="{{ vich_uploader_asset( lastCom.auteur, 'imageFile') }}" alt="{{  lastCom.auteur.username }}" />
+                                    </div>
+                                    <div>
+                                        <span>Dernier: <a href="{{ path('forum.discussion', {id: lastDiscuCom.id, slug: lastDiscuCom.slug}) }}#ancreCom{{ lastCom.id }}">
+                                            {{ lastDiscuCom.titre | slice(0, 25) }}{% if lastDiscuCom.titre|length > 25 %}...{% endif %}
+                                        </a></span>
+                                    </div>
+                                    <div>
+                                        <a class="pseudoUser{{ lastCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastCom.auteur.id, slug: lastCom.auteur.slug})}}">{{ lastCom.auteur.username }}</a>
+                                        , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                    </div>
+                                    {% else %}
+                                    <div class="node-extra-icon visitor-avatar">
+                                        <img height="36" width="36" src="{{ vich_uploader_asset( lastDiscuCom.auteur, 'imageFile') }}" alt="{{  lastDiscuCom.auteur.username }}" />
+                                    </div>
+                                    <div>
+                                        <span>Dernier: <a href="{{ path('forum.discussion', {id: lastDiscuCom.id, slug: lastDiscuCom.slug}) }}">
+                                            {{ lastDiscuCom.titre | slice(0, 20) }}{% if lastDiscuCom.titre|length > 20 %}...{% endif %}
+                                        </a></span>
+                                    </div>
+                                    <div>
+                                        <a class="pseudoUser{{ lastDiscuCom.auteur.role.id }}" href="{{ path('membres.profil', {id: lastDiscuCom.auteur.id, slug: lastDiscuCom.auteur.slug})}}">{{ lastDiscuCom.auteur.username }}</a>
+                                        , <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(lastDiscuCom.dateCreation | date('d-m-Y H:i:s')) }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                            <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
+                            {% endif %}
+                        </div>
                     </td>
                 </tr>
                 {% endif %}

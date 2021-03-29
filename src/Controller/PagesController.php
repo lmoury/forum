@@ -15,7 +15,7 @@ class PagesController extends AbstractController
 {
 
     private $current_url = 'home';
-
+    private $current_url_p = 'premium';
     /**
      * @var ObjectManager
      */
@@ -79,6 +79,17 @@ class PagesController extends AbstractController
     public function cookies()
     {
         return $this->render('pages/cookies.html.twig');
+    }
+
+
+    /**
+     * @Route("/premium", name="premium")
+     */
+    public function premium()
+    {
+        return $this->render('pages/premium.html.twig', [
+            'current_url_p' => $this->current_url_p,
+        ]);
     }
 
     /**
