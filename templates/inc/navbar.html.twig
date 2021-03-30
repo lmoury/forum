@@ -13,9 +13,14 @@
                     <a class="nav-link"  href="{{ path('forums') }}">Forums</a>
                 </li>
                 {% if app.user %}
-                <li class="nav-item {% if current_url is defined and current_url == 'membres' %}active{% endif %}">
-                    <a class="nav-link" href="{{ path('membres') }}">Membres</a>
-                </li>
+                    <li class="nav-item {% if current_url is defined and current_url == 'membres' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('membres') }}">Membres</a>
+                    </li>
+                    {% if app.user.role.id == 1 %}
+                    <li class="nav-item {% if current_url_p is defined and current_url_p == 'premium' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('premium') }}">Premium</a>
+                    </li>
+                    {% endif %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
