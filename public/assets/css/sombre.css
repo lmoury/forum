@@ -6,6 +6,24 @@ body {
 	background-color: #193142;
 	color: #d4dcff;
 }
-.sidebar-content, .breadcrumb, .notice, .block-container-prefix {
+.sidebar-content, .breadcrumb, .notice, .block-container-prefix, .wysibb-text {
 	background-color: #193142;
+}
+.profilPanelForum::after {
+	color: #193142;
+}
+.wysibb-toolbar {
+	background: #2f78a0;
+}
+.bottom-resize-line {
+	border: solid #185886;
+}
+.message-attribution {
+	border-bottom: 1px solid #185886;
+}
+.wysibb, .wysibb .wysibb-toolbar {
+	border: 1px solid #185886;
+}
+.wysibb .wysibb-toolbar .wysibb-toolbar-container {
+	border-right: 1px solid #185886;
 }

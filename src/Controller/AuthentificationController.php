@@ -7,6 +7,7 @@ use App\Form\InscriptionType;
 use App\Form\LostPasswordType;
 use App\Repository\UserRoleRepository;
 use App\Repository\UserRepository;
+use App\Notification\LostPasswordNotification;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,7 +86,7 @@ class AuthentificationController extends AbstractController
      * @param Request $request
      * @param UserRepository $repository
      */
-    public function getEmail(UserRepository $repository, Request $request)
+    public function getEmail(UserRepository $repository, Request $request, LostPasswordNotification $notification)
     {
         if('POST' === $request->getMethod() && $request->request->get('email')) {
             $user = $repository->getEmailUser(htmlspecialchars($request->request->get('email')));
@@ -96,8 +97,8 @@ class AuthentificationController extends AbstractController
                 }
                 $user->setLostPasswordKey($key);
                 $this->em->flush();
-                
-                $this->addFlash('success', 'email envoyé');
+                $notification->sendEmailLostPassword($user);
+                $this->addFlash('success', 'l\'email à bien été envoyé');
                 return $this->redirectToRoute('login');
             }
             $this->addFlash('error', 'Aucun compte ne correspond à cet email');

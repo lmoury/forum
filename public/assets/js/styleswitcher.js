@@ -3,6 +3,14 @@ function setActiveStyleSheet(title) {
   for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
     if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
       a.disabled = true;
+      if(title == "clair") {
+          document.getElementById("clair").style.cssText = "display: none;color:white";
+          document.getElementById("sombre").style.cssText = "display: inline-flex;color:#193142";
+      } else {
+          document.getElementById("clair").style.cssText = "display: inline-flex;color:white";
+          document.getElementById("sombre").style.cssText = "display: none;color:#193142";
+      }
+
       if(a.getAttribute("title") == title) a.disabled = false;
     }
   }
