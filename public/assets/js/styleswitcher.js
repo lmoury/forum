@@ -4,11 +4,11 @@ function setActiveStyleSheet(title) {
     if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
       a.disabled = true;
       if(title == "clair") {
-          document.getElementById("clair").style.cssText = "display: none;color:white";
-          document.getElementById("sombre").style.cssText = "display: inline-flex;color:#193142";
+          document.getElementById("clair").style.cssText = "display: none;color:white;position:relative;top:2px;";
+          document.getElementById("sombre").style.cssText = "display: inline-flex;color:#193142;position:relative;top:2px;";
       } else {
-          document.getElementById("clair").style.cssText = "display: inline-flex;color:white";
-          document.getElementById("sombre").style.cssText = "display: none;color:#193142";
+          document.getElementById("clair").style.cssText = "display: inline-flex;color:white;position:relative;top:2px;";
+          document.getElementById("sombre").style.cssText = "display: none;color:#193142;position:relative;top:2px;";
       }
 
       if(a.getAttribute("title") == title) a.disabled = false;
