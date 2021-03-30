@@ -56,7 +56,7 @@ class LayoutController extends AbstractController
      */
     public function cookieAccept(Request $request)
     {
-        setcookie('accept_cookie', true, time() + 3600, '/', null, false, true);
+        setcookie('accept_cookie', true, time() + 36*24*3600, '/', null, false, true);
         if($_SERVER['HTTP_REFERER']) {
             return $this->redirect($_SERVER['HTTP_REFERER']);
         } else {
