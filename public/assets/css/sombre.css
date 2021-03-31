@@ -9,7 +9,7 @@ body {
 .sidebar-content, .breadcrumb, .notice, .block-container-prefix, .wysibb-text, .formRow > dd, .content-report {
 	background-color: #193142!important;
 }
-.profilPanelForum::after {
+.profilPanelForum::after, .wysibb-toolbar-container {
 	color: #193142;
 }
 .message-userArrow-report::after {
@@ -80,11 +80,16 @@ body {
 	border: 1px solid  #244961!important;
     color: #d4dcff!important;
 }
-
 .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn .fonticon {
     text-shadow: none!important;
 }
-
+.wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn:hover {
+    background: #0f1e28!important;
+    color: #d4dcff!important;
+}
+.wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn:hover span, .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn.on .fonticon {
+    color: #d4dcff!important;
+}
 .wysibb-toolbar {
 	background: #2f78a0;
 }

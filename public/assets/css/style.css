@@ -1239,7 +1239,7 @@ td.discussionCol1 {
     font-size: 30pt;
     color: rgb(245, 245, 245);
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .profilPanelForum::after {
         top: 0px;
         right: 2px;
@@ -1631,7 +1631,7 @@ dl.widget-conversation {
     border: none;
     background: rgb(245,245,245);
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .mobileBrDisplay {
         display: none;
     }
@@ -1642,8 +1642,17 @@ dl.widget-conversation {
         display: none;
     }
 }
-
+@media (min-width: 768px) {
+    .mobileBrDisplayMD {
+        display: none;
+    }
+}
 @media (max-width: 768px) {
+    .mobileDisplayMD {
+        display: none;
+    }
+}
+@media (max-width: 992px) {
     .prefixeMobileMB {
         margin-bottom: 6px;
     }

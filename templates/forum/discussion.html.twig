@@ -31,7 +31,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-2 text-center">
+    <div class="col-lg-2 text-center">
         <div class="profilPanelForum no-padding" id="content-section">
             <div class="avatarShadow avatar-discussion">
                 {% if discussion.auteur.role.role == ('ROLE_MODERATEUR') or discussion.auteur.role.role == ('ROLE_ADMIN') %}
@@ -71,7 +71,7 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="col-md-10">
+    <div class="col-lg-10">
         <div class="" id="content-section">
             <div class="message-attribution message-attribution--split">
                 <div class="float-left">{{ date_passed(discussion.dateCreation | date('d-m-Y H:i:s')) }}</div>
@@ -122,7 +122,7 @@
 <div id="ancreCom{{ com.id }}"></div>
 <br/>
 <div class="row">
-    <div class="col-md-2 text-center">
+    <div class="col-lg-2 text-center">
         <div class="profilPanelForum no-padding" id="content-section">
             <div class="avatarShadow avatar-discussion">
                 {% if com.auteur.role.role == ('ROLE_MODERATEUR') or com.auteur.role.role == ('ROLE_ADMIN') %}
@@ -162,7 +162,7 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="col-md-10">
+    <div class="col-lg-10">
         <div class="" id="content-section">
             <div class="message-attribution message-attribution--split">
                 <div class="float-left">{{ date_passed(com.dateCreation | date('d-m-Y H:i:s'))}}</div>

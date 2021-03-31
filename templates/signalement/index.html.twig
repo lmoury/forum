@@ -20,8 +20,8 @@
                 <thead>
                   <tr class="nodeLigneTitle">
                     <th class="pl-5">Signalements</th>
-                    <th class="discussionRepAfi mobileDisplay">Rapports</th>
-                    <th class="discussionRepAfi mobileDisplay" style="text-align: right;">Dernier Rapport ↓</th>
+                    <th class="discussionRepAfi mobileDisplayMD">Rapports</th>
+                    <th class="discussionRepAfi mobileDisplayMD" style="text-align: right;">Dernier Rapport ↓</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -43,12 +43,12 @@
                                 <span class="disparforumstat">
                                     <a class="pseudoUser{{ s.user.role.id }}" href="{{ path('membres.profil', {id: s.user.id, slug: s.user.slug}) }}">{{ s.user.username }}</a>,
                                     <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(s.createdAt | date('d-m-Y H:i:s')) }}</span>
-                                    <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-flag"></i> {{ s.signalementRaisons.count }}</span>
+                                    <span class="nodeStatItem mobileBrDisplayMD"><i class="fa fa-flag"></i> {{ s.signalementRaisons.count }}</span>
                                     <span class="nodeStatItem float-right">{{ s.statutType }}</span>
                                 </span>
                             </div>
                         </td>
-                        <td class="discussionCol3 discussionRepAfiBis mobileDisplay">
+                        <td class="discussionCol3 discussionRepAfiBis mobileDisplayMD">
                             <div class="nodeTdCust">
                                 <div class="discussionRepAfi">
                                     <div><span class="nodeStatItem">Rapports:</span> <span style="float: right;">{{ s.signalementRaisons.count }}</span></div>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="discussionCol4 discussionRepAfiBis mobileDisplay">
+                        <td class="discussionCol4 discussionRepAfiBis mobileDisplayMD">
                             <div class="nodeTdCust">
                                 <div class="discussionRepAfi">
                                     {% if s.signalementRaisons.count > 0 %}

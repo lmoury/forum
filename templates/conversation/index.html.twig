@@ -26,8 +26,8 @@
                     <thead>
                       <tr class="nodeLigneTitle">
                         <th class="pl-5">Titre de la conversation</th>
-                        <th class="discussionRepAfi mobileDisplay">Réponses</th>
-                        <th class="discussionRepAfi mobileDisplay" style="text-align: right;">Dernier Message ↓</th>
+                        <th class="discussionRepAfi mobileDisplayMD">Réponses</th>
+                        <th class="discussionRepAfi mobileDisplayMD" style="text-align: right;">Dernier Message ↓</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -99,11 +99,11 @@
                                         <a class="pseudoUser{{ p.participant.role.id }}" href="{{ path('membres.profil', {id: p.participant.id, slug: p.participant.slug}) }}">{{ p.participant.username }}</a>,
                                         {% endfor %}
                                         <span class="nodeStatItem"><i class="fa fa-clock-o"></i> {{ date_passed(u.conversation.createdAt | date('d-m-Y H:i:s')) }}</span>
-                                        <span class="nodeStatItem mobileBrDisplay"><i class="fa fa-comments"></i> {{ u.conversation.conversationReponses.count }}</span>
+                                        <span class="nodeStatItem mobileBrDisplayMD"><i class="fa fa-comments"></i> {{ u.conversation.conversationReponses.count }}</span>
                                     </span>
                                 </div>
                             </td>
-                            <td class="discussionCol3 discussionRepAfiBis mobileDisplay">
+                            <td class="discussionCol3 discussionRepAfiBis mobileDisplayMD">
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         <div><span class="nodeStatItem">Réponses:</span> <span style="float: right;">{{ u.conversation.conversationReponses.count }}</span></div>
@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="discussionCol4 discussionRepAfiBis mobileDisplay">
+                            <td class="discussionCol4 discussionRepAfiBis mobileDisplayMD">
                                 <div class="nodeTdCust">
                                     <div class="discussionRepAfi">
                                         {% if u.conversation.conversationReponses.count > 0 %}
