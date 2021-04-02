@@ -158,12 +158,23 @@ border-bottom: none;
 @media (max-width: 992px) {
     #chatbox .wysibb .wysibb-toolbar {
     	float: none;
-    	width: auto;
+    	width: 100%;
     	overflow-y: auto;
     	overflow-x: hidden;
         display: inline-flex;
     }
     #chatbox .wysibb {
         width: 88%;
+    }
+    #chatbox .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn, .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn.wbb-select {
+    	width: 28px!important;
+    	max-width: 100%!important;
+    }
+    #chatbox .wysibb-toolbar-container {
+        width: 100%!important;
+    }
+    #chatbox .wysibb-text-editor.wysibb-body {
+    	min-height: 30px!important;
+    	max-height: 30px!important;
     }
 }
