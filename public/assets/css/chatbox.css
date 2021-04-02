@@ -1,22 +1,11 @@
 .bgChatMessage {
-    background: rgb(234,233,232) url('../images/fond1.png') repeat top;
+    background: rgb(231, 231, 231);
     box-shadow: inset 0px 0px 9px black;
     padding: 12px;
     height: 400px;
     overflow: auto;
     width: 100%;
-}
-
-body {
-	background-color: transparent;
-	color: #333;
-	padding: 0px;
-	overflow: hidden;
-}
-
-html {
-    width: 100%;
-
+    color: #333;
 }
 
 .cursor-pointer{
@@ -157,4 +146,24 @@ border-bottom: none;
     padding: 9px;
     box-shadow: inset 0px 0px 0px 1px black, 0px 5px 10px rgba(0,0,0,0.4);
     width: 280px;
+}
+#chatbox .wysibb {
+    width: 95%;
+	height: auto;
+}
+#chatbox .wysibb-text-editor.wysibb-body {
+	min-height: 20px!important;
+	max-height: 20px!important;
+}
+@media (max-width: 992px) {
+    #chatbox .wysibb .wysibb-toolbar {
+    	float: none;
+    	width: auto;
+    	overflow-y: auto;
+    	overflow-x: hidden;
+        display: inline-flex;
+    }
+    #chatbox .wysibb {
+        width: 88%;
+    }
 }

@@ -30,7 +30,7 @@ class LostPasswordNotification
     public function sendEmailLostPassword(User $user)
     {
         $message = (new \Swift_Message('Récupération de mot de passe'))
-        ->setFrom('lMoury@gmail.com')
+        ->setFrom('laurentmoury@gmail.com')
         ->setTo($user->getEmail())
         ->setBody($this->renderer->render('emails/lostPassword.html.twig', [
             'user' => $user,

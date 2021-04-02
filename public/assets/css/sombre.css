@@ -93,3 +93,19 @@ body {
 .wysibb-toolbar {
 	background: #2f78a0;
 }
+#chatbox {
+	background: #193142 !important;
+}
+.bgChatMessage {
+    background: radial-gradient(#185886 50%, #0f3652);
+    box-shadow: inset 0px 0px 9px black;
+    padding: 12px;
+    height: 400px;
+    overflow: auto;
+    width: 100%;
+    color: #d4dcff!important;
+}
+.faChatBox {
+	color: #d4dcff;
+	background: #2f78a0;
+}

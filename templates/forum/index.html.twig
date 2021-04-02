@@ -14,7 +14,9 @@
 <div class="row">
     <div class="col-lg-9">
         {% if app.user %}
-        <iframe id="chatbox" class="mb-3" src="chatbox" style="{% if is_granted('ROLE_PREMIUM') %}height: 580px;{% endif %}"></iframe>
+        <div id="chatbox" class="mb-3" style="{% if is_granted('ROLE_PREMIUM') %}height: 580px;{% endif %}">
+            {{ render(controller("App\\Controller\\Chatbox\\ChatboxController:chatbox")) }}
+        </div>
         {% endif %}
         {% for categorie in categories if categorie.parent == null %}
             {% if categorie.access.nom is not defined or is_granted(categorie.access.role) %}
@@ -38,4 +40,80 @@
         {{ include("inc/sidebar.html.twig") }}
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/assets/js/bbcode.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script type="text/javascript">
+        function remplirInput(id,txt) {
+          document.getElementById(id).value +=" "+ txt +" ";
+        }
+        function tagUser(id,txt) {
+          document.getElementById(id).value +="@"+ txt +", ";
+        }
+    </script>
+    <script>
+    $('#envoi').click(function(e){
+        e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
+        var bbcode = "";
+        if( "{{ is_granted('ROLE_PREMIUM') }}" ) {
+            bbcode = $(".editor").bbcode();
+        }
+        var text = $('#message').val();
+        if(bbcode != ""){
+            var message = bbcode;
+        } else if(text != "") {
+            var message = text;
+        } else {
+            var message = "";
+        }
+        if(message != ""){ // on vérifie que les variables ne sont pas vides
+            $(".wysibb-text-editor").contents().remove();
+            document.getElementById('message').value="";
+            $.ajax({
+                url : "{{ path('enregistrement') }}", // on donne l'URL du fichier de traitement
+                type : "POST", // la requête est de type POST
+                data : "message=" + message // et on envoie nos données
+            });
+        }
+
+
+    });
+    </script>
+    <script>
+    function charger(){
+        setTimeout( function(){
+            var premierID = $('#chatboxMsg div.p-1:last').attr('id'); // on récupère l'id le plus récent
+            $.ajax({
+                url : "charger?id=" + premierID, // on passe l'id le plus récent au fichier de chargement
+                //type : GET,
+                success : function(html){
+                    $('#chatboxMsg').append(html);
+                    document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
+                }
+            });
+            charger();
+        }, 2000);
+    }
+    charger();
+    </script>
+    <script>
+        document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
+    </script>
+    <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
+    <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
+    <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
+    <script>
+    $(document).ready(function() {
+    var wbbOpt = {
+    buttons: "bold,italic,underline,strike,|,img,link,smilebox",
+    lang: "fr",
+    }
+    $(".editor").wysibb(wbbOpt);
+    });
+    </script>
 {% endblock %}

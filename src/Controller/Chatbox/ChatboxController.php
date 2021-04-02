@@ -33,7 +33,6 @@ class ChatboxController extends AbstractController
 
 
     /**
-     * @Route("/chatbox", name="chatbox")
      * @param ChatboxRepository $repository
      */
     public function chatbox(ChatboxRepository $repository)
@@ -62,7 +61,7 @@ class ChatboxController extends AbstractController
         $this->em->persist($chatbox);
         $this->em->flush();
 
-        return $this->redirectToRoute('chatbox');
+        return $this->redirectToRoute('forums');
     }
 
     /**
@@ -80,7 +79,7 @@ class ChatboxController extends AbstractController
             $this->em->persist($chatboxForm);
             $this->em->flush();
         }
-        return $this->redirectToRoute('chatbox');
+        return $this->redirectToRoute('forums');
     }
 
     /**
@@ -146,6 +145,6 @@ class ChatboxController extends AbstractController
             $this->em->flush();
             $this->addFlash('success', 'Commentaire de la chatbox supprimé');
         }
-        return $this->redirectToRoute('chatbox');
+        return $this->redirectToRoute('forums');
     }
 }

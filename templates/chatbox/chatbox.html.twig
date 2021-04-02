@@ -1,243 +1,103 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %} Chatbox {% endblock %}</title>
-        {% block stylesheets %}
-            <!-- css -->
-            <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
-            <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-            <link rel="stylesheet" type="text/css" href="/assets/css/username.css">
-            <link rel="stylesheet" type="text/css" href="/assets/plugins/wow/css/animate.css">
-            <link rel="stylesheet" type="text/css" href="/assets/css/chatbox.css">
-            <!-- Font -->
-            <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome.css"/>
-            <link rel="stylesheet" type="text/css" href="/assets/fonts/font-mfizz-2.3.0/font-mfizz.css">
-        {% endblock %}
-    </head>
-    <body>
-    <div class="sidebar-content mb-4">
-        <div class="sidebar-title">
-            <strong><i class="fa fa-wechat mr-2"></i>Chatbox</strong>
-            <span class="cursor-pointer float-right" data-toggle="modal" data-target="#myModal"><span class="fa fa-warning"></span></span>
-            {% if is_granted('ROLE_MODERATEUR')  %}
-            <span class="cursor-pointer float-right mr-2" data-title="Delete" data-toggle="modal" data-target="#vider" ><i class="fa fa-trash"></i></span>
+<div class="sidebar-content mb-4">
+    <div class="sidebar-title">
+        <strong><i class="fa fa-wechat mr-2"></i>Chatbox</strong>
+        <span class="cursor-pointer float-right" data-toggle="modal" data-target="#myModal"><span class="fa fa-warning"></span></span>
+        {% if is_granted('ROLE_MODERATEUR')  %}
+        <span class="cursor-pointer float-right mr-2" data-title="Delete" data-toggle="modal" data-target="#vider" ><i class="fa fa-trash"></i></span>
+        {% endif %}
+        <!-- Modal -->
+        <div class="modal" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content modalChatbox">
+                    <div class="modal-header slide">
+                        <h4 class="modal-title chatboxH4"><span class="fa fa-gavel" style="padding-right:9px;"></span>Règlement de la ChatBox</h4>
+                        <button type="button" class="close chatboxClose" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="spacer center"><div class="mask center"></div></div>
+                    <div class="modal-body slide">
+                        <p>
+                        - Interdiction de spammer (3 messages et 3 caractères d'affilés maximum).<br/>
+                        - 3 Smileys maximum a chaque message entrer dans la shoutbox.<br/>
+                        - Interdiction de mettre des liens externe sauf images et musiques.<br/>
+                        - Interdiction d'utiliser les majuscules de manière intempestive (pas plus de 5 maj).<br/>
+                        - Interdiction d'avoir un langage vulgaire.<br/>
+                        - Interdiction de divulguer des informations personnel.<br/>
+                        - Interdiction de poster plus d'un lien (liens internes seulement).<br/>
+                        - Interdiction de parler de virus, rat ou autre sur la shoutbox.<br/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for message in app.flashes('success') %}
+<div class="alert alert-success alert-custom">
+    <i class="fa fa-check"></i> {{ message }}
+</div>
+{% endfor %}
+<div class="p-2">
+    <div class="bgChatMessage" id="chatboxMsg">
+        {% for chat in chatbox %}
+        <div class="p-1" id='{{ chat.id }}'>
+            {% if chat.user != app.user %}
+                <a href="#" class="float-right" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-exclamation-triangle"></i></a>
+                <!-- modal signalement -->
+                <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                    {{ include("signalement/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.chatbox'}) }}
+                </div>
             {% endif %}
-            <!-- Modal -->
-            <div class="modal" id="myModal" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content modalChatbox">
-                        <div class="modal-header slide">
-                            <h4 class="modal-title chatboxH4"><span class="fa fa-gavel" style="padding-right:9px;"></span>Règlement de la ChatBox</h4>
-                            <button type="button" class="close chatboxClose" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="spacer center"><div class="mask center"></div></div>
-                        <div class="modal-body slide">
-                            <p>
-                            - Interdiction de spammer (3 messages et 3 caractères d'affilés maximum).<br/>
-                            - 3 Smileys maximum a chaque message entrer dans la shoutbox.<br/>
-                            - Interdiction de mettre des liens externe sauf images et musiques.<br/>
-                            - Interdiction d'utiliser les majuscules de manière intempestive (pas plus de 5 maj).<br/>
-                            - Interdiction d'avoir un langage vulgaire.<br/>
-                            - Interdiction de divulguer des informations personnel.<br/>
-                            - Interdiction de poster plus d'un lien (liens internes seulement).<br/>
-                            - Interdiction de parler de virus, rat ou autre sur la shoutbox.<br/>
-                            </p>
-                        </div>
-                    </div>
+            {% if is_granted('ROLE_MODERATEUR') %}
+                <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete{{ chat.id }}" ><i class="fa fa-trash"></i></a>
+                <!-- modal delete -->
+                <div class="modal fade" id="delete{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                    {{ include("inc/modal/modal_delete.html.twig", {signal : chat.id, route : 'chatbox.supprimer'}) }}
                 </div>
-            </div>
-        </div>
-    </div>
-    {% for message in app.flashes('success') %}
-    <div class="alert alert-success alert-custom">
-        <i class="fa fa-check"></i> {{ message }}
-    </div>
-    {% endfor %}
-    <div class="p-2">
-        <div class="bgChatMessage" id="chatboxMsg">
-            {% for chat in chatbox %}
-            <div class="p-1" id='{{ chat.id }}'>
-                {% if chat.user != app.user %}
-                    <a href="#" class="float-right" data-title="Signaler" data-toggle="modal" data-target="#signaler{{ chat.id }}" ><i class="fa fa-exclamation-triangle"></i></a>
-                    <!-- modal signalement -->
-                    <div class="modal fade modal-custom" id="signaler{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                        {{ include("signalement/signalement_modal.html.twig", {signal : chat.id, route : 'signalement.chatbox'}) }}
-                    </div>
-                {% endif %}
-                {% if is_granted('ROLE_MODERATEUR') %}
-                    <a href="#" data-title="Delete" data-toggle="modal" data-target="#delete{{ chat.id }}" ><i class="fa fa-trash"></i></a>
-                    <!-- modal delete -->
-                    <div class="modal fade" id="delete{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                        {{ include("inc/modal/modal_delete.html.twig", {signal : chat.id, route : 'chatbox.supprimer'}) }}
-                    </div>
-                {% endif %}
-                <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
-                <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
-                - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
-                <span class="chatpseudMessag">
-                    <a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> :
-                    {% if chat.user.role.id == 1 or chat.user.role.id == 5 %}{{ chat.message }}{% else %}{{ parser(chat.message) | raw }}{% endif %}
-                </span>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <form method="POST" action="{{ path('enregistrement') }}">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                            </div>
-                            <input type="text" id="message" name="message" required="required" maxlength="255" placeholder="Écrire un message..." class="form-control">
-                            <div class="input-group-prepend">
-                                <button class="btn input-group-text" type="submit" name="submit" value="Envoyez votre message !" id="envoi"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            {% if is_granted('ROLE_PREMIUM') %}
-            <div class="col-md-12">
-                <div class="faChatBox" onclick="addBalises('#message', '[b]', '[/b]');"><span class="fa fa-bold"></span></div>
-            	<div class="faChatBox" onclick="addBalises('#message', '[i]', '[/i]');"><span class="fa fa-italic"></span></div>
-                <div class="faChatBox" onclick="addBalises('#message', '[u]', '[/u]');"><span class="fa fa-underline"></span></div>
-                <div class="faChatBox" onclick="addBalises('#message', '[s]', '[/s]');"><s>S</s></div>
-            	<div class="faChatBox" onclick="addBalises('#message', '[url=http://www.exemple.com]', 'descriptif_du_lien[/url]');"><span class="fa fa-link" ></span></div>
-            	<div class="faChatBox" onclick="addBalises('#message', '[img]', '[/img]');"><span class="fa fa-picture-o" ></span></div>
-
-                <div class="faChatBox dropdown"><span data-toggle="dropdown"><span class="fa fa-paint-brush"></span></span>
-                    <div class="dropdown-menu wbb-list">
-                        <div class="sc" style="background:#61BD6D" title="#61BD6D" onclick="addBalises('#message', '[color=#61BD6D]', '[/color]');"></div>
-                        <div class="sc" style="background:#1ABC9C" title="#1ABC9C" onclick="addBalises('#message', '[color=#1ABC9C]', '[/color]');"></div>
-                        <div class="sc" style="background:#54ACD2" title="#54ACD2" onclick="addBalises('#message', '[color=#54ACD2]', '[/color]');"></div>
-                        <div class="sc" style="background:#2C82C9" title="#2C82C9" onclick="addBalises('#message', '[color=#2C82C9]', '[/color]');"></div>
-                        <div class="sc" style="background:#9365B8" title="#9365B8" onclick="addBalises('#message', '[color=#9365B8]', '[/color]');"></div>
-                        <div class="sc" style="background:#475577" title="#475577" onclick="addBalises('#message', '[color=#475577]', '[/color]');"></div>
-                        <div class="sc" style="background:#CCCCCC" title="#CCCCCC" onclick="addBalises('#message', '[color=#CCCCCC]', '[/color]');"></div>
-                        <span class="pl"></span>
-                        <div class="sc" style="background:#41A85F" title="#41A85F" onclick="addBalises('#message', '[color=#41A85F]', '[/color]');"></div>
-                        <div class="sc" style="background:#00A885" title="#00A885" onclick="addBalises('#message', '[color=#00A885]', '[/color]');"></div>
-                        <div class="sc" style="background:#3D8EB9" title="#3D8EB9" onclick="addBalises('#message', '[color=#3D8EB9]', '[/color]');"></div>
-                        <div class="sc" style="background:#2969B0" title="#2969B0" onclick="addBalises('#message', '[color=#2969B0]', '[/color]');"></div>
-                        <div class="sc" style="background:#553982" title="#553982" onclick="addBalises('#message', '[color=#553982]', '[/color]');"></div>
-                        <div class="sc" style="background:#28324E" title="#28324E" onclick="addBalises('#message', '[color=#28324E]', '[/color]');"></div>
-                        <div class="sc" style="background:#000000" title="#000000" onclick="addBalises('#message', '[color=#000000]', '[/color]');"></div>
-                        <span class="pl"></span>
-                        <div class="sc" style="background:#F7DA64" title="#F7DA64" onclick="addBalises('#message', '[color=#F7DA64]', '[/color]');"></div>
-                        <div class="sc" style="background:#FBA026" title="#FBA026" onclick="addBalises('#message', '[color=#FBA026]', '[/color]');"></div>
-                        <div class="sc" style="background:#EB6B56" title="#EB6B56" onclick="addBalises('#message', '[color=#EB6B56]', '[/color]');"></div>
-                        <div class="sc" style="background:#E25041" title="#E25041" onclick="addBalises('#message', '[color=#E25041]', '[/color]');"></div>
-                        <div class="sc" style="background:#A38F84" title="#A38F84" onclick="addBalises('#message', '[color=#A38F84]', '[/color]');"></div>
-                        <div class="sc" style="background:#EFEFEF" title="#EFEFEF" onclick="addBalises('#message', '[color=#EFEFEF]', '[/color]');"></div>
-                        <div class="sc" style="background:#FFFFFF" title="#FFFFFF" onclick="addBalises('#message', '[color=#FFFFFF]', '[/color]');"></div>
-                        <span class="pl"></span>
-                        <div class="sc" style="background:#FAC51C" title="#FAC51C" onclick="addBalises('#message', '[color=#FAC51C]', '[/color]');"></div>
-                        <div class="sc" style="background:#F37934" title="#F37934" onclick="addBalises('#message', '[color=#F37934]', '[/color]');"></div>
-                        <div class="sc" style="background:#D14841" title="#D14841" onclick="addBalises('#message', '[color=#D14841]', '[/color]');"></div>
-                        <div class="sc" style="background:#B8312F" title="#B8312F" onclick="addBalises('#message', '[color=#B8312F]', '[/color]');"></div>
-                        <div class="sc" style="background:#7C706B" title="#7C706B" onclick="addBalises('#message', '[color=#7C706B]', '[/color]');"></div>
-                        <div class="sc" style="background:#D1D5D8" title="#D1D5D8" onclick="addBalises('#message', '[color=#D1D5D8]', '[/color]');"></div>
-                    </div>
-                </div>
-
-                <div class="faChatBox dropdown"><span data-toggle="dropdown"><span class="fa fa-smile-o" ></span></span>
-                    <div class="dropdown-menu smileyCust">
-                        <span onclick="remplirInput('message',';)');"><img src="../assets/img/smileys/clin.gif" alt=";)" /></span>
-                        <span onclick="remplirInput('message','lol');"><img src="../assets/img/smileys/lol.gif" alt="lol" /></span>
-                        <span onclick="remplirInput('message',':ninja:');"><img src="../assets/img/smileys/ninja.gif" alt=":ninja:" /></span>
-                        <span onclick="remplirInput('message',':troll:');"><img src="../assets/img/smileys/troll/troll.png" alt=":troll:" /></span>
-                        <span onclick="remplirInput('message',':troll1:');"><img src="../assets/img/smileys/troll/1.png" alt=":troll1:" /></span>
-                        <span onclick="remplirInput('message',':abruti:');"><img src="../assets/img/smileys/abruti.gif" alt=":abruti:" /></span>
-                        <span onclick="remplirInput('message',':boulet:');"><img src="../assets/img/smileys/boulet.gif" alt=":boulet:" /></span>
-                        <span onclick="remplirInput('message',':nettoyage:');"><img src="../assets/img/smileys/nettoyage.gif" alt=":boulet:" /></span> 
-                    </div>
-                </div>
-            </div>
             {% endif %}
+            <img width="20" height="20"src="{{ vich_uploader_asset(chat.user, 'imageFile') }}" alt="{{ chat.user.username }}" />
+            <span class="chatDateCust">{{ date_chatbox(chat.poster | date('d-m-Y H:i:s')) }}</span>
+            - {% if chat.user != app.user %}<span onclick="tagUser('message','{{ chat.user.username }}')" class="tagUser fa fa-tag"></span>{% endif %}
+            <span class="chatpseudMessag">
+                <a href="{{ path('membres.profil', {id: chat.user.id, slug: chat.user.slug}) }}" class="pseudoUser{{ chat.user.role.id }}" > {{ chat.user.username }} </a> :
+                {% if chat.user.role.id == 1 or chat.user.role.id == 5 %}{{ chat.message }}{% else %}{{ parser(chat.message) | raw }}{% endif %}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <form method="POST" action="{{ path('enregistrement') }}" method="POST">
+                <div class="form-group">
+                    <div class="input-group">
+                        {% if is_granted('ROLE_PREMIUM') %}
+                        <input class="editor form-control" type="text" id="message" name="message">
+                        {% else %}
+                        <input type="text" id="message" name="message" required="required" maxlength="255" placeholder="Écrire un message..." class="form-control">
+                        {% endif %}
+                        <div class="input-group-prepend">
+                            <button class="btn input-group-text" type="submit" name="submit" value="Envoyez votre message !" id="envoi"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="vider" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
-                </div>
-                <div class="modal-footer">
-                <form method="post" action="{{ path('chatbox.delete')}}">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button class="btn btn-danger">Vider la chatbox</button>
-                </form>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
-                </div>
+<div class="modal fade" id="vider" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Veuillez confirmer la suppression ?</div>
+            </div>
+            <div class="modal-footer">
+            <form method="post" action="{{ path('chatbox.delete')}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger">Vider la chatbox</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
             </div>
         </div>
     </div>
-    {% block javascripts %}
-        <!-- javascript -->
-        <script src="/assets/js/jquery.min.js"></script>
-        <script src="/assets/js/popper.min.js"></script>
-        <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/assets/js/extra.js"></script>
-        <script src="/assets/plugins/wow/js/wow.min.js"></script>
-        <script src="/assets/js/bbcode.js"></script>
-        <script>
-            new WOW().init();
-        </script>
-        <script type="text/javascript">
-            function remplirInput(id,txt) {
-              document.getElementById(id).value +=" "+ txt +" ";
-            }
-            function tagUser(id,txt) {
-              document.getElementById(id).value +="@"+ txt +", ";
-            }
-        </script>
-        <script>
-        $('#envoi').click(function(e){
-            e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
-            var message = $('#message').val();
-            if(message != ""){ // on vérifie que les variables ne sont pas vides
-                document.getElementById('message').value="";
-                $.ajax({
-                    url : "{{ path('enregistrement') }}", // on donne l'URL du fichier de traitement
-                    type : "POST", // la requête est de type POST
-                    data : "message=" + message // et on envoie nos données
-                });
-            }
-
-        });
-        </script>
-        <script>
-        function charger(){
-            setTimeout( function(){
-                var premierID = $('#chatboxMsg div.p-1:last').attr('id'); // on récupère l'id le plus récent
-                $.ajax({
-                    url : "charger?id=" + premierID, // on passe l'id le plus récent au fichier de chargement
-                    //type : GET,
-                    success : function(html){
-                        $('#chatboxMsg').append(html);
-                        document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
-                    }
-                });
-                charger();
-            }, 2000);
-        }
-        charger();
-        </script>
-        <script>
-            document.getElementById('chatboxMsg').scrollTop = document.getElementById('chatboxMsg').scrollHeight;
-        </script>
-        <script>
-        jQuery(document).ready(function(){
-            $('.alert-custom').show(0).delay(5000).hide(200);
-        });
-        </script>
-   {% endblock %}
-    </body>
-</html>
+</div>
