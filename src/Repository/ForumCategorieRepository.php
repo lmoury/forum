@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ForumCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -17,7 +17,7 @@ class ForumCategorieRepository extends ServiceEntityRepository
 {
     private $security;
 
-    public function __construct(RegistryInterface $registry, Security $security)
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, ForumCategorie::class);
         $this->security = $security;

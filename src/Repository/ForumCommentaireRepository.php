@@ -6,7 +6,7 @@ use App\Entity\ForumCommentaire;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -19,7 +19,7 @@ class ForumCommentaireRepository extends ServiceEntityRepository
 {
     private $security;
 
-    public function __construct(RegistryInterface $registry, Security $security)
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, ForumCommentaire::class);
         $this->security = $security;

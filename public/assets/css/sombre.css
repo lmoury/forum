@@ -6,7 +6,7 @@ body {
 	background-color: #193142;
 	color: #d4dcff;
 }
-.sidebar-content, .breadcrumb, .notice, .block-container-prefix, .wysibb-text, .formRow > dd, .content-report {
+.sidebar-content, .breadcrumb, .notice, .block-container-prefix, .wysibb-text, .wysibb, .formRow > dd, .content-report {
 	background-color: #193142!important;
 }
 .profilPanelForum::after, .wysibb-toolbar-container {
@@ -108,4 +108,24 @@ body {
 .faChatBox {
 	color: #d4dcff;
 	background: #2f78a0;
+}
+#wbbmodal .wbbm, #wbbmodal .wbbm-inp-row input {
+	background: #193142!important;
+	color: #d4dcff!important;
+    border: 1px solid #244961!important;
+}
+#wbbmodal .wbbm-title {
+	color: #d4dcff!important;
+}
+#wbbmodal .wbbm-bottom {
+	border-top: 1px solid #244961!important;
+	background: #193142 !important;
+}
+#wbbmodal .wbbm-title {
+	border-bottom: 1px solid #244961!important;
+}
+#wbbm-cancel {
+	background: #0f1e28 !important;
+	color: #d4dcff !important;
+    border: 1px solid #244961!important;
 }

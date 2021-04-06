@@ -1847,3 +1847,6 @@ li.select2-results__option   {
     top: auto;
     margin-left: 3px;
 }
+.wysibb-toolbar {
+	background: rgb(231, 231, 231);
+}
