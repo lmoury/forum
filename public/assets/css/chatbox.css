@@ -112,14 +112,24 @@ border-bottom: none;
 .titleDelet:hover {
     color: black;
 }
-
+#chatbox .wysibb .wysibb-text {
+    margin: 0px!important;
+    width: 95%;
+}
+#chatbox #envoi {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 41px;
+}
 #chatbox .col-md-11 {
 	padding-right: 0px!important;
 }
-
-
+.wysibb .bottom-resize-line {
+	display: none!important;
+}
 #chatbox .wysibb {
-    width: 95%;
+    width: 100%;
 	height: auto;
 }
 #chatbox .wysibb-text-editor.wysibb-body {
@@ -193,21 +203,14 @@ border-bottom: none;
     #chatbox .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn span.btn-inner {
     	min-width: auto;
     }
-
-    #chatbox .wysibb .wysibb-text {
-        margin: 0px!important;
-        width: 90%;
-    }
-    #chatbox #envoi {
-    	position: absolute;
-    	bottom: 0px;
-    	right: 0px;
-    	height: 41px;
-    }
     #chatbox .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn .wbb-list {
     	position: absolute!important;
     	top: 32px!important;
     	left: -1px!important;
     	max-height: 220px!important;
+    }
+    #chatbox .wysibb .wysibb-text {
+        margin: 0px!important;
+        width: 90%;
     }
 }
