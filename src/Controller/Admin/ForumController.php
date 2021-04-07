@@ -9,17 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ForumController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -40,7 +40,7 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/admin/categorie/new", name="admin.categorie.new")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param ForumCategorieRepository $repository
      * @param new ForumCategorie()
@@ -69,7 +69,7 @@ class ForumController extends AbstractController
 
     /**
     * @Route("/admin/categorie/{slug}.{id}/editer", name="admin.categorie.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"}, methods="GET|POST")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumCategorie $categorie
     * @param ForumCategorieRepository $repository
     * @param ForumCategorieType
@@ -103,7 +103,7 @@ class ForumController extends AbstractController
 
     /**
     * @Route("/admin/categorie/{id}", name="admin.categorie.delete", methods="DELETE")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumCategorie $categorie
     * @param Request $request
     */

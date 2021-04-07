@@ -11,7 +11,7 @@ use App\Form\ForumDiscussionSearchNavbarType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -22,7 +22,7 @@ class SearchController extends AbstractController
     private $current_url = 'search';
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -32,7 +32,7 @@ class SearchController extends AbstractController
     private $paginator;
 
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->paginator = $paginator;
@@ -42,7 +42,7 @@ class SearchController extends AbstractController
     /**
      * @Route("/search", name="search")
      * @Security("is_granted('ROLE_USER')")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param ForumDiscussionRepository $repository
      */
@@ -77,7 +77,7 @@ class SearchController extends AbstractController
 
 
     /**
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param ForumDiscussionRepository $repository
      */
@@ -98,7 +98,7 @@ class SearchController extends AbstractController
     /**
      * @Route("/tags/{slug}.{id}", name="tags", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
      * @Security("is_granted('ROLE_USER')")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param Tag $tag
      * @param ForumDiscussionRepository $repository

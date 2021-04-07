@@ -8,7 +8,7 @@ use App\Form\LostPasswordType;
 use App\Repository\UserRoleRepository;
 use App\Repository\UserRepository;
 use App\Notification\LostPasswordNotification;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +19,12 @@ class AuthentificationController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
             $this->em = $em;
     }
@@ -48,7 +48,7 @@ class AuthentificationController extends AbstractController
 
     /**
      * @Route("/inscription", name="inscription")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param UserRoleRepository $repoRole
      * @param UserPasswordEncoderInterface $encoder
      * @param Request $request
@@ -82,7 +82,7 @@ class AuthentificationController extends AbstractController
 
     /**
      * @Route("/lost-password", name="lost.password")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Request $request
      * @param UserRepository $repository
      */
@@ -109,7 +109,7 @@ class AuthentificationController extends AbstractController
 
     /**
      * @Route("/lost-password/new", name="lost.password.new")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @param UserRepository $repository

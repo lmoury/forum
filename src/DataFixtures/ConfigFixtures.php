@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Config;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 class ConfigFixtures extends Fixture implements OrderedFixtureInterface

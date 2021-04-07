@@ -14,7 +14,7 @@ use App\Repository\UserRepository;
 use App\Repository\PrefixeRepository;
 use App\Form\DiscussionType;
 use App\Form\DeplacerDiscussionType;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class ForumController extends AbstractController
     private $current_url = 'forums';
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -38,7 +38,7 @@ class ForumController extends AbstractController
     private $paginator;
 
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->paginator = $paginator;
@@ -105,7 +105,7 @@ class ForumController extends AbstractController
      /**
     * @Route("/forums/{slug}.{id}/new", name="forum.discussions.new", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
     * @Security("is_granted('ROLE_USER')", message="You have to be logged in")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumCategorie $categorie
     * @param PrefixeRepository $repository
     * @param Request $request
@@ -143,7 +143,7 @@ class ForumController extends AbstractController
     * @Route("/discussion/{slug}.{id}/edit/{idCom}", name="forum.commentaire.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
     * @Security("is_granted('ACCESS_DISCUSSION', discussion)")
     * @param PaginatorInterface paginator
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumDiscussion $discussion
     * @param ForumCommentaireRepository $comRepo
     * @param ForumDiscussionViewRepository $repoView
@@ -195,7 +195,7 @@ class ForumController extends AbstractController
     /**
     * @Route("/discussion/{slug}.{id}/editer", name="forum.discussion.editer", requirements={"slug": "[a-zA-Z0-9\-\.]*"}, methods="GET|POST")
     * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumDiscussion $discussion
     * @param Request $request
     * @param string $slug
@@ -228,7 +228,7 @@ class ForumController extends AbstractController
     /**
     * @Route("/discussion/{id}", name="forum.discussion.delete", methods="DELETE")
     * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumDiscussion $discussion
     * @param Request $request
     * @return Symfony\Component\HttpFoundation\Response
@@ -247,7 +247,7 @@ class ForumController extends AbstractController
     /**
    * @Route("/commentaire/new-{id}", name="forum.commentaire.new")
    * @Security("is_granted('ROLE_USER')")
-   * @param ObjectManager em
+   * @param EntityManagerInterface em
    * @param ForumDiscussion $discussion
    * @param Request $request
    */
@@ -273,7 +273,7 @@ class ForumController extends AbstractController
    /**
    * @Route("/commmentaire/{id}", name="forum.commentaire.delete", methods="DELETE")
    * @Security("is_granted('DELET_EDIT_COMMENTAIRE', commentaire) or is_granted('ROLE_MODERATEUR')")
-   * @param ObjectManager em
+   * @param EntityManagerInterface em
    * @param ForumCommentaire $commentaire
    * @param Request $request
    */
@@ -289,7 +289,7 @@ class ForumController extends AbstractController
    /**
     * @Route("/forums/locked/{id}", name="forum.locked")
     * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumDiscussion $discussion
     */
    public function locked(ForumDiscussion $discussion)
@@ -310,7 +310,7 @@ class ForumController extends AbstractController
    /**
     * @Route("/forums/important/{id}", name="forum.important")
     * @Security("is_granted('ROLE_MODERATEUR')")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumDiscussion $discussion
     */
    public function important(ForumDiscussion $discussion)
@@ -332,7 +332,7 @@ class ForumController extends AbstractController
    /**
      * @Route("/forums/deplacer/{id}", name="forum.deplacer.discussion")
      * @Security("is_granted('DELET_EDIT_DISCISSION', discussion) or is_granted('ROLE_MODERATEUR')")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Request $request
      */
     public function deplacerDiscussion(Request $request, ForumDiscussion $discussion)

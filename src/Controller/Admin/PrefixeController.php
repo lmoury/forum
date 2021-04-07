@@ -10,17 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PrefixeController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -41,7 +41,7 @@ class PrefixeController extends AbstractController
 
     /**
      * @Route("/admin/prefixes/new", name="admin.prefixes.new")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param ForumCategorieRepository $repository
      * @param PrefixeType
@@ -69,7 +69,7 @@ class PrefixeController extends AbstractController
 
     /**
     * @Route("/admin/prefixes/{id}/editer", name="admin.prefixes.editer", methods="GET|POST")
-    * @param ObjectManager em
+    * @param EntityManagerInterface em
     * @param ForumCategorieRepository $repository
     * @param Prefixe $prefixe
     * @param Request $request
@@ -98,7 +98,7 @@ class PrefixeController extends AbstractController
 
     /**
     * @Route("/admin/prefixes/delete.{id}", name="admin.prefixes.delete", methods="DELETE")
-    * @param ObjectManager $this->em
+    * @param EntityManagerInterface $this->em
     * @param Prefixe $prefixe
     * @param Request $request
     */

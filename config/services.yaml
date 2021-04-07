@@ -66,24 +66,3 @@ services:
         arguments:
             - "@security.token_storage"
         tags: [{ name: form.type }]
-
-xiidea_easy_audit:
-    resolver: xiidea.easy_audit.default_event_resolver                             #Optional
-    doctrine_event_resolver : xiidea.easy_audit.default_doctrine_event_resolver    #Optional
-    default_logger : true                                                          #Optional
-
-    user_property : username                                               #Required
-
-    doctrine_objects :                                                          #Optional
-        App\Entity\User : [created, updated, deleted]
-        App\Entity\ForumDiscussion : [created, updated, deleted]
-        App\Entity\ForumCommentaire : [created, updated, deleted]
-        App\Entity\Likes : [created, updated, deleted]
-
-    events :                                                                      #Optional
-        - security.interactive_login
-        - security.authentication.failure : user.event_resolver
-
-    logger_channel:
-        xiidea.easy_audit.logger.service: ["info", "debug"]
-        file.logger: ["!info", "!debug"]

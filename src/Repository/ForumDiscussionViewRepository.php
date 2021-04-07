@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ForumDiscussionView;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ForumDiscussionView|null find($id, $lockMode = null, $lockVersion = null)

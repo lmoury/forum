@@ -8,24 +8,24 @@ use App\Repository\UserRoleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LayoutController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
 
     /**
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param NoticeRepository $repository
      * @param UserBannirRepository $repoBannir
      * @param UserRoleRepository $repoRole

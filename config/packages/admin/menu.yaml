@@ -31,5 +31,4 @@ easy_admin:
                   - {entity: 'Tag', icon: 'tags', label: 'Tags'}
                   - {label: 'Prefixe', icon: 'list-ol', route: 'admin.prefixes' }
             - {label: 'Templates', icon: 'file', route: 'admin.templates' }
-            - {label: 'Logs', icon: 'link', route: 'admin.auditlog' }
             - {entity: 'Contact', icon: 'envelope', label: 'Contact'}

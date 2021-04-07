@@ -6,7 +6,7 @@ use App\Entity\ConversationReponse;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ConversationReponse|null find($id, $lockMode = null, $lockVersion = null)

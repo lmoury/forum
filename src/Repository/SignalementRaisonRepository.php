@@ -6,7 +6,7 @@ use App\Entity\SignalementRaison;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method SignalementRaison|null find($id, $lockMode = null, $lockVersion = null)

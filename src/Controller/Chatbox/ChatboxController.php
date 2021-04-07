@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\DBAL\Driver\Connection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 Use App\Twig\DateExtension;
@@ -22,11 +22,11 @@ class ChatboxController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -45,7 +45,7 @@ class ChatboxController extends AbstractController
 
     /**
     * @Route("/chatbox/delete", name="chatbox.delete", methods="DELETE")
-    * @param ObjectManager $this->em
+    * @param EntityManagerInterface $this->em
     * @param Connection $connection
     * @Security("is_granted('ROLE_MODERATEUR')")
     */
@@ -66,7 +66,7 @@ class ChatboxController extends AbstractController
 
     /**
      * @Route("/enregistrement", name="enregistrement")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Request $request
      */
     public function enregistrement(Request $request)
@@ -133,7 +133,7 @@ class ChatboxController extends AbstractController
 
     /**
     * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer", methods="DELETE")
-    * @param ObjectManager $this->em
+    * @param EntityManagerInterface $this->em
     * @param Chatbox $chatbox
     * @param Request $request
     * @Security("is_granted('ROLE_MODERATEUR')")

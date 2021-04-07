@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserBannir;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method UserBannir|null find($id, $lockMode = null, $lockVersion = null)

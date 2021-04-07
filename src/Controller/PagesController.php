@@ -9,7 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PagesController extends AbstractController
 {
@@ -17,7 +17,7 @@ class PagesController extends AbstractController
     private $current_url = 'home';
     private $current_url_p = 'premium';
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -27,7 +27,7 @@ class PagesController extends AbstractController
     private $paginator;
 
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->paginator = $paginator;
@@ -94,6 +94,7 @@ class PagesController extends AbstractController
 
     /**
      * @Route("/contact", name="contact")
+     * @param EntityManagerInterface $this->em
      */
     public function contact(Request $request)
     {

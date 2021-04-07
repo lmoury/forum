@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Notice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Notice|null find($id, $lockMode = null, $lockVersion = null)

@@ -13,7 +13,7 @@ use App\Form\ConversationAddStaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -26,7 +26,7 @@ class ConversationController extends AbstractController
     private $current_url = 'conversation';
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -36,7 +36,7 @@ class ConversationController extends AbstractController
     private $paginator;
 
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->paginator = $paginator;
@@ -66,7 +66,7 @@ class ConversationController extends AbstractController
     /**
      * @Route("/conversation/{slug}.{id}", name="conversation.message", requirements={"slug": "[a-zA-Z0-9\-\.]*"})
      * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param ConversationUserRepository $repository
      * @param ConversationReponseRepository $repoRep
      * @param Conversation $conversation
@@ -97,7 +97,7 @@ class ConversationController extends AbstractController
 
     /**
      * @Route("/conversation/new", name="conversation.new")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param Request $request
      * @param ConversationUserType $form
      * @param ConversationUser $formulaire
@@ -142,7 +142,7 @@ class ConversationController extends AbstractController
      /**
       * @Route("/conversation/important/{id}", name="conversation.important")
       * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-      * @param ObjectManager em
+      * @param EntityManagerInterface em
       * @param ConversationUserRepository $repository
       * @param Conversation $conversation
       */
@@ -168,7 +168,7 @@ class ConversationController extends AbstractController
      /**
       * @Route("/conversation/locked/{id}", name="conversation.locked")
       * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-      * @param ObjectManager em
+      * @param EntityManagerInterface em
       * @param Conversation $conversation
       */
      public function locked(Conversation $conversation)
@@ -189,7 +189,7 @@ class ConversationController extends AbstractController
      /**
       * @Route("/conversation/quitter/{id}", name="conversation.quitter")
       * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-      * @param ObjectManager em
+      * @param EntityManagerInterface em
       * @param ConversationUserRepository $repository
       * @param Conversation $conversation
       */
@@ -206,7 +206,7 @@ class ConversationController extends AbstractController
      /**
       * @Route("/conversation/reponse/{id}", name="conversation.reponse.new")
       * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-      * @param ObjectManager em
+      * @param EntityManagerInterface em
       * @param Conversation $conversation
       * @param ConversationUserRepository $repository
       * @param Request $request
@@ -236,7 +236,7 @@ class ConversationController extends AbstractController
      /**
        * @Route("/conversation/addstaff/{id}", name="conversation.add.staff")
        * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-       * @param ObjectManager $this->em
+       * @param EntityManagerInterface $this->em
        * @param Request $request
        * @param Conversation $conversation
        */
@@ -265,7 +265,7 @@ class ConversationController extends AbstractController
       /**
       * @Route("/conversation/{id}", name="conversation.delete", methods="DELETE")
       * @Security("is_granted('ACCESS_CONVERSATION', conversation)")
-      * @param ObjectManager em
+      * @param EntityManagerInterface em
       * @param Conversation $conversation
       * @param Request $request
       */

@@ -11,17 +11,17 @@ use App\Repository\LikeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LikesController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -29,7 +29,7 @@ class LikesController extends AbstractController
 
     /**
      * @Route("/like/discussion.{id}", name="like.discussion")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param ForumDiscussion $discussion
      * @param Request $request
      */
@@ -46,7 +46,7 @@ class LikesController extends AbstractController
 
     /**
      * @Route("/like/delet/discussion.{id}", name="delet.like.discussion")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param ForumDiscussion $discussion
      * @param LikeRepository $repo
      */
@@ -61,7 +61,7 @@ class LikesController extends AbstractController
 
     /**
      * @Route("/like/commentaire.{id}", name="like.commentaire")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param ForumCommentaire $commentaire
      * @param Request $request
      */
@@ -79,7 +79,7 @@ class LikesController extends AbstractController
 
     /**
      * @Route("/like/delet/commentaire.{id}", name="delet.like.commentaire")
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param ForumCommentaire $commentaire
      * @param LikeRepository $repo
      */

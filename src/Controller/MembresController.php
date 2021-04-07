@@ -12,7 +12,7 @@ use App\Repository\ForumCommentaireRepository;
 use App\Form\EditMembreType;
 use App\Form\EditPasswordMembreType;
 use App\Form\EditBannirMembreType;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class MembresController extends AbstractController
     private $current_url = 'membres';
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -39,7 +39,7 @@ class MembresController extends AbstractController
     private $repository;
 
 
-    public function __construct(ObjectManager $em, UserRepository $repository, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, UserRepository $repository, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->repository = $repository;
@@ -98,7 +98,7 @@ class MembresController extends AbstractController
     /**
      * @Route("/membres/compte", name="membres.compte")
      * @param UserRepository $this->repository
-     * @param ObjectManager em
+     * @param EntityManagerInterface em
      * @param UserPasswordEncoderInterface $encoder
      * @param Request $request
      */
@@ -135,7 +135,7 @@ class MembresController extends AbstractController
     /**
      * @Route("/membres/banni/{id}", name="membres.bannir")
      * @Security("is_granted('ROLE_MODERATEUR')")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Request $request
      * @param UserRoleRepository $repoRole
      * @param UserBannirRepository $repoBannir

@@ -12,7 +12,7 @@ use App\Repository\SignalementRaisonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -23,7 +23,7 @@ class SignalementController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -33,7 +33,7 @@ class SignalementController extends AbstractController
     private $paginator;
 
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->paginator = $paginator;
@@ -62,7 +62,7 @@ class SignalementController extends AbstractController
       * @Route("/signalement/signal.{id}", name="signalement.signal")
       * @param Signalement $signalement
       * @param SignalementRepository $repository
-      * @param ObjectManager $this->em
+      * @param EntityManagerInterface $this->em
       * @param Request $request
       * @Security("is_granted('ROLE_MODERATEUR')")
       */
@@ -84,7 +84,7 @@ class SignalementController extends AbstractController
       /**
        * @Route("/signalement/resolu.{id}", name="signalement.resolu")
        * @param Signalement $signalement
-       * @param ObjectManager $this->em
+       * @param EntityManagerInterface $this->em
        * @Security("is_granted('ROLE_MODERATEUR')")
        */
        public function signalementResolu(Signalement $signalement)
@@ -102,7 +102,7 @@ class SignalementController extends AbstractController
 
     /**
       * @Route("/signalement/discussion.{id}", name="signalement.discussion")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param ForumDiscussion $discussion
      * @param SignalementRepository $repository
      * @param Request $request
@@ -142,7 +142,7 @@ class SignalementController extends AbstractController
 
     /**
       * @Route("/signalement/commentaire.{id}", name="signalement.commentaire")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param ForumCommentaire $commentaire
      * @param SignalementRepository $repository
      * @param Request $request
@@ -182,7 +182,7 @@ class SignalementController extends AbstractController
 
     /**
      * @Route("/signalement/chatbox.{id}", name="signalement.chatbox")
-     * @param ObjectManager $this->em
+     * @param EntityManagerInterface $this->em
      * @param Chatbox $chatbox
      * @param SignalementRepository $repository
      * @param Request $request
@@ -223,7 +223,7 @@ class SignalementController extends AbstractController
 
     /**
     * @Route("/signalement/delete.{id}", name="signalement.delete", methods="DELETE")
-    * @param ObjectManager $this->em
+    * @param EntityManagerInterface $this->em
     * @param Signalement $signalement
     * @param Request $request
     * @Security("is_granted('ROLE_MODERATEUR')")
