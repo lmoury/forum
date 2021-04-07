@@ -75,7 +75,7 @@
                         {% else %}
                         <input type="text" id="message" name="message" required="required" maxlength="255" placeholder="Écrire un message..." class="form-control">
                         {% endif %}
-                        <div class="input-group-prepend">
+                        <div class="input-group-prepend {% if is_granted('ROLE_PREMIUM') %}versPremium{% endif %}">
                             <button class="btn input-group-text" type="submit" name="submit" value="Envoyez votre message !" id="envoi"><i class="fa fa-send" aria-hidden="true"></i>{{ button|default('')}}</button>
                         </div>
                     </div>
