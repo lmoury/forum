@@ -83,6 +83,7 @@
 
     });
     </script>
+    {% if is_granted('ROLE_USER') %}
     <script>
     function charger(){
         setTimeout( function(){
@@ -110,10 +111,12 @@
     <script>
     $(document).ready(function() {
     var wbbOpt = {
-    buttons: "bold,italic,underline,strike,img,link,smilebox",
-    lang: "fr",
+        buttons: "bold,italic,underline,strike,img,link,smilebox",
+        lang: "fr",
     }
-    $(".editor").wysibb(wbbOpt );
+    $(".editor").wysibb(wbbOpt);
     });
     </script>
+    
+    {% endif %}
 {% endblock %}

@@ -143,12 +143,12 @@ class User implements UserInterface,\Serializable
     private $plainPassword = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chatbox", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="App\Entity\Chatbox", mappedBy="User", cascade={"remove"})
      */
     private $chatboxes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Signalement", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Signalement", mappedBy="user", cascade={"remove"})
      */
     private $signaleur;
 
@@ -158,7 +158,7 @@ class User implements UserInterface,\Serializable
     private $lostPasswordKey;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SignalementRaison", mappedBy="signaleur")
+     * @ORM\OneToMany(targetEntity="App\Entity\SignalementRaison", mappedBy="signaleur", cascade={"remove"})
      */
     private $signalementRaisons;
 

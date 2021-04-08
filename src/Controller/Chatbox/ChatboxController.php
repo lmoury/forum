@@ -15,12 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 Use App\Twig\DateExtension;
 Use App\Twig\ParserJBBCodeExtension;
 
-/**
- * @Security("is_granted('ROLE_USER')")
- */
 class ChatboxController extends AbstractController
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -31,8 +27,8 @@ class ChatboxController extends AbstractController
         $this->em = $em;
     }
 
-
     /**
+     * @Security("is_granted('ROLE_USER')")
      * @param ChatboxRepository $repository
      */
     public function chatbox(ChatboxRepository $repository)
@@ -41,6 +37,25 @@ class ChatboxController extends AbstractController
         return $this->render('chatbox/chatbox.html.twig', [
             'chatbox' => $chatbox
         ]);
+    }
+
+    /**
+     * @Route("/enregistrement", name="enregistrement")
+     * @Security("is_granted('ROLE_USER')")
+     * @param EntityManagerInterface $this->em
+     * @param Request $request
+     */
+    public function enregistrement(Request $request)
+    {
+        $chatboxForm = new Chatbox();
+        if('POST' === $request->getMethod() && $request->request->get('message') != null) {
+            $chatboxForm->setPoster(new \DateTime());
+            $chatboxForm->setUser($this->getUser());
+            $chatboxForm->setMessage(htmlspecialchars($request->request->get('message')));
+            $this->em->persist($chatboxForm);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('forums');
     }
 
     /**
@@ -65,19 +80,18 @@ class ChatboxController extends AbstractController
     }
 
     /**
-     * @Route("/enregistrement", name="enregistrement")
-     * @param EntityManagerInterface $this->em
-     * @param Request $request
-     */
-    public function enregistrement(Request $request)
+    * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer", methods="DELETE")
+    * @param EntityManagerInterface $this->em
+    * @param Chatbox $chatbox
+    * @param Request $request
+    * @Security("is_granted('ROLE_MODERATEUR')")
+    */
+    public function deleteMessage(Chatbox $chatbox, Request $request)
     {
-        $chatboxForm = new Chatbox();
-        if('POST' === $request->getMethod() && $request->request->get('message') != null) {
-            $chatboxForm->setPoster(new \DateTime());
-            $chatboxForm->setUser($this->getUser());
-            $chatboxForm->setMessage(htmlspecialchars($request->request->get('message')));
-            $this->em->persist($chatboxForm);
+        if($this->isCsrfTokenValid('delete' . $chatbox->getId(), $request->get('_token'))) {
+            $this->em->remove($chatbox);
             $this->em->flush();
+            $this->addFlash('success', 'Commentaire de la chatbox supprimé');
         }
         return $this->redirectToRoute('forums');
     }
@@ -92,6 +106,9 @@ class ChatboxController extends AbstractController
      */
     public function charger(Request $request, ChatboxRepository $repository, DateExtension $dateChat, ParserJBBCodeExtension $parser)
     {
+        if(!$this->getUser()) {
+            return die();
+        }
         if($request->query->get('id') > 0) {
             $message = null; $signalement = null; $tag = null; $delete = null; $texte = null;
             $messages = $repository->getNewMessagesChatbox($request->query->get('id'));
@@ -129,22 +146,5 @@ class ChatboxController extends AbstractController
             }
         }
 
-    }
-
-    /**
-    * @Route("/chatbox/supprimer.{id}", name="chatbox.supprimer", methods="DELETE")
-    * @param EntityManagerInterface $this->em
-    * @param Chatbox $chatbox
-    * @param Request $request
-    * @Security("is_granted('ROLE_MODERATEUR')")
-    */
-    public function deleteMessage(Chatbox $chatbox, Request $request)
-    {
-        if($this->isCsrfTokenValid('delete' . $chatbox->getId(), $request->get('_token'))) {
-            $this->em->remove($chatbox);
-            $this->em->flush();
-            $this->addFlash('success', 'Commentaire de la chatbox supprimé');
-        }
-        return $this->redirectToRoute('forums');
     }
 }

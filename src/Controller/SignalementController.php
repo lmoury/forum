@@ -217,7 +217,7 @@ class SignalementController extends AbstractController
             $this->em->flush();
             $this->addFlash('success', 'Merci d’avoir signalé ce contenu');
         }
-        return $this->redirectToRoute('chatbox');
+        return $this->redirectToRoute('forums');
     }
 
 
