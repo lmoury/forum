@@ -151,7 +151,7 @@ class ForumController extends AbstractController
     * @param Request $request
     * @param string $slug
     */
-    public function discussion(int $idCom = null, Request $request, ForumDiscussion $discussion, ForumCommentaireRepository $comRepo, string $slug, ForumDiscussionViewRepository $repoView): Response
+    public function discussion(int $idCom = null, Request $request,ForumCategorieRepository $repositoryCateg, ForumDiscussion $discussion, ForumCommentaireRepository $comRepo, string $slug, ForumDiscussionViewRepository $repoView): Response
     {
         $discussionView = $repoView->getDiscussionView($this->getUser(), $discussion);
         if(!$discussionView) {
@@ -183,9 +183,10 @@ class ForumController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
-
+        $categories = $repositoryCateg->getListCateg();
         return $this->render('forum/discussion.html.twig', [
           'current_url' => $this->current_url,
+          'categories' => $categories,
           'discussion' => $discussion,
           'commentaires' => $commentaires,
           'comEdit' => $idCom,

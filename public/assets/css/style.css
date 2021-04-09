@@ -35,6 +35,13 @@ a:hover {
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     border-radius: 0px;
 }
+.breadcrumb-item + .breadcrumb-item::before {
+	display: inline-block;
+	padding-right: .5rem;
+	color: #6c757d;
+	content: "\f105";
+	font-family: fontAwesome;
+}
 /* ---------------------------------------------------
     HEADER
 ----------------------------------------------------- */

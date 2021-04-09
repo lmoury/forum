@@ -6,6 +6,11 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('forums') }}">Forums</a></li>
+    {% for categParent in categories if (categParent.id == discussion.categorie.parent and categParent.parent != NULL) %}
+    {% if categParent %}
+        <li class="breadcrumb-item"><a href="{{ path('forum.discussions', {id: categParent.id, slug: categParent.slug}) }}">{{ categParent.categorie }}</a></li>
+    {% endif %}
+    {% endfor %}
     <li class="breadcrumb-item"><a href="{{ path('forum.discussions', {id: discussion.categorie.id, slug: discussion.categorie.slug})}}">{{ discussion.categorie.categorie }}</a></li>
     <li class="breadcrumb-item active">{{ discussion.titre }}</li>
 </ol>
