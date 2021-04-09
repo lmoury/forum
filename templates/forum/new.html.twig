@@ -6,6 +6,7 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('/') }}"><i class="fa fa-home"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('forums') }}">Forums</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('forum.discussions', {id: categorie.id, slug: categorie.slug}) }}">{{ categorie.categorie }}</a></li>
     <li class="breadcrumb-item active">Créer une discussion</li>
 </ol>
 

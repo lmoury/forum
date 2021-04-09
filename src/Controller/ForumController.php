@@ -133,6 +133,7 @@ class ForumController extends AbstractController
 
         return $this->render('forum/new.html.twig', [
             'current_url' => $this->current_url,
+            'categorie' => $categorie,
             'form' => $form->createView()
         ]);
     }
