@@ -147,6 +147,10 @@ border-bottom: none;
 #chatbox .wysibb-body img {
 	max-height: 25px;
 }
+div:empty:before {
+  content:attr(data-placeholder);
+  color:gray
+}
 @media (max-width: 992px) {
     .wbb-list .sc {
     	width: 16px!important;

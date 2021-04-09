@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         {% if is_granted('ROLE_PREMIUM') %}
-                        <input class="editor form-control" type="text" id="message" name="message">
+                        <input class="editor form-control" type="text" id="message" name="message" maxlength="255" placeholder="Écrire un message...">
                         {% else %}
                         <input type="text" id="message" name="message" required="required" maxlength="255" placeholder="Écrire un message..." class="form-control">
                         {% endif %}

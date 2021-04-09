@@ -79,8 +79,6 @@
                 data : "message=" + message // et on envoie nos données
             });
         }
-
-
     });
     </script>
     {% if is_granted('ROLE_USER') %}
@@ -117,6 +115,32 @@
     $(".editor").wysibb(wbbOpt);
     });
     </script>
-    
+    <script>
+    jQuery(document).ready(function($){
+        $('#chatbox .wysibb-text-editor').attr('data-placeholder', 'Écrire un message...');
+        $('#chatbox .wysibb-text-editor').children().last().remove();
+        $('#chatbox .wysibb-text-editor').keyup(function(){
+        var textDiv = $(".wysibb-text-editor").text();
+        if(textDiv === "") {
+            $('#chatbox .wysibb-text-editor').children().last().remove();
+        }
+        });
+        $("#chatbox .wysibb-text-editor").bind("keydown", function(event) {
+            var target = $(event.target);
+            c = event.keyCode;
+            if(c === 13 || c === 27){
+                $('#envoi').click();
+                $('<div contenteditable="true"></div>').appendTo('#chatbox .input-group').focus().remove();
+            }
+        });
+        $("[contenteditable='true']").on("focus", function() {
+            $("#chatbox .wysibb-text-editor").toggleClass("focus");
+        });
+        $("[contenteditable='true']").on("blur", function() {
+            $("#chatbox .wysibb-text-editor").toggleClass("focus");
+        });
+    });
+
+    </script>
     {% endif %}
 {% endblock %}

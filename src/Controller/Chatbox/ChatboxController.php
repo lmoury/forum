@@ -144,7 +144,7 @@ class ChatboxController extends AbstractController
                 }
                 return new Response($message);
             }
+            return die();
         }
-
     }
 }

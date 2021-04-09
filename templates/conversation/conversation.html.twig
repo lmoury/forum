@@ -233,27 +233,5 @@
         });
     });
     </script>
-    <link href="/assets/plugins/wysibb/wbbtheme.css" rel="stylesheet">
-    <script src="/assets/plugins/wysibb/jqueryBBCode.min.js"></script>
-    <script type="text/javascript" src="/assets/plugins/wysibb/jquery.wysibb.js"></script>
-    <script type="text/javascript" src="/assets/plugins/wysibb/fr.js"></script>
-    <script>
-
-    $(document).ready(function() {
-    var wbbOpt = {
-    buttons: "br,bold,italic,underline,strike,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,img,link,|,fontcolor,fontsize,fontfamily,table,|,code,quote,smilebox",
-    lang: "fr",
-    allButtons: {
-    br : {
-        title: 'Saut de ligne',
-        buttonHTML: '<span class="fonticon"><strong>br</strong></span>',
-        excmd: 'br',
-        transform : {
-            '<br/>':"[br]"
-        }
-    } }
-    }
-    $(".editor").wysibb(wbbOpt);
-    });
-    </script>
+    {{ include('inc/editor/wysibb.html.twig') }}
 {% endblock %}
