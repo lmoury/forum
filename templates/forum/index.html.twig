@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-lg-9">
-        {% if app.user %}
+        {% if is_granted('ROLE_USER')  %}
         <div id="chatbox" class="mb-3" style="{% if is_granted('ROLE_PREMIUM') %}height: 580px;{% endif %}">
             {{ render(controller("App\\Controller\\Chatbox\\ChatboxController:chatbox")) }}
         </div>

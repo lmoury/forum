@@ -63,6 +63,7 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if is_granted('ROLE_USER')  %}
                         <div class="nodeLastPost mobileBrDisplaySM">
                             {% if lastDiscuCom %}
                                 <div class="noMessages">
@@ -80,11 +81,12 @@
                             {% else %}
                             <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
                             {% endif %}
-
+                        {% endif  %}
                         </div>
 
                         </td>
                         <td class="nodeCol3 mobileDisplaySM">
+                        {% if is_granted('ROLE_USER')  %}
                         <div class="nodeLastPost">
                             {% if lastDiscuCom %}
                                 <div class="noMessages">
@@ -121,6 +123,7 @@
                             <span class="noMessages nodeStatItem">(Ne contient aucun message)</span>
                             {% endif %}
                         </div>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endif %}
