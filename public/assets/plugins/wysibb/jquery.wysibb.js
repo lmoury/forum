@@ -458,6 +458,7 @@ wbbdebug=true;
 			   {img: '<img src="/assets/img/smileys/informatique/hacker10.gif" class="sm">', bbcode:" :hacker: ", title: 'Hacker'},
 			   {img: '<img src="/assets/img/smileys/informatique/virusdown.gif" class="sm">', bbcode:" :virusdown: ", title: 'Virus download'},
 			   {img: '<img src="/assets/img/smileys/informatique/anonymous.png" class="sm">', bbcode:" :anonymous: ", title: 'Anonymous'},
+
 			],
 			attrWrap: ['src','color','href'] //use becouse FF and IE change values for this attr, modify [attr] to _[attr]
 		}
