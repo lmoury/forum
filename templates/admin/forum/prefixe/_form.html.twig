@@ -1,6 +1,12 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-12 ">
+        <div class="font-weight-bold mb-3">Style des préfixe :
+            <span class="prefix style">style</span>
+            {% for i in 1..9 %}
+                <span class="prefix style{{ i }}">style{{ i }}</span>
+            {% endfor %}
+        </div>
         <div class="form-group  field-text"><label for="forumcategorie_categorie" class="form-control-label required">Prefixe</label>
             <div class="form-widget">
                 {{ form_widget(form.prefix) }}

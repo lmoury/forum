@@ -458,6 +458,12 @@ wbbdebug=true;
 			   {img: '<img src="/assets/img/smileys/informatique/hacker10.gif" class="sm">', bbcode:" :hacker: ", title: 'Hacker'},
 			   {img: '<img src="/assets/img/smileys/informatique/virusdown.gif" class="sm">', bbcode:" :virusdown: ", title: 'Virus download'},
 			   {img: '<img src="/assets/img/smileys/informatique/anonymous.png" class="sm">', bbcode:" :anonymous: ", title: 'Anonymous'},
+			   {img: '<img src="/assets/img/smileys/informatique/annony10.gif" class="sm">', bbcode:" :anonymous1: ", title: 'anonymous1'},
+			   {img: '<img src="/assets/img/smileys/informatique/cabug10.gif" class="sm">', bbcode:" :cabug: ", title: 'cabug'},
+			   {img: '<img src="/assets/img/smileys/games.gif" class="sm">', bbcode:" :games: ", title: 'games'},
+			   {img: '<img src="/assets/img/smileys/2guns.gif" class="sm">', bbcode:" :2guns: ", title: '2guns'},
+			   {img: '<img src="/assets/img/smileys/banned.gif" class="sm">', bbcode:" :banned: ", title: 'banned'},
+			   {img: '<img src="/assets/img/smileys/baver.gif" class="sm">', bbcode:" :baver: ", title: 'baver'},
 
 			],
 			attrWrap: ['src','color','href'] //use becouse FF and IE change values for this attr, modify [attr] to _[attr]

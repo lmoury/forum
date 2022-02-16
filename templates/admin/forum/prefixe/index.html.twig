@@ -15,8 +15,6 @@
                     <tr>
             			<th>#</th>
                 		<th>Prefixe</th>
-                		<th>Icon</th>
-                		<th>Style</th>
                 		<th>Catégories</th>
                         <th>Action</th>
             	   </tr>
@@ -25,16 +23,14 @@
                     {% for prefixe in prefixes %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ prefixe.prefix }}</td>
-                            <td><i class="{{ prefixe.icon }}"></i></td>
-                            <td><span class="prefix {{ prefixe.couleurType }}"> {{ prefixe.couleurType }} </span></td>
+                            <td><h5><span class="prefix {{ prefixe.couleurType }}"><i class="{{ prefixe.icon }}"></i> {{ prefixe.prefix }}</span></h5></td>
                             <td>
                                 <a class="btn btn-info" href="#" data-toggle="modal" data-target="#prefixe{{ prefixe.id }}" >Afficher</a>
                                 <div class="modal fade" id="prefixe{{ prefixe.id }}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">{{ prefixe.prefix }}</h5>
+                                                <h5 class="modal-title"><i class="{{ prefixe.icon }}"></i> {{ prefixe.prefix }}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">×</span>
                                                 </button>

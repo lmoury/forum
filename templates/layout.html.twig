@@ -10,11 +10,13 @@
 		<meta name="author" content="El Mojito">
         <title>{% block title %}| Lmoury{% endblock %}</title>
         {% block stylesheets %}
+            <!-- favicon -->
+            <link rel="shortcut icon" href="/assets/img/logolm.png">
             <!-- css -->
             <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
             <link rel="stylesheet" type="text/css" href="/assets/css/chatbox.css">
-            <link rel="stylesheet" type="text/css" href="/assets/css/clair.css" title="clair">
+            <!---<link rel="stylesheet" type="text/css" href="/assets/css/clair.css" title="clair"> -->
             <link rel="stylesheet" type="text/css" href="/assets/css/sombre.css" title="sombre">
             <link rel="stylesheet" type="text/css" href="/assets/css/username.css">
             <link rel="stylesheet" type="text/css" href="/assets/plugins/wow/css/animate.css">
@@ -24,6 +26,7 @@
         {% endblock %}
     </head>
     <body>
+        <!--- <script src="http://chezswan.free.fr/JS/flocons_000/snow.js" type="text/javascript"></script> -->
         {% for message in app.flashes('success') %}
         <div class="alert alert-success alert-custom">
             <i class="fa fa-check"></i> {{ message }}

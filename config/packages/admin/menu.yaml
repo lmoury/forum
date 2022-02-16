@@ -1,6 +1,7 @@
 easy_admin:
     design:
         assets:
+            favicon: '/assets/img/logolm.png'
             css:
                 - '/assets/css/admin.css'
                 - '/assets/css/username.css'
